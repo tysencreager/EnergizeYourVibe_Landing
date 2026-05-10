@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import { useAuth } from '../hooks/useAuth.jsx';
 
 const links = [
   { to: '/', label: 'Home' },
@@ -11,12 +12,20 @@ const links = [
 export default function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  async function handleSignOut() {
+    await signOut();
+    setIsMenuOpen(false);
+    navigate('/');
+  }
 
   return (
     <>
@@ -60,12 +69,37 @@ export default function Nav() {
             ))}
           </div>
 
-          <Link
-            to="/membership"
-            className="hidden md:inline-block bg-pink text-white hover:bg-magenta px-6 py-3 rounded-full text-sm font-bold transition-colors shadow-md uppercase tracking-wider"
-          >
-            Join Us
-          </Link>
+          {user ? (
+            <div className="hidden md:flex items-center gap-3">
+              <Link
+                to="/portal"
+                className="bg-pink text-white hover:bg-magenta px-6 py-3 rounded-full text-sm font-bold transition-colors shadow-md uppercase tracking-wider"
+              >
+                Portal
+              </Link>
+              <button
+                onClick={handleSignOut}
+                className="text-magenta hover:text-pink text-xs font-bold uppercase tracking-widest transition-colors"
+              >
+                Sign out
+              </button>
+            </div>
+          ) : (
+            <div className="hidden md:flex items-center gap-4">
+              <Link
+                to="/login"
+                className="text-magenta hover:text-pink text-sm font-bold uppercase tracking-wider transition-colors"
+              >
+                Sign in
+              </Link>
+              <Link
+                to="/membership"
+                className="bg-pink text-white hover:bg-magenta px-6 py-3 rounded-full text-sm font-bold transition-colors shadow-md uppercase tracking-wider"
+              >
+                Join Us
+              </Link>
+            </div>
+          )}
 
           <button
             className="md:hidden text-magenta bg-sun p-2 rounded-full"
@@ -90,13 +124,40 @@ export default function Nav() {
               {l.label}
             </NavLink>
           ))}
-          <Link
-            to="/membership"
-            onClick={() => setIsMenuOpen(false)}
-            className="bg-sun text-magenta text-center py-5 rounded-full font-bold text-xl mt-4 uppercase tracking-widest shadow-lg"
-          >
-            Join Us
-          </Link>
+          {user ? (
+            <>
+              <NavLink
+                to="/portal"
+                onClick={() => setIsMenuOpen(false)}
+                className="bg-sun text-magenta text-center py-5 rounded-full font-bold text-xl mt-4 uppercase tracking-widest shadow-lg"
+              >
+                Portal
+              </NavLink>
+              <button
+                onClick={handleSignOut}
+                className="font-display text-2xl underline opacity-90"
+              >
+                Sign out
+              </button>
+            </>
+          ) : (
+            <>
+              <NavLink
+                to="/login"
+                onClick={() => setIsMenuOpen(false)}
+                className="font-display text-3xl border-b border-white/20 pb-4"
+              >
+                Sign in
+              </NavLink>
+              <Link
+                to="/membership"
+                onClick={() => setIsMenuOpen(false)}
+                className="bg-sun text-magenta text-center py-5 rounded-full font-bold text-xl mt-4 uppercase tracking-widest shadow-lg"
+              >
+                Join Us
+              </Link>
+            </>
+          )}
         </div>
       )}
     </>
