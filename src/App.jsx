@@ -11,6 +11,7 @@ import Cookies from './pages/Cookies.jsx';
 import Login from './pages/Login.jsx';
 import AuthCallback from './pages/AuthCallback.jsx';
 import Portal from './pages/Portal.jsx';
+import PortalPillar from './pages/PortalPillar.jsx';
 import PortalInactive from './pages/PortalInactive.jsx';
 
 export default function App() {
@@ -40,6 +41,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Portal />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/portal/:pillarKey"
+          element={
+            <ProtectedRoute>
+              <PortalPillar />
             </ProtectedRoute>
           }
         />
