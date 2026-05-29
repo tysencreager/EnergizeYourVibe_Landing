@@ -6,7 +6,10 @@ import { useAuth } from '../hooks/useAuth.jsx';
 const links = [
   { to: '/', label: 'Home' },
   { to: '/about', label: 'About' },
+  { to: '/pillars', label: '7 Pillars' },
+  { to: '/eyv-method', label: 'EYV Method' },
   { to: '/events', label: 'Events' },
+  { to: '/faq', label: 'FAQ' },
 ];
 
 export default function Nav() {

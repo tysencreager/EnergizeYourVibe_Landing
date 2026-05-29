@@ -69,7 +69,7 @@ export default function Hero() {
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-pink animate-pulse" />
           <span className="uppercase tracking-[0.2em] text-[10px] md:text-xs">Launch</span>
           <span className="hidden sm:inline text-magenta/40">|</span>
-          <span>First 50 members lock in $88/mo for life. Beta Vibe Pricing: 2 months for 1 (90-day commitment).</span>
+          <span>First 50 members lock in $88/mo for life. Beta Vibe Deal: two months for the price of one (90-day commitment).</span>
         </p>
       </div>
     </section>

@@ -5,11 +5,15 @@ import { pillars } from '../data/pillars.js';
 import Sunburst from './Sunburst.jsx';
 import Reveal from './Reveal.jsx';
 
+// Brightened gradients (per client #64 / H3): the dark maroon/brown tail stops
+// (#3b0a24, #6a0e33, #8A2F10, #8A4C09) read as "brown" and muddy under the grain
+// overlay. Ramped up to brighter, more saturated brand colors so each panel pops
+// while staying fully on-palette (no new hues introduced).
 const gradientMap = {
-  align:   { from: '#B71556', via: '#8A1249', to: '#3b0a24' },
-  feel:    { from: '#E22E64', via: '#B71556', to: '#6a0e33' },
-  think:   { from: '#F26B38', via: '#D94E21', to: '#8A2F10' },
-  fuel:    { from: '#F8A232', via: '#E07E18', to: '#8A4C09' },
+  align:   { from: '#E22E64', via: '#B71556', to: '#8A1249' },
+  feel:    { from: '#E22E64', via: '#B71556', to: '#8A1249' },
+  think:   { from: '#F8A232', via: '#F26B38', to: '#E22E64' },
+  fuel:    { from: '#FDE08B', via: '#F8A232', to: '#F26B38' },
   connect: { from: '#E22E64', via: '#F26B38', to: '#B71556' },
   flow:    { from: '#F26B38', via: '#F8A232', to: '#B71556' },
   shine:   { from: '#FDE08B', via: '#F8A232', to: '#E22E64' },

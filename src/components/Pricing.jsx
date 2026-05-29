@@ -52,6 +52,18 @@ export default function Pricing() {
             First 50 Members Only
           </div>
 
+          {/*
+            TODO (H1 / Markup #62) — CONFIRM FINAL PRICING WITH CLIENT BEFORE PUBLISHING.
+            The Markup feedback is internally inconsistent, so the live numbers below
+            ($88/mo, +$45 reg, "$133 today") are intentionally left unchanged for now.
+            Proposed structure to verify:
+              • First 50 (locked for life): $88/mo + one-time $45 reg.
+              • After first 50: $110/mo + one-time $25 reg = $135 first month.
+              • After June:     $110/mo + one-time $45 reg = $155 to sign up.
+            Open question: the stated "$47 savings for life" doesn't reconcile cleanly
+            with the figures above ($110-$88=$22/mo, or $135-$88=$47 one month only).
+            Do NOT hardcode these until Jenn confirms.
+          */}
           <div className="text-center mb-8 pt-6">
             <h3 className="text-2xl md:text-3xl font-display text-gray-900 mb-4">
               Energize Your Vibe Membership
@@ -99,11 +111,15 @@ export default function Pricing() {
 
           <div className="text-center space-y-3">
             <p className="inline-flex items-center gap-3 text-magenta text-sm font-bold bg-magenta/5 px-5 py-3 rounded-full border border-magenta/15">
-              <span className="uppercase tracking-[0.2em] text-[10px] bg-magenta text-sun px-2 py-0.5 rounded-full">Beta Vibe Pricing</span>
-              <span>Sign up between May 18 and June 1, 2026 and get 2 months for the price of 1. Your next payment won’t begin until August 1, 2026.</span>
+              <span className="uppercase tracking-[0.2em] text-[10px] bg-magenta text-sun px-2 py-0.5 rounded-full">Beta Vibe Deal</span>
+              {/* TODO (H2 / Markup #63): client wants the "two months for the price of one" deal kept,
+                  framed as getting June/July for the price of one. Current copy says May 18-June 1 signup
+                  with May+June combined and billing starting Aug 1 - the specific months conflict with #63
+                  (June/July) and resolved #1 (June free, billing July). Confirm exact dates with Jenn. */}
+              <span>Sign up during the Beta window and get two months for the price of one. Your next payment won’t begin until after your first two months.</span>
             </p>
             <p className="text-gray-600 text-sm font-medium max-w-xl mx-auto">
-              Membership includes a 90-day commitment. May and June are combined as your first month so you can fully experience the community, build consistency, and create real connection.
+              Membership includes a 90-day commitment. Your first two months are combined as one so you can fully experience the community, build consistency, and create real connection.
             </p>
           </div>
         </div>
