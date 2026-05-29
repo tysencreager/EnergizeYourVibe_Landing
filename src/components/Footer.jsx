@@ -45,7 +45,10 @@ export default function Footer() {
             <ul className="space-y-3 text-white/80 font-medium">
               <li><Link to="/" className="hover:text-sun transition-colors">Home</Link></li>
               <li><Link to="/about" className="hover:text-sun transition-colors">About Jenn</Link></li>
+              <li><Link to="/pillars" className="hover:text-sun transition-colors">7 Pillars</Link></li>
+              <li><Link to="/eyv-method" className="hover:text-sun transition-colors">EYV Method</Link></li>
               <li><Link to="/events" className="hover:text-sun transition-colors">Events</Link></li>
+              <li><Link to="/faq" className="hover:text-sun transition-colors">FAQ</Link></li>
               <li><Link to="/membership" className="hover:text-sun transition-colors">Membership</Link></li>
             </ul>
           </div>

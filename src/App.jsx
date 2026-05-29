@@ -3,6 +3,9 @@ import Layout from './components/Layout.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import Home from './pages/Home.jsx';
 import About from './pages/About.jsx';
+import Pillars from './pages/Pillars.jsx';
+import EyvMethod from './pages/EyvMethod.jsx';
+import Faq from './pages/Faq.jsx';
 import Events from './pages/Events.jsx';
 import Membership from './pages/Membership.jsx';
 import Terms from './pages/Terms.jsx';
@@ -20,6 +23,9 @@ export default function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/pillars" element={<Pillars />} />
+        <Route path="/eyv-method" element={<EyvMethod />} />
+        <Route path="/faq" element={<Faq />} />
         <Route path="/events" element={<Events />} />
         <Route path="/membership" element={<Membership />} />
         <Route path="/terms" element={<Terms />} />
