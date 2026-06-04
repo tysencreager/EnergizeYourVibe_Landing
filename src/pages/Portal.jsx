@@ -40,6 +40,32 @@ export default function Portal() {
         <Blob tone="pink" size="lg" className="-top-20 -right-20" opacity={15} />
 
         <div className="max-w-6xl mx-auto relative z-10">
+          {/* Start-here call-out: the 7 Pillar Assessment */}
+          <Link
+            to="/portal/assessment"
+            className="group block bento-card glass border-2 border-pink/25 p-6 sm:p-8 mb-12 md:mb-16 hover:-translate-y-1 hover:shadow-2xl transition-all"
+          >
+            <div className="flex flex-col sm:flex-row items-center gap-5 sm:gap-7 text-center sm:text-left">
+              <span className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-pink/10 text-magenta shrink-0">
+                <Sparkles size={26} strokeWidth={1.75} />
+              </span>
+              <div className="flex-1">
+                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-magenta mb-2">
+                  Start here
+                </p>
+                <h3 className="text-2xl md:text-3xl font-display text-gray-900 mb-1">
+                  Take the <i className="text-pink">7 Pillar Assessment.</i>
+                </h3>
+                <p className="text-gray-700 text-sm md:text-base font-medium leading-relaxed">
+                  See where your energy is most supported — and where it needs attention — so you know exactly which pillar to focus on first.
+                </p>
+              </div>
+              <span className="inline-flex items-center gap-2 text-magenta font-bold text-xs uppercase tracking-widest group-hover:gap-3 transition-all shrink-0">
+                Begin <ArrowRight size={14} strokeWidth={2} />
+              </span>
+            </div>
+          </Link>
+
           <div className="text-center mb-12 md:mb-16">
             <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-magenta mb-3">
               The 7 Pillars
