@@ -16,6 +16,7 @@ import AuthCallback from './pages/AuthCallback.jsx';
 import Portal from './pages/Portal.jsx';
 import PortalPillar from './pages/PortalPillar.jsx';
 import PortalInactive from './pages/PortalInactive.jsx';
+import Assessment from './pages/Assessment.jsx';
 
 export default function App() {
   return (
@@ -47,6 +48,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Portal />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/portal/assessment"
+          element={
+            <ProtectedRoute>
+              <Assessment />
             </ProtectedRoute>
           }
         />
