@@ -89,7 +89,7 @@ export default function LaunchPopup() {
         <div className="relative z-10 p-7 sm:p-10 text-white text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 border border-white/30 backdrop-blur-md text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] mb-5">
             <Calendar size={12} strokeWidth={1.75} className="text-sun" />
-            Launching June 1, 2026
+            Launching July 1, 2026
           </div>
 
           <h2
@@ -100,7 +100,7 @@ export default function LaunchPopup() {
           </h2>
 
           <p className="text-white/95 text-sm sm:text-base font-medium leading-relaxed mb-6">
-            Energize Your Vibe officially launches <span className="font-bold text-sun">June 1, 2026</span>, with membership signup opening <span className="font-bold text-sun">May 18, 2026</span>. The first 50 members lock in the introductory <span className="font-bold text-sun">$88/mo</span> Beta Vibe rate <span className="font-bold text-sun">for life</span>. Once those spots are gone, pricing goes up.
+            Energize Your Vibe officially launches <span className="font-bold text-sun">July 1, 2026</span>, with membership signup opening <span className="font-bold text-sun">June 18, 2026</span>. The first 50 members lock in the introductory <span className="font-bold text-sun">$88/mo</span> Beta Vibe rate <span className="font-bold text-sun">for life</span>. Once those spots are gone, pricing goes up.
           </p>
 
           <div className="bg-white/10 border border-white/25 rounded-2xl px-5 py-4 mb-7 backdrop-blur-sm">
@@ -108,7 +108,7 @@ export default function LaunchPopup() {
               Beta Vibe Pricing
             </p>
             <p className="text-sm sm:text-base font-medium">
-              Sign up between May 18 and June 1, 2026 and get 2 months for the price of 1. Your next payment won’t begin until August 1, 2026. Membership includes a 90-day commitment.
+              Sign up between June 18 and July 1, 2026 and get 2 months for the price of 1. Your next payment won’t begin until September 1, 2026. Membership includes a 90-day commitment.
             </p>
           </div>
 

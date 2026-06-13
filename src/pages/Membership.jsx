@@ -61,16 +61,16 @@ export default function Membership() {
         <div className="max-w-4xl mx-auto relative z-10 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 border border-white/30 backdrop-blur-md text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] mb-6 text-white">
             <Sparkles size={14} strokeWidth={1.75} className="text-sun" />
-            Launching June 1, 2026
+            Launching July 1, 2026
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-display text-white leading-tight mb-5 md:mb-6 drop-shadow-md">
             Membership signup opens{' '}
-            <span className="font-serif italic text-sun">May 18, 2026.</span>
+            <span className="font-serif italic text-sun">June 18, 2026.</span>
           </h1>
 
           <p className="text-lg md:text-xl text-white/95 font-medium max-w-2xl mx-auto leading-relaxed">
-            Doors officially open June 1, 2026. Drop your details below and we’ll send you the link the moment signup goes live on May 18, plus the inside scoop on the first 50 founding member rate.
+            Doors officially open July 1, 2026. Drop your details below and we’ll send you the link the moment signup goes live on June 18, plus the inside scoop on the first 50 founding member rate.
           </p>
         </div>
       </section>
