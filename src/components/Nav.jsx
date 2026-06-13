@@ -1,16 +1,81 @@
 import { useState, useEffect } from 'react';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth.jsx';
 
-const links = [
+const navItems = [
   { to: '/', label: 'Home' },
-  { to: '/about', label: 'About' },
-  { to: '/pillars', label: '7 Pillars' },
-  { to: '/eyv-method', label: 'EYV Method' },
-  { to: '/events', label: 'Events' },
-  { to: '/faq', label: 'FAQ' },
+  {
+    label: 'About',
+    to: '/about',
+    items: [
+      { to: '/about', label: 'Meet Jenn' },
+      { to: '/faq', label: 'FAQ' },
+    ],
+  },
+  {
+    label: 'Explore',
+    items: [
+      { to: '/pillars', label: '7 Pillars' },
+      { to: '/eyv-method', label: 'EYV Method' },
+      { to: '/events', label: 'Events' },
+    ],
+  },
+  { to: '/shop', label: 'Shop' },
 ];
+
+function DesktopDropdown({ item }) {
+  const { pathname } = useLocation();
+  const isActive = item.items.some((sub) => sub.to === pathname);
+
+  return (
+    <div className="relative group">
+      {item.to ? (
+        <NavLink
+          to={item.to}
+          end={item.to === '/'}
+          className={({ isActive: linkActive }) =>
+            `inline-flex items-center gap-1 font-bold text-sm transition-colors ${
+              linkActive || isActive ? 'text-orange' : 'text-magenta hover:text-orange'
+            }`
+          }
+        >
+          {item.label}
+          <ChevronDown size={14} strokeWidth={2.5} className="transition-transform duration-200 group-hover:rotate-180" />
+        </NavLink>
+      ) : (
+        <button
+          type="button"
+          className={`inline-flex items-center gap-1 font-bold text-sm transition-colors ${
+            isActive ? 'text-orange' : 'text-magenta hover:text-orange'
+          }`}
+        >
+          {item.label}
+          <ChevronDown size={14} strokeWidth={2.5} className="transition-transform duration-200 group-hover:rotate-180" />
+        </button>
+      )}
+
+      {/* Panel (pt bridges the hover gap so the menu doesn't flicker) */}
+      <div className="absolute left-1/2 -translate-x-1/2 top-full pt-4 z-50 opacity-0 invisible translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0">
+        <div className="min-w-[210px] bg-white rounded-2xl shadow-xl border-2 border-pink/15 p-2">
+          {item.items.map((sub) => (
+            <NavLink
+              key={sub.to}
+              to={sub.to}
+              className={({ isActive: linkActive }) =>
+                `block px-4 py-2.5 rounded-xl text-sm font-bold transition-colors ${
+                  linkActive ? 'text-orange bg-sun/40' : 'text-magenta hover:text-orange hover:bg-sun/30'
+                }`
+              }
+            >
+              {sub.label}
+            </NavLink>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -55,21 +120,25 @@ export default function Nav() {
             </span>
           </Link>
 
-          <div className="hidden md:flex items-center space-x-8 bg-sun/30 px-6 py-2.5 rounded-full border border-gold/20">
-            {links.map((l) => (
-              <NavLink
-                key={l.to}
-                to={l.to}
-                end={l.to === '/'}
-                className={({ isActive }) =>
-                  `font-bold text-sm transition-colors ${
-                    isActive ? 'text-orange' : 'text-magenta hover:text-orange'
-                  }`
-                }
-              >
-                {l.label}
-              </NavLink>
-            ))}
+          <div className="hidden md:flex items-center space-x-7 bg-sun/30 px-6 py-2.5 rounded-full border border-gold/20">
+            {navItems.map((item) =>
+              item.items ? (
+                <DesktopDropdown key={item.label} item={item} />
+              ) : (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  end={item.to === '/'}
+                  className={({ isActive }) =>
+                    `font-bold text-sm transition-colors ${
+                      isActive ? 'text-orange' : 'text-magenta hover:text-orange'
+                    }`
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              )
+            )}
           </div>
 
           {user ? (
@@ -115,18 +184,46 @@ export default function Nav() {
       </div>
 
       {isMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-magenta text-white pt-32 px-8 flex flex-col gap-8 md:hidden">
-          {links.map((l) => (
-            <NavLink
-              key={l.to}
-              to={l.to}
-              end={l.to === '/'}
-              onClick={() => setIsMenuOpen(false)}
-              className="font-display text-4xl border-b border-white/20 pb-4"
-            >
-              {l.label}
-            </NavLink>
-          ))}
+        <div className="fixed inset-0 z-40 bg-magenta text-white pt-32 px-8 pb-12 flex flex-col gap-6 md:hidden overflow-y-auto">
+          {navItems.map((item) =>
+            item.items ? (
+              <div key={item.label} className="border-b border-white/20 pb-5">
+                {item.to ? (
+                  <NavLink
+                    to={item.to}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="font-display text-4xl block mb-4"
+                  >
+                    {item.label}
+                  </NavLink>
+                ) : (
+                  <p className="font-display text-4xl mb-4">{item.label}</p>
+                )}
+                <div className="flex flex-col gap-4 pl-1">
+                  {item.items.map((sub) => (
+                    <NavLink
+                      key={sub.to}
+                      to={sub.to}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="text-2xl font-bold text-white/85"
+                    >
+                      {sub.label}
+                    </NavLink>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.to === '/'}
+                onClick={() => setIsMenuOpen(false)}
+                className="font-display text-4xl border-b border-white/20 pb-5"
+              >
+                {item.label}
+              </NavLink>
+            )
+          )}
           {user ? (
             <>
               <NavLink
@@ -148,7 +245,7 @@ export default function Nav() {
               <NavLink
                 to="/login"
                 onClick={() => setIsMenuOpen(false)}
-                className="font-display text-3xl border-b border-white/20 pb-4"
+                className="font-display text-3xl border-b border-white/20 pb-5"
               >
                 Sign in
               </NavLink>

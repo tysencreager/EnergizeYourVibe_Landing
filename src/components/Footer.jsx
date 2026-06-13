@@ -48,6 +48,7 @@ export default function Footer() {
               <li><Link to="/pillars" className="hover:text-sun transition-colors">7 Pillars</Link></li>
               <li><Link to="/eyv-method" className="hover:text-sun transition-colors">EYV Method</Link></li>
               <li><Link to="/events" className="hover:text-sun transition-colors">Events</Link></li>
+              <li><Link to="/shop" className="hover:text-sun transition-colors">Shop</Link></li>
               <li><Link to="/faq" className="hover:text-sun transition-colors">FAQ</Link></li>
               <li><Link to="/membership" className="hover:text-sun transition-colors">Membership</Link></li>
             </ul>

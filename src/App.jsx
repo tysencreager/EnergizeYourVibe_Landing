@@ -7,6 +7,7 @@ import Pillars from './pages/Pillars.jsx';
 import EyvMethod from './pages/EyvMethod.jsx';
 import Faq from './pages/Faq.jsx';
 import Events from './pages/Events.jsx';
+import Shop from './pages/Shop.jsx';
 import Membership from './pages/Membership.jsx';
 import Terms from './pages/Terms.jsx';
 import Privacy from './pages/Privacy.jsx';
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/eyv-method" element={<EyvMethod />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/events" element={<Events />} />
+        <Route path="/shop" element={<Shop />} />
         <Route path="/membership" element={<Membership />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
