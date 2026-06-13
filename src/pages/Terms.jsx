@@ -32,9 +32,9 @@ export default function Terms() {
         then-current standard rate.
       </p>
       <p>
-        Beta Vibe members who join during the launch window (May 18 – June 1, 2026)
-        receive two months for the price of one (June and July combined as the first
-        month), with the next payment scheduled for August 1, 2026.
+        Beta Vibe members who join during the launch window (June 18 – July 1, 2026)
+        receive two months for the price of one (July and August combined as the first
+        month), with the next payment scheduled for September 1, 2026.
       </p>
 
       <h3>90-Day Commitment</h3>

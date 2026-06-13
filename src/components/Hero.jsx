@@ -5,17 +5,14 @@ export default function Hero() {
   return (
     <section className="relative z-10 pt-40 pb-16 md:pt-72 md:pb-32 px-5 md:px-6 overflow-hidden bg-sun">
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <video
+        <img
           className="absolute inset-0 w-full h-full object-cover"
-          src="/assets/eyv-header-video.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          poster="/assets/jenn-headshot-2.png"
+          src="/assets/jenn-headshot-2.png"
+          alt=""
+          aria-hidden="true"
+          fetchPriority="high"
         />
-        {/* Soft colorwash so the video reads */}
+        {/* Soft colorwash so the image reads */}
         <div className="absolute inset-0 hero-video-overlay" />
         {/* Dark-to-light radial vignette centered on the text for contrast */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(60,10,30,0.32)_0%,rgba(60,10,30,0.12)_45%,transparent_75%)]" />
