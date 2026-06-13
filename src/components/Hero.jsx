@@ -7,7 +7,7 @@ export default function Hero() {
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <img
           className="absolute inset-0 w-full h-full object-cover"
-          src="/assets/jenn-headshot-2.png"
+          src="/assets/new-header.png"
           alt=""
           aria-hidden="true"
           fetchPriority="high"
