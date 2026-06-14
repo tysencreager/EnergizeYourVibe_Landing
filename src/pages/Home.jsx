@@ -15,7 +15,17 @@ export default function Home() {
 
   useEffect(() => {
     if (!hash) return;
-    const el = document.querySelector(hash);
+    // Only treat the hash as a section anchor if it looks like one. Supabase
+    // and other auth flows put non-selector data in the hash (e.g.
+    // `#access_token=...&type=magiclink`), and passing that to querySelector
+    // throws SyntaxError, which crashes the whole React tree.
+    if (!/^#[\w-]+$/.test(hash)) return;
+    let el = null;
+    try {
+      el = document.querySelector(hash);
+    } catch {
+      return;
+    }
     if (el) {
       setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
     }
