@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Sparkles, RotateCcw } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Sparkles, RotateCcw } from 'lucide-react';
 import Blob from '../components/Blob.jsx';
 import Sunburst from '../components/Sunburst.jsx';
 import { pillars, pillarColorClasses } from '../data/pillars.js';
@@ -19,15 +19,35 @@ const bandToneClasses = {
   attention: 'bg-orange/10 text-orange border-orange/30',
 };
 
+// Every statement flattened into one sequence for the card-by-card flow.
+const flatStatements = assessmentPillars.flatMap((pillar) =>
+  pillar.statements.map((text, statementIndex) => ({
+    pillarKey: pillar.key,
+    statementIndex,
+    text,
+    perPillarCount: pillar.statements.length,
+  }))
+);
+const totalStatements = flatStatements.length;
+
+// The 1–5 buttons grow with the rating so the scale reads at a glance.
+const scaleSizes = [
+  'w-10 h-10 text-sm',
+  'w-11 h-11 text-sm',
+  'w-12 h-12 text-base',
+  'w-[3.25rem] h-[3.25rem] text-base',
+  'w-14 h-14 text-lg',
+];
+
 export default function Assessment() {
   // answers shape: { [pillarKey]: { [statementIndex]: 1..5 } }
   const [answers, setAnswers] = useState({});
+  const [started, setStarted] = useState(false);
+  // current ranges 0..totalStatements; the final value shows the completion card.
+  const [current, setCurrent] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  const advanceTimer = useRef(null);
 
-  const totalStatements = assessmentPillars.reduce(
-    (sum, p) => sum + p.statements.length,
-    0
-  );
   const answeredCount = useMemo(
     () =>
       Object.values(answers).reduce(
@@ -60,18 +80,58 @@ export default function Assessment() {
     return sorted.filter((p) => p.total === lowest).slice(0, 2).map((p) => p.key);
   }, [results]);
 
-  function setAnswer(pillarKey, statementIndex, value) {
+  const currentAnswer =
+    current < totalStatements
+      ? answers[flatStatements[current].pillarKey]?.[
+          flatStatements[current].statementIndex
+        ]
+      : undefined;
+
+  function goTo(index) {
+    clearTimeout(advanceTimer.current);
+    setCurrent(Math.max(0, Math.min(index, totalStatements)));
+  }
+
+  function setAnswer(value) {
+    if (current >= totalStatements) return;
+    const { pillarKey, statementIndex } = flatStatements[current];
     setAnswers((prev) => ({
       ...prev,
       [pillarKey]: { ...(prev[pillarKey] ?? {}), [statementIndex]: value },
     }));
+    // A beat to see the selection land, then flow to the next statement.
+    clearTimeout(advanceTimer.current);
+    advanceTimer.current = setTimeout(() => {
+      setCurrent((c) => Math.min(c + 1, totalStatements));
+    }, 280);
   }
+
+  useEffect(() => () => clearTimeout(advanceTimer.current), []);
+
+  // Keyboard flow: 1–5 to answer, arrows to move between statements.
+  useEffect(() => {
+    if (!started || submitted) return;
+    function onKey(e) {
+      if (e.target.closest('input, textarea')) return;
+      if (e.key >= '1' && e.key <= '5' && current < totalStatements) {
+        setAnswer(Number(e.key));
+      } else if (e.key === 'ArrowLeft') {
+        goTo(current - 1);
+      } else if (e.key === 'ArrowRight' && currentAnswer !== undefined) {
+        goTo(current + 1);
+      }
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  });
 
   function handleSubmit() {
     if (!allAnswered) {
-      // Jump to the first unanswered statement so it's obvious what's left.
-      const firstMissing = document.querySelector('[data-unanswered="true"]');
-      firstMissing?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Jump back to the first unanswered statement.
+      const firstMissing = flatStatements.findIndex(
+        (s) => answers[s.pillarKey]?.[s.statementIndex] === undefined
+      );
+      if (firstMissing !== -1) goTo(firstMissing);
       return;
     }
     setSubmitted(true);
@@ -80,6 +140,8 @@ export default function Assessment() {
 
   function handleReset() {
     setAnswers({});
+    setStarted(false);
+    setCurrent(0);
     setSubmitted(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -127,62 +189,50 @@ export default function Assessment() {
         <div className="max-w-3xl mx-auto relative z-10">
           {submitted ? (
             <Results results={results} focusKeys={focusKeys} onReset={handleReset} />
+          ) : !started ? (
+            <IntroCard onStart={() => setStarted(true)} />
           ) : (
             <>
-              {/* How it works */}
-              <div className="bento-card glass border-2 border-pink/20 p-6 sm:p-8 mb-10">
-                <h2 className="text-2xl md:text-3xl font-display text-gray-900 mb-3">
-                  How it <i className="text-pink">works.</i>
-                </h2>
-                <p className="text-gray-700 font-medium leading-relaxed mb-4">
-                  Rate each statement from 1 to 5 based on how true it feels for you right now.
-                </p>
-                <ul className="grid sm:grid-cols-2 gap-2">
-                  {assessmentScale.map((s) => (
-                    <li
-                      key={s.value}
-                      className="flex items-center gap-3 text-sm font-medium text-gray-700"
-                    >
-                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-pink/10 text-magenta font-bold shrink-0">
-                        {s.value}
-                      </span>
-                      {s.label}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <ProgressBar answers={answers} answeredCount={answeredCount} />
 
-              {/* Pillar blocks */}
-              <div className="space-y-8">
-                {assessmentPillars.map((pillar) => (
-                  <PillarBlock
-                    key={pillar.key}
-                    pillar={pillar}
-                    answers={answers[pillar.key] ?? {}}
-                    onAnswer={setAnswer}
-                  />
-                ))}
-              </div>
+              {current < totalStatements ? (
+                <QuestionCard
+                  key={current}
+                  entry={flatStatements[current]}
+                  value={currentAnswer}
+                  onAnswer={setAnswer}
+                />
+              ) : (
+                <CompletionCard
+                  allAnswered={allAnswered}
+                  onSubmit={handleSubmit}
+                  onBack={() => goTo(totalStatements - 1)}
+                />
+              )}
 
-              {/* Submit */}
-              <div className="mt-10 text-center">
-                <p className="text-sm font-bold uppercase tracking-[0.2em] text-magenta mb-4">
-                  {answeredCount} / {totalStatements} answered
-                </p>
-                <button
-                  type="button"
-                  onClick={handleSubmit}
-                  disabled={!allAnswered}
-                  className="inline-flex items-center gap-3 bg-pink text-white py-5 px-10 rounded-full font-bold uppercase tracking-widest text-base md:text-lg hover:bg-magenta transition-colors shadow-[0_10px_30px_rgba(226,46,100,0.35)] disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  See my results
-                </button>
-                {!allAnswered && (
-                  <p className="text-xs text-gray-500 font-medium mt-3">
-                    Answer every statement to reveal your pillar breakdown.
+              {current < totalStatements && (
+                <div className="flex items-center justify-between mt-8">
+                  <button
+                    type="button"
+                    onClick={() => goTo(current - 1)}
+                    disabled={current === 0}
+                    className="inline-flex items-center gap-2 text-magenta font-bold uppercase tracking-widest text-xs hover:text-pink transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                  >
+                    <ArrowLeft size={14} strokeWidth={2} /> Back
+                  </button>
+                  <p className="hidden sm:block text-[11px] text-gray-400 font-medium">
+                    Tip: press 1–5 to answer
                   </p>
-                )}
-              </div>
+                  <button
+                    type="button"
+                    onClick={() => goTo(current + 1)}
+                    disabled={currentAnswer === undefined}
+                    className="inline-flex items-center gap-2 text-magenta font-bold uppercase tracking-widest text-xs hover:text-pink transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                  >
+                    Next <ArrowRight size={14} strokeWidth={2} />
+                  </button>
+                </div>
+              )}
             </>
           )}
         </div>
@@ -191,55 +241,166 @@ export default function Assessment() {
   );
 }
 
-function PillarBlock({ pillar, answers, onAnswer }) {
-  const meta = pillarMeta[pillar.key];
-  const palette = pillarColorClasses[meta.color] ?? pillarColorClasses.pink;
-
+function IntroCard({ onStart }) {
   return (
-    <div className="bento-card glass border-2 border-pink/15 p-6 sm:p-8">
-      <span
-        className={`inline-block text-[10px] font-bold uppercase tracking-[0.3em] ${palette.chip} px-3 py-1.5 rounded-full mb-4`}
-      >
-        {meta.subtitle}
-      </span>
-      <h3 className="text-2xl md:text-3xl font-display text-gray-900">{meta.name}</h3>
-      <p className="text-pink italic font-serif text-base mb-6">{pillar.focus}</p>
+    <div className="bento-card glass border-2 border-pink/20 p-7 sm:p-10 text-center">
+      <h2 className="text-2xl md:text-3xl font-display text-gray-900 mb-3">
+        How it <i className="text-pink">works.</i>
+      </h2>
+      <p className="text-gray-700 font-medium leading-relaxed mb-6 max-w-xl mx-auto">
+        You’ll see one statement at a time — {totalStatements} in all, a quick minute or
+        two per pillar. Rate how true each one feels for you right now. No overthinking;
+        your first instinct is usually the honest one.
+      </p>
+      <ul className="inline-grid sm:grid-cols-2 gap-x-10 gap-y-2 text-left mb-8">
+        {assessmentScale.map((s) => (
+          <li key={s.value} className="flex items-center gap-3 text-sm font-medium text-gray-700">
+            <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-pink/10 text-magenta font-bold shrink-0">
+              {s.value}
+            </span>
+            {s.label}
+          </li>
+        ))}
+      </ul>
+      <div>
+        <button
+          type="button"
+          onClick={onStart}
+          className="inline-flex items-center gap-3 bg-pink text-white py-4 px-10 rounded-full font-bold uppercase tracking-widest text-base hover:bg-magenta transition-colors shadow-[0_10px_30px_rgba(226,46,100,0.35)]"
+        >
+          Begin <ArrowRight size={18} />
+        </button>
+      </div>
+    </div>
+  );
+}
 
-      <div className="space-y-5">
-        {pillar.statements.map((statement, idx) => {
-          const value = answers[idx];
-          const unanswered = value === undefined;
+function ProgressBar({ answers, answeredCount }) {
+  return (
+    <div className="mb-8">
+      <div className="flex gap-1.5 mb-2">
+        {assessmentPillars.map((pillar) => {
+          const meta = pillarMeta[pillar.key];
+          const palette = pillarColorClasses[meta.color] ?? pillarColorClasses.pink;
+          const done = Object.keys(answers[pillar.key] ?? {}).length;
+          const pct = (done / pillar.statements.length) * 100;
           return (
             <div
-              key={idx}
-              data-unanswered={unanswered ? 'true' : undefined}
-              className="border-b border-pink/10 pb-5 last:border-0 last:pb-0"
+              key={pillar.key}
+              className="flex-1 h-2 rounded-full bg-white/70 overflow-hidden"
+              title={meta.name}
             >
-              <p className="text-gray-800 font-medium mb-3">{statement}</p>
-              <div className="flex flex-wrap gap-2">
-                {assessmentScale.map((s) => {
-                  const selected = value === s.value;
-                  return (
-                    <button
-                      key={s.value}
-                      type="button"
-                      onClick={() => onAnswer(pillar.key, idx, s.value)}
-                      aria-pressed={selected}
-                      title={s.label}
-                      className={`w-11 h-11 rounded-full font-bold text-sm border-2 transition-all ${
-                        selected
-                          ? 'bg-pink text-white border-pink shadow-md scale-105'
-                          : 'bg-white text-gray-600 border-gray-200 hover:border-pink/50'
-                      }`}
-                    >
-                      {s.value}
-                    </button>
-                  );
-                })}
-              </div>
+              <div
+                className={`h-full rounded-full ${palette.bg} transition-all duration-300`}
+                style={{ width: `${pct}%` }}
+              />
             </div>
           );
         })}
+      </div>
+      <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-magenta text-right">
+        {answeredCount} / {totalStatements}
+      </p>
+    </div>
+  );
+}
+
+function QuestionCard({ entry, value, onAnswer }) {
+  const meta = pillarMeta[entry.pillarKey];
+  const palette = pillarColorClasses[meta.color] ?? pillarColorClasses.pink;
+
+  return (
+    <div
+      className="bento-card glass border-2 border-pink/15 p-7 sm:p-10 text-center"
+      style={{ animation: 'fade-up 0.35s ease both' }}
+    >
+      <div className="flex items-center justify-center gap-3 mb-6 flex-wrap">
+        <span
+          className={`inline-block text-[10px] font-bold uppercase tracking-[0.3em] ${palette.chip} px-3 py-1.5 rounded-full`}
+        >
+          {meta.name} · {meta.subtitle}
+        </span>
+        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
+          {entry.statementIndex + 1} of {entry.perPillarCount}
+        </span>
+      </div>
+
+      <p className="text-2xl md:text-[2rem] leading-snug font-display text-gray-900 mb-10 min-h-[4.5rem] flex items-center justify-center">
+        {entry.text}
+      </p>
+
+      <div
+        className="flex items-end justify-center gap-2 sm:gap-4"
+        role="radiogroup"
+        aria-label="How true is this for you?"
+      >
+        {assessmentScale.map((s, i) => {
+          const selected = value === s.value;
+          return (
+            <button
+              key={s.value}
+              type="button"
+              role="radio"
+              aria-checked={selected}
+              onClick={() => onAnswer(s.value)}
+              className="group flex flex-col items-center gap-2 w-14 sm:w-16"
+            >
+              <span
+                className={`inline-flex items-center justify-center rounded-full font-bold border-2 transition-all duration-150 ${scaleSizes[i]} ${
+                  selected
+                    ? `${palette.bg} text-white border-transparent shadow-lg scale-110`
+                    : 'bg-white text-gray-600 border-gray-200 group-hover:border-pink group-hover:text-magenta group-hover:-translate-y-1'
+                }`}
+              >
+                {s.value}
+              </span>
+              <span
+                className={`text-[9px] sm:text-[10px] font-semibold leading-tight transition-colors ${
+                  selected ? 'text-magenta' : 'text-gray-400 group-hover:text-gray-600'
+                }`}
+              >
+                {s.label}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function CompletionCard({ allAnswered, onSubmit, onBack }) {
+  return (
+    <div
+      className="bento-card glass border-2 border-pink/20 p-8 sm:p-12 text-center"
+      style={{ animation: 'fade-up 0.35s ease both' }}
+    >
+      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-pink/10 mb-6">
+        <Sparkles className="text-pink" size={32} strokeWidth={1.75} />
+      </div>
+      <h2 className="text-3xl md:text-4xl font-display text-gray-900 mb-3">
+        That’s all <i className="text-pink">{totalStatements} of them.</i>
+      </h2>
+      <p className="text-gray-700 font-medium leading-relaxed mb-8 max-w-md mx-auto">
+        {allAnswered
+          ? 'Beautifully done. Ready to see where your energy is thriving — and where it’s asking for attention?'
+          : 'Almost there — a few statements are still unanswered. We’ll take you back to the first one.'}
+      </p>
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <button
+          type="button"
+          onClick={onSubmit}
+          className="inline-flex items-center gap-3 bg-pink text-white py-5 px-10 rounded-full font-bold uppercase tracking-widest text-base md:text-lg hover:bg-magenta transition-colors shadow-[0_10px_30px_rgba(226,46,100,0.35)]"
+        >
+          {allAnswered ? 'See my results' : 'Finish the rest'}
+        </button>
+        <button
+          type="button"
+          onClick={onBack}
+          className="text-magenta font-bold uppercase tracking-widest text-xs hover:text-pink transition-colors"
+        >
+          Review answers
+        </button>
       </div>
     </div>
   );
