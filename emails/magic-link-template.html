@@ -1,0 +1,36 @@
+<!-- Supabase Magic Link email template.
+     Paste into: Supabase → Authentication → Email Templates → Magic Link.
+     {{ .ConfirmationURL }} is Supabase's placeholder for the sign-in link.
+     Suggested subject: Your one-tap sign-in link 💗 -->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#FDF3E3; padding:32px 12px;">
+  <tr>
+    <td align="center">
+      <table role="presentation" width="480" cellpadding="0" cellspacing="0" style="max-width:480px;">
+        <tr>
+          <td align="center" style="background-color:#E22E64; background:linear-gradient(135deg,#B71556 0%,#E22E64 60%,#F26B38 100%); border-radius:24px 24px 0 0; padding:40px 36px 32px;">
+            <p style="margin:0 0 12px; font-family:Arial,Helvetica,sans-serif; font-size:11px; letter-spacing:4px; text-transform:uppercase; color:#FDE08B; font-weight:bold;">Energize Your Vibe</p>
+            <h1 style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:30px; line-height:38px; color:#ffffff; font-weight:normal;">Welcome back, <em style="color:#FDE08B;">sister.</em></h1>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" style="background-color:#ffffff; border-radius:0 0 24px 24px; padding:36px;">
+            <p style="margin:0 0 24px; font-family:Arial,Helvetica,sans-serif; font-size:16px; line-height:26px; color:#3d3d3d;">
+              Here's your one-tap sign-in link — no password, no fuss. It expires in an hour, so don't leave it hanging. 💗
+            </p>
+            <a href="{{ .ConfirmationURL }}" style="display:inline-block; background-color:#B71556; color:#ffffff; font-family:Arial,Helvetica,sans-serif; font-size:15px; font-weight:bold; letter-spacing:2px; text-transform:uppercase; text-decoration:none; padding:16px 42px; border-radius:999px;">Sign me in</a>
+            <p style="margin:28px 0 0; font-family:Arial,Helvetica,sans-serif; font-size:13px; line-height:21px; color:#9a7d6b;">
+              Didn't request this? You can safely ignore this email — nobody can sign in without it.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" style="padding:24px 16px 4px;">
+            <p style="margin:0; font-family:Arial,Helvetica,sans-serif; font-size:12px; line-height:19px; color:#9a7d6b;">
+              Energize Your Vibe · <a href="https://www.energizeyourvibe.com" style="color:#B71556;">energizeyourvibe.com</a>
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
