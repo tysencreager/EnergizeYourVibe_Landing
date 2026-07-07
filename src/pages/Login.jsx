@@ -3,7 +3,7 @@ import { Mail, Sparkles, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import Blob from '../components/Blob.jsx';
 import Sunburst from '../components/Sunburst.jsx';
-import { supabase } from '../lib/supabase.js';
+import { supabase, isSupabaseConfigured } from '../lib/supabase.js';
 
 export default function Login() {
   const location = useLocation();
@@ -16,6 +16,15 @@ export default function Login() {
   async function handleSubmit(e) {
     e.preventDefault();
     if (status === 'submitting') return;
+
+    if (!isSupabaseConfigured) {
+      setStatus('error');
+      setErrorMessage(
+        'Sign-in is not configured on this deployment: the Supabase environment variables (VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY) are missing from the build.'
+      );
+      return;
+    }
+
     setStatus('submitting');
     setErrorMessage('');
 

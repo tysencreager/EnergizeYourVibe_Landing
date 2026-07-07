@@ -5,13 +5,19 @@ export default function Hero() {
   return (
     <section className="relative z-10 pt-40 pb-16 md:pt-72 md:pb-32 px-5 md:px-6 overflow-hidden bg-sun">
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <img
+        <video
           className="absolute inset-0 w-full h-full object-cover"
-          src="/assets/new-header.png"
-          alt=""
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          poster="/assets/eyv-header-poster.jpg"
           aria-hidden="true"
-          fetchPriority="high"
-        />
+        >
+          <source src="/assets/eyv-header-video.webm" type="video/webm" />
+          <source src="/assets/eyv-header-video.mp4" type="video/mp4" />
+        </video>
         {/* Soft colorwash so the image reads */}
         <div className="absolute inset-0 hero-video-overlay" />
         {/* Dark-to-light radial vignette centered on the text for contrast */}
@@ -42,7 +48,7 @@ export default function Hero() {
           </span>
         </h1>
 
-        <p className="text-sm md:text-xl text-white mb-6 md:mb-8 max-w-2xl leading-snug font-medium bg-black/25 backdrop-blur-md rounded-2xl px-4 md:px-5 py-3 border border-white/20 shadow-lg">
+        <p className="text-sm md:text-xl text-white mb-6 md:mb-8 max-w-2xl leading-snug font-medium bg-pink/70 backdrop-blur-md rounded-2xl px-4 md:px-5 py-3 border border-white/25 shadow-lg">
           Energize Your Vibe is a transformational global sisterhood rooted in self-love, confidence, and authentic connection.
           <span className="text-sun font-semibold"> We lead with love. We live with intention. We have fun.</span>
         </p>
