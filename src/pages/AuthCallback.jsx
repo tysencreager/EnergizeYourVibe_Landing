@@ -10,6 +10,16 @@ export default function AuthCallback() {
   useEffect(() => {
     let cancelled = false;
 
+    // Supabase reports link failures (expired, already used, misconfigured
+    // redirect URL) as error params in the URL hash — surface them instead of
+    // silently retrying getSession, which just times out into a generic error.
+    const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+    const hashError = hashParams.get('error_description') || hashParams.get('error');
+    if (hashError) {
+      setErrorMessage(hashError.replace(/\+/g, ' '));
+      return;
+    }
+
     async function finish() {
       // Supabase JS auto-detects the session in the URL when detectSessionInUrl
       // is true. We just need to wait until it has parsed it.
