@@ -93,7 +93,15 @@ export default function Footer() {
             © {year} Energize Your Vibe, LLC. All rights reserved.
           </p>
           <p className="text-white/50 font-medium uppercase tracking-[0.3em]">
-            Made with <span className="text-sun">love</span> in Draper, Utah.
+            Site crafted by{' '}
+            <a
+              href="https://www.elevategrowth.solutions/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sun hover:text-white transition-colors underline underline-offset-4 decoration-sun/40"
+            >
+              Elevate Growth Solutions
+            </a>
           </p>
         </div>
       </div>
