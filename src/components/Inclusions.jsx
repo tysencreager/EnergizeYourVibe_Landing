@@ -12,6 +12,8 @@ import {
   Gift,
   Feather,
   ArrowRight,
+  BookOpen,
+  PhoneCall,
 } from 'lucide-react';
 import Blob from './Blob.jsx';
 import GradientBarList from './GradientBarList.jsx';
@@ -23,6 +25,7 @@ const itemsLeft = [
   { icon: <Sparkles />, text: 'Monthly 7 Pillar support and growth calls with Energize Your Vibe expert coaches (join as needed)', accent: 'orange' },
   { icon: <MessageSquareText />, text: 'Texts: Stay connected with uplifting texts during the week, filled with inspiration, motivation, self-love reminders, and simple ways to take action.', accent: 'pink' },
   { icon: <Heart />, text: 'Cheerleader in your pocket', accent: 'magenta' },
+  { icon: <BookOpen />, text: 'Resource library in your member portal', accent: 'gold' },
 ];
 
 const itemsRight = [
@@ -31,6 +34,7 @@ const itemsRight = [
   { icon: <Sun />, text: 'Affirmations & Vibe Checks', accent: 'orange' },
   { icon: <MessageCircleHeart />, text: 'Private Facebook Community', accent: 'pink' },
   { icon: <Gift />, text: 'Personalized Welcome Gift in the Mail', accent: 'magenta' },
+  { icon: <PhoneCall />, text: 'The Energize Your Vibe Hotline', accent: 'pink' },
 ];
 
 export default function Inclusions() {

@@ -49,7 +49,7 @@ export default function Hero() {
         </h1>
 
         <p className="text-sm md:text-xl text-white mb-6 md:mb-8 max-w-2xl leading-snug font-medium bg-pink/70 backdrop-blur-md rounded-2xl px-4 md:px-5 py-3 border border-white/25 shadow-lg">
-          Energize Your Vibe is a transformational global sisterhood rooted in self-love, confidence, and authentic connection.
+          Energize Your Vibe is a high vibin&rsquo; community for women who want to connect and build meaningful relationships.
           <span className="text-sun font-semibold"> We lead with love. We live with intention. We have fun.</span>
         </p>
 

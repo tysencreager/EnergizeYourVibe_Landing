@@ -24,7 +24,7 @@ export default function About() {
               The heart behind <span className="font-serif italic text-gradient font-semibold">Energize Your Vibe.</span>
             </h1>
             <p className="text-lg md:text-xl text-magenta/90 font-medium leading-relaxed mb-6">
-              Jenn is the founder of Energize Your Vibe, a transformational global sisterhood rooted in self-love, confidence, and authentic connection. She built this community for women who want more: real tools, real support, and a place to simply be themselves.
+              Jenn is the founder of Energize Your Vibe, a high vibin&rsquo; community for women who want to connect and build meaningful relationships. For women who want to play, grow, and be real — who don&rsquo;t want to do life alone.
             </p>
             <Link
               to="/membership"
@@ -172,7 +172,7 @@ export default function About() {
               <div className="absolute inset-0 md:bg-gradient-to-r md:from-magenta/30 md:via-transparent md:to-magenta" />
               <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-sm text-magenta text-[10px] font-bold uppercase tracking-[0.3em] shadow-lg">
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-pink" />
-                Rise together
+                Find your people
               </div>
             </div>
 
@@ -216,6 +216,76 @@ export default function About() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* OUR MISSION — Jenn's words */}
+      <section className="relative py-20 md:py-28 px-5 md:px-6 bg-white overflow-hidden">
+        <Blob tone="sun" size="xl" className="-top-40 -left-40" opacity={25} slow />
+        <Blob tone="pink" size="lg" className="bottom-0 -right-32" opacity={12} />
+        <div className="max-w-3xl mx-auto relative z-10">
+          <div className="text-center mb-12">
+            <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-pink mb-4">
+              Our Mission
+            </p>
+            <h2 className="text-4xl md:text-6xl font-display text-gray-900 leading-tight">
+              Life is meant to be <i className="text-gradient">fully lived.</i>
+            </h2>
+          </div>
+
+          <div className="space-y-6 text-lg md:text-xl text-gray-700 font-medium leading-relaxed">
+            <p>
+              At Energize Your Vibe, we believe life is meant to be lived fully, with heart,
+              connection, and energy that lights you up from the inside out.
+            </p>
+            <p>
+              We&rsquo;re a global community of women who choose to live intentionally, embrace
+              purpose, and make joy a way of life. Women who encourage one another, celebrate
+              one another, and grow stronger together. Women who know they don&rsquo;t have to do
+              life alone.
+            </p>
+            <p>
+              We&rsquo;re committed to showing up through every season of life. Whether you&rsquo;re
+              celebrating a victory or walking through a difficult chapter, you&rsquo;ll find women
+              who will stand beside you with love, compassion, encouragement, and genuine
+              support.
+            </p>
+            <p>
+              We believe confidence and humility can exist together. We honor our truth, remain
+              open to learning, and know that when women choose love, authenticity, and
+              connection, the impact reaches far beyond ourselves.
+            </p>
+            <p>
+              Inside our community, you&rsquo;ll find meaningful relationships that go beyond the
+              screen. Through online gatherings, local meetups, retreats, seminars, and
+              unforgettable experiences, we create opportunities to laugh together, learn
+              together, and build friendships that last.
+            </p>
+            <p>
+              You&rsquo;ll also discover practical tools to help you navigate the areas of life that
+              matter most. Our 7 Pillars framework, resource library, expert-led calls,
+              community support, daily inspiration, texts, emails, social media, and the
+              Energize Your Vibe Hotline are all designed to help you strengthen your life one
+              step at a time.
+            </p>
+            <p>
+              Life will always bring challenges. None of us are exempt. But with the right
+              people beside you and the right tools within you, those challenges can become
+              opportunities to grow stronger, wiser, and more resilient.
+            </p>
+            <p>
+              This is your place to reconnect with yourself, build lasting friendships, and
+              create a life that feels energized, intentional, and fully lived.
+            </p>
+          </div>
+
+          <div className="mt-12 text-center bg-soft-dawn rounded-3xl border-2 border-pink/15 p-8 md:p-10">
+            <p className="font-display text-2xl md:text-4xl text-magenta leading-snug">
+              Because you matter.<br />
+              You are loved.<br />
+              <i className="text-pink">And life is meant to be fully expressed.</i>
+            </p>
           </div>
         </div>
       </section>
