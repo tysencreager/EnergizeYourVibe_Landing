@@ -2,7 +2,7 @@ const phrases = [
   'Energize your vibe',
   'Empower your energy',
   'Transform your life',
-  'Rise together',
+  'Find your people',
 ];
 
 export default function Marquee() {

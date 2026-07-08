@@ -3,8 +3,8 @@ import Blob from './Blob.jsx';
 import Reveal from './Reveal.jsx';
 
 const pillars = [
-  { label: 'Online Haven', desc: 'Select gatherings, events, soulful service, retreats and local spaces that bring us together.' },
-  { label: 'In-Person Magic', desc: 'Select gatherings, events, soulful service, retreats and local spaces that bring us together.' },
+  { label: 'Online Haven', desc: 'Online gatherings, expert-led calls, and daily inspiration that meet you wherever you are.' },
+  { label: 'In-Person Magic', desc: 'Local meetups, retreats, seminars, and unforgettable experiences that bring us together.' },
   { label: 'Truly Personal', desc: 'We know your name. We root for you. We genuinely care.' },
 ];
 

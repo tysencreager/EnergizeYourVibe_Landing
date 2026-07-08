@@ -32,7 +32,7 @@ export default function Footer() {
             </div>
           </Link>
           <p className="text-white/80 font-medium leading-relaxed max-w-2xl text-base">
-            A transformational global sisterhood rooted in self-love, confidence, and authentic connection. We lead with love. We live with intention. We have fun.
+            A high vibin’ community for women who want to connect and build meaningful relationships. We lead with love. We live with intention. We have fun.
           </p>
         </div>
 
