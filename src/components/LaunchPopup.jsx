@@ -1,9 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { X, ArrowRight, Calendar } from 'lucide-react';
+import { X, ArrowRight, Calendar, Check } from 'lucide-react';
 import Sunburst from './Sunburst.jsx';
 
-const STORAGE_KEY = 'eyv-launch-popup-dismissed-v1';
+const STORAGE_KEY = 'eyv-launch-popup-dismissed-v2';
+
+const foundingBenefits = [
+  'Lock in the $88 monthly Founding Member rate for life (first 50 members only)',
+  'Your one-time $45 Setup Fee is waived (through July 31)',
+  'Start with the 7 Pillar Assessment and your personalized growth roadmap',
+  'Invitations to local meetups, experiences, and community events',
+  'Access to the member library, daily Lives for Vibes & inspiring texts, monthly calls',
+  'Energize Your Vibe Hotline, podcast, playlists, meditations, affirmations & vibe check-ins',
+  'Private FB Community & personalized welcome gift',
+];
 const OPEN_DELAY_MS = 900;
 
 export default function LaunchPopup() {
@@ -67,7 +77,7 @@ export default function LaunchPopup() {
       />
 
       {/* Card */}
-      <div className="relative w-full max-w-lg overflow-hidden rounded-3xl shadow-2xl border border-white/40 animate-[fade-up_450ms_cubic-bezier(0.16,1,0.3,1)_both]">
+      <div className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto overflow-x-hidden rounded-3xl shadow-2xl border border-white/40 animate-[fade-up_450ms_cubic-bezier(0.16,1,0.3,1)_both]">
         {/* Gradient background + decorative sunburst */}
         <div className="absolute inset-0 bg-gradient-to-br from-magenta via-pink to-orange grain" aria-hidden="true" />
         <Sunburst
@@ -89,28 +99,45 @@ export default function LaunchPopup() {
         <div className="relative z-10 p-7 sm:p-10 text-white text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 border border-white/30 backdrop-blur-md text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] mb-5">
             <Calendar size={12} strokeWidth={1.75} className="text-sun" />
-            Launching July 1, 2026
+            Sign-ups launch July 17 · Community begins August 1
           </div>
 
           <h2
             id="launch-popup-title"
-            className="font-display text-3xl sm:text-4xl leading-[1.05] mb-4"
+            className="font-display text-3xl sm:text-4xl leading-[1.05] mb-3"
           >
-            Step into the sisterhood, <span className="font-serif italic text-sun">at the Beta Vibe rate.</span>
+            Step into the sisterhood, and become a{' '}
+            <span className="font-serif italic text-sun">Founding Member</span> of Energize Your Vibe
           </h2>
 
-          <p className="text-white/95 text-sm sm:text-base font-medium leading-relaxed mb-6">
-            Energize Your Vibe officially launches <span className="font-bold text-sun">July 1, 2026</span>, with membership signup opening <span className="font-bold text-sun">June 18, 2026</span>. The first 50 members lock in the introductory <span className="font-bold text-sun">$88/mo</span> Beta Vibe rate <span className="font-bold text-sun">for life</span>. Once those spots are gone, pricing goes up.
+          <p className="font-serif italic text-sun text-base sm:text-lg mb-4">
+            Build a life you love. You don’t have to do it alone.
           </p>
 
-          <div className="bg-white/10 border border-white/25 rounded-2xl px-5 py-4 mb-7 backdrop-blur-sm">
-            <p className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] text-sun mb-1">
-              Beta Vibe Pricing
+          <p className="text-white/95 text-sm sm:text-base font-medium leading-relaxed mb-6">
+            Support your mind. Strengthen your life. Connect with women who inspire you, cheer you on, and make the journey more fun.
+          </p>
+
+          <div className="bg-white/10 border border-white/25 rounded-2xl px-5 py-4 mb-5 backdrop-blur-sm text-left">
+            <p className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] text-sun mb-3 text-center">
+              Join before August 1 for Founding Member benefits
             </p>
-            <p className="text-sm sm:text-base font-medium">
-              Sign up between June 18 and July 1, 2026 and get 2 months for the price of 1. Your next payment won’t begin until September 1, 2026. Membership includes a 90-day commitment.
-            </p>
+            <ul className="space-y-2">
+              {foundingBenefits.map((benefit, i) => (
+                <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm font-medium leading-snug">
+                  <Check size={15} strokeWidth={2.5} className="text-sun shrink-0 mt-0.5" />
+                  <span>{benefit}</span>
+                </li>
+              ))}
+            </ul>
           </div>
+
+          <p className="text-xs sm:text-sm font-semibold text-sun mb-1">
+            Real tools. Real friendships. Real growth.
+          </p>
+          <p className="text-[11px] sm:text-xs font-medium text-white/85 mb-6">
+            Community begins August 1 · Membership includes a 90-day commitment
+          </p>
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
             <Link
@@ -118,7 +145,7 @@ export default function LaunchPopup() {
               onClick={handleCta}
               className="w-full sm:w-auto bg-sun text-magenta font-bold uppercase tracking-widest text-xs sm:text-sm py-3.5 px-7 rounded-full hover:bg-white transition-colors shadow-lg inline-flex items-center justify-center gap-2"
             >
-              Reserve My Spot <ArrowRight size={16} strokeWidth={1.75} />
+              Become a Founding Member <ArrowRight size={16} strokeWidth={1.75} />
             </Link>
             <button
               type="button"

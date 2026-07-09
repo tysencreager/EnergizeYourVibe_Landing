@@ -144,9 +144,9 @@ export default function Inclusions() {
           </Link>
           <p className="mt-6 inline-flex items-center gap-3 text-pink font-bold text-sm md:text-base bg-pink/10 px-6 py-2.5 rounded-full border border-pink/20">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-pink animate-pulse" />
-            <span className="uppercase tracking-[0.2em] text-xs">Now Open</span>
+            <span className="uppercase tracking-[0.2em] text-xs">Founding Members</span>
             <span className="text-pink/40">|</span>
-            <span>First 50 members lock in $88/mo for life.</span>
+            <span>First 50 members lock in the $88/mo Founding Member rate for life.</span>
           </p>
         </div>
       </div>

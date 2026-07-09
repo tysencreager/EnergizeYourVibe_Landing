@@ -72,7 +72,7 @@ export default function Hero() {
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-pink animate-pulse" />
           <span className="uppercase tracking-[0.2em] text-[10px] md:text-xs">Launch</span>
           <span className="hidden sm:inline text-magenta/40">|</span>
-          <span>First 50 members lock in $88/mo for life. Beta Vibe Deal: two months for the price of one (90-day commitment).</span>
+          <span>Sign-ups launch July 17 · Community begins August 1. First 50 Founding Members lock in $88/mo for life, $45 Setup Fee waived through July 31.</span>
         </p>
       </div>
     </section>
