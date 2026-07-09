@@ -50,14 +50,21 @@ export default function MissionIntro() {
             For women who don&rsquo;t want to <i className="text-gradient">do life alone.</i>
           </h2>
           <p className="text-lg md:text-xl text-gray-700 font-medium leading-relaxed mb-5">
-            The way you move through life begins with the way you experience it. When you
-            become more aware of how you think, feel, respond, and connect, small daily
-            choices begin to shape lasting transformation.
+            Most women spend years piecing together books, podcasts, therapy, coaching,
+            and wellness tools. Energize Your Vibe brings those life-changing principles
+            together in one supportive community where you can learn, practice, and grow
+            &mdash; and, most importantly, connect &amp; play! Live &amp; thrive!
           </p>
-          <p className="text-lg md:text-xl text-gray-600 font-medium leading-relaxed">
-            Find your people. The ones you truly vibe with. The ones who cheer you on,
-            celebrate your wins, lift you through life&rsquo;s challenges, and cultivate
-            positivity and joy together.
+          <p className="text-lg md:text-xl text-gray-600 font-medium leading-relaxed mb-7">
+            Together, we learn. We grow. We laugh. We show up. We create experiences,
+            support one another, and enjoy the journey along the way.
+          </p>
+          <p className="inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm md:text-base font-bold uppercase tracking-[0.2em]">
+            <span className="text-pink">Tools <span className="normal-case font-serif italic tracking-normal">(learn)</span></span>
+            <span className="text-gray-300">·</span>
+            <span className="text-orange">Community <span className="normal-case font-serif italic tracking-normal">(belong)</span></span>
+            <span className="text-gray-300">·</span>
+            <span className="text-magenta">Experiences <span className="normal-case font-serif italic tracking-normal">(live it)</span></span>
           </p>
         </Reveal>
 

@@ -22,19 +22,18 @@ export default function Terms() {
         information you provide is accurate and complete.
       </p>
 
-      <h2>2. Membership &amp; Beta Vibe Pricing</h2>
+      <h2>2. Membership &amp; Founding Member Pricing</h2>
       <p>
         Our membership is a recurring subscription billed monthly unless otherwise
         described at checkout. During our launch period, the first 50 members who join
-        lock in the introductory &ldquo;Beta Vibe&rdquo; rate of $88/month for the
+        lock in the introductory &ldquo;Founding Member&rdquo; rate of $88/month for the
         lifetime of their continuous membership. If membership is cancelled, this
         lifetime rate is forfeited and any future membership will be offered at the
         then-current standard rate.
       </p>
       <p>
-        Beta Vibe members who join during the launch window (June 18 – July 1, 2026)
-        receive two months for the price of one (July and August combined as the first
-        month), with the next payment scheduled for September 1, 2026.
+        Sign-ups launch July 17, 2026, and the community begins August 1, 2026. Founding
+        Members who join through July 31, 2026 have the one-time $45 Setup Fee waived.
       </p>
 
       <h3>90-Day Commitment</h3>
@@ -50,7 +49,7 @@ export default function Terms() {
         Payments are processed by our third-party payment processor (currently Square).
         By providing payment information, you authorize us and our processor to charge
         your chosen payment method for all membership fees, one-time fees (such as the
-        $45 registration fee), retreat fees, and any applicable taxes. If a payment is
+        $45 Setup Fee, where applicable), retreat fees, and any applicable taxes. If a payment is
         declined, we may suspend access until the balance is paid.
       </p>
 
@@ -64,7 +63,7 @@ export default function Terms() {
 
       <h3>Refunds</h3>
       <p>
-        Except where required by applicable law, membership fees, registration fees, and
+        Except where required by applicable law, membership fees, setup fees, and
         retreat deposits are non-refundable. Requests for goodwill adjustments can be
         sent to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> and will be
         reviewed case by case.

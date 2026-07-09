@@ -61,16 +61,16 @@ export default function Membership() {
         <div className="max-w-4xl mx-auto relative z-10 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 border border-white/30 backdrop-blur-md text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] mb-6 text-white">
             <Sparkles size={14} strokeWidth={1.75} className="text-sun" />
-            Launching July 1, 2026
+            Community begins August 1, 2026
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-display text-white leading-tight mb-5 md:mb-6 drop-shadow-md">
-            Membership signup opens{' '}
-            <span className="font-serif italic text-sun">June 18, 2026.</span>
+            Sign-ups launch{' '}
+            <span className="font-serif italic text-sun">July 17, 2026.</span>
           </h1>
 
           <p className="text-lg md:text-xl text-white/95 font-medium max-w-2xl mx-auto leading-relaxed">
-            Doors officially open July 1, 2026. Drop your details below and we’ll send you the link the moment signup goes live on June 18, plus the inside scoop on the first 50 founding member rate.
+            The community begins August 1, 2026. Drop your details below and we’ll send you the link the moment sign-ups go live on July 17, plus the inside scoop on the first 50 Founding Member rate.
           </p>
         </div>
       </section>
@@ -192,10 +192,13 @@ export default function Membership() {
             Already a yes?
           </p>
           <h2 className="text-3xl md:text-5xl font-display text-gray-900 mb-5 leading-tight">
-            Skip the wait. <i className="text-pink">Reserve your spot now.</i>
+            Skip the wait. <i className="text-pink">Become a Founding Member.</i>
           </h2>
+          <p className="text-gray-700 text-base md:text-lg font-medium leading-relaxed mb-5 max-w-2xl mx-auto">
+            This is more than a membership. It’s a place to learn practical tools that help you understand yourself, strengthen your mindset, and support your emotional well-being while building genuine friendships with women who encourage you, celebrate your wins, and remind you that you don’t have to do life alone.
+          </p>
           <p className="text-gray-700 text-base md:text-lg font-medium leading-relaxed mb-8 max-w-2xl mx-auto">
-            The first 50 members lock in <strong>$88/mo for life</strong>. Beta Vibe Pricing: 2 months for the price of 1, with a 90-day commitment.
+            The first 50 members lock in the <strong>$88/mo Founding Member rate for life</strong>, and your one-time $45 Setup Fee is waived through July 31. Membership includes a 90-day commitment.
           </p>
           <a
             href={CHECKOUT_URL}

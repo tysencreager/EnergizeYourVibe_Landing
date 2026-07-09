@@ -22,8 +22,8 @@ const faqs = [
     a: 'Placeholder answer - join from wherever you are, with both online and select in-person gatherings as the community grows.',
   },
   {
-    q: 'What is the time commitment? (placeholder)',
-    a: 'Placeholder answer - membership includes a 90-day commitment. Join the calls and texts as much or as little as feels right for you.',
+    q: 'Why is there a 90-day commitment?',
+    a: 'Real transformation takes practice. Ninety days gives you time to connect, choose in, attend gatherings, build awareness, learn new tools, create healthier habits, and experience what happens when you consistently support yourself.',
   },
 ];
 
