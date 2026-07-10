@@ -333,3 +333,14 @@ svg.lucide {
     scroll-behavior: auto !important;
   }
 }
+
+/* -- Print (Save as PDF from the assessment results) -- */
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  body {
+    background: #fff;
+  }
+}

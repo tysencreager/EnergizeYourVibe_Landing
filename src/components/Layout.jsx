@@ -14,13 +14,17 @@ export default function Layout() {
 
   return (
     <div className="relative overflow-x-hidden min-h-screen selection:bg-pink selection:text-white">
-      <AlertBanner />
-      <Nav />
+      <div className="print:hidden">
+        <AlertBanner />
+        <Nav />
+      </div>
       <main>
         <Outlet />
       </main>
-      <Footer />
-      <LaunchPopup />
+      <div className="print:hidden">
+        <Footer />
+        <LaunchPopup />
+      </div>
     </div>
   );
 }
