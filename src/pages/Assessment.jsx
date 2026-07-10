@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Sparkles, RotateCcw } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Sparkles, RotateCcw, Printer, CloudUpload } from 'lucide-react';
 import Blob from '../components/Blob.jsx';
 import Sunburst from '../components/Sunburst.jsx';
 import { pillars, pillarColorClasses } from '../data/pillars.js';
@@ -9,6 +9,8 @@ import {
   assessmentPillars,
   bandForScore,
 } from '../data/assessment.js';
+import { supabase } from '../lib/supabase.js';
+import { useAuth } from '../hooks/useAuth.jsx';
 
 // Look up the marketing pillar (name, subtitle, color) by key.
 const pillarMeta = Object.fromEntries(pillars.map((p) => [p.key, p]));
@@ -30,6 +32,27 @@ const flatStatements = assessmentPillars.flatMap((pillar) =>
 );
 const totalStatements = flatStatements.length;
 
+// Build the display shape (totals, percentages, bands) from stored per-pillar
+// totals — used both for a fresh submission and a result loaded from Supabase.
+function resultsFromScores(scores) {
+  const perPillar = assessmentPillars.map((pillar) => ({
+    key: pillar.key,
+    total: scores[pillar.key] ?? 0,
+  }));
+  const grandTotal = perPillar.reduce((s, p) => s + p.total, 0);
+  return perPillar.map((p) => ({
+    ...p,
+    percent: grandTotal ? Math.round((p.total / grandTotal) * 100) : 0,
+    band: bandForScore(p.total),
+  }));
+}
+
+function focusKeysFromResults(results) {
+  const sorted = [...results].sort((a, b) => a.total - b.total);
+  const lowest = sorted[0]?.total;
+  return sorted.filter((p) => p.total === lowest).slice(0, 2).map((p) => p.key);
+}
+
 // The 1–5 buttons grow with the rating so the scale reads at a glance.
 const scaleSizes = [
   'w-10 h-10 text-sm',
@@ -40,13 +63,37 @@ const scaleSizes = [
 ];
 
 export default function Assessment() {
+  const { user } = useAuth();
   // answers shape: { [pillarKey]: { [statementIndex]: 1..5 } }
   const [answers, setAnswers] = useState({});
   const [started, setStarted] = useState(false);
   // current ranges 0..totalStatements; the final value shows the completion card.
   const [current, setCurrent] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  // Latest saved result from Supabase: { scores, created_at } | null
+  const [savedResult, setSavedResult] = useState(null);
+  const [saveStatus, setSaveStatus] = useState(null); // null | saving | saved | error
   const advanceTimer = useRef(null);
+
+  // Load the member's most recent saved result so returning visitors see it
+  // without retaking anything.
+  useEffect(() => {
+    if (!user) return;
+    let cancelled = false;
+    supabase
+      .from('assessment_results')
+      .select('scores, created_at')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
+      .then(({ data, error }) => {
+        if (!cancelled && !error && data) setSavedResult(data);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [user?.id]);
 
   const answeredCount = useMemo(
     () =>
@@ -125,7 +172,7 @@ export default function Assessment() {
     return () => window.removeEventListener('keydown', onKey);
   });
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (!allAnswered) {
       // Jump back to the first unanswered statement.
       const firstMissing = flatStatements.findIndex(
@@ -136,20 +183,36 @@ export default function Assessment() {
     }
     setSubmitted(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Save to the member's profile so results survive beyond this visit.
+    if (user) {
+      const scores = Object.fromEntries(results.map((r) => [r.key, r.total]));
+      setSaveStatus('saving');
+      const { error } = await supabase
+        .from('assessment_results')
+        .insert({ user_id: user.id, scores });
+      if (error) {
+        setSaveStatus('error');
+      } else {
+        setSaveStatus('saved');
+        setSavedResult({ scores, created_at: new Date().toISOString() });
+      }
+    }
   }
 
-  function handleReset() {
+  function handleRetake() {
     setAnswers({});
-    setStarted(false);
+    setStarted(true);
     setCurrent(0);
     setSubmitted(false);
+    setSaveStatus(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   return (
     <>
       {/* HERO */}
-      <section className="relative pt-32 pb-14 md:pt-44 md:pb-20 px-5 md:px-6 bg-animated-warm overflow-hidden grain">
+      <section className="relative pt-32 pb-14 md:pt-44 md:pb-20 px-5 md:px-6 bg-animated-warm overflow-hidden grain print:hidden">
         <Sunburst
           className="absolute -right-32 -top-32 w-[520px] h-[520px] opacity-20"
           strokeColor="rgba(255,255,255,0.6)"
@@ -188,7 +251,21 @@ export default function Assessment() {
 
         <div className="max-w-3xl mx-auto relative z-10">
           {submitted ? (
-            <Results results={results} focusKeys={focusKeys} onReset={handleReset} />
+            <Results
+              results={results}
+              focusKeys={focusKeys}
+              onRetake={handleRetake}
+              takenAt={new Date().toISOString()}
+              saveStatus={saveStatus}
+            />
+          ) : savedResult && !started ? (
+            <Results
+              results={resultsFromScores(savedResult.scores)}
+              focusKeys={focusKeysFromResults(resultsFromScores(savedResult.scores))}
+              onRetake={handleRetake}
+              takenAt={savedResult.created_at}
+              saveStatus="saved"
+            />
           ) : !started ? (
             <IntroCard onStart={() => setStarted(true)} />
           ) : (
@@ -406,13 +483,30 @@ function CompletionCard({ allAnswered, onSubmit, onBack }) {
   );
 }
 
-function Results({ results, focusKeys, onReset }) {
+function Results({ results, focusKeys, onRetake, takenAt, saveStatus }) {
   const maxTotal = 40;
+  const takenDate = takenAt
+    ? new Date(takenAt).toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+      })
+    : null;
 
   return (
     <div>
+      {/* Print-only letterhead */}
+      <div className="hidden print:block text-center mb-8">
+        <p className="text-xs font-bold uppercase tracking-[0.3em] text-magenta">
+          Energize Your Vibe
+        </p>
+        <p className="text-sm text-gray-600 font-medium">
+          7 Pillar Assessment results{takenDate ? ` · ${takenDate}` : ''}
+        </p>
+      </div>
+
       <div className="text-center mb-12">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-pink/10 border border-pink/20 text-[10px] font-bold uppercase tracking-[0.3em] mb-5 text-magenta">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-pink/10 border border-pink/20 text-[10px] font-bold uppercase tracking-[0.3em] mb-5 text-magenta print:hidden">
           <Sparkles size={14} strokeWidth={1.75} />
           Your results
         </div>
@@ -423,6 +517,20 @@ function Results({ results, focusKeys, onReset }) {
           Here’s how your energy is distributed across the 7 pillars right now. Numbers
           shift as you grow — this is a snapshot, not a verdict.
         </p>
+        {takenDate && (
+          <p className="inline-flex items-center gap-2 mt-5 text-[11px] font-bold uppercase tracking-[0.2em] text-gray-500 bg-white/70 border border-pink/15 rounded-full px-4 py-2 print:hidden">
+            Taken {takenDate}
+            {saveStatus === 'saved' && (
+              <span className="inline-flex items-center gap-1 text-magenta">
+                <CloudUpload size={13} strokeWidth={2} /> Saved to your profile
+              </span>
+            )}
+            {saveStatus === 'saving' && <span className="text-gray-400">Saving…</span>}
+            {saveStatus === 'error' && (
+              <span className="text-orange">Couldn’t save — print a copy below</span>
+            )}
+          </p>
+        )}
       </div>
 
       {/* Pillar score bars */}
@@ -494,19 +602,28 @@ function Results({ results, focusKeys, onReset }) {
         </div>
       </div>
 
-      <div className="text-center space-y-4">
+      <div className="text-center space-y-5">
         <p className="text-gray-700 font-medium max-w-xl mx-auto leading-relaxed">
           This isn’t about being perfect — it’s about awareness. When you know what needs
           support, you can actually do something about it. That’s how you start to energize
           your vibe.
         </p>
-        <button
-          type="button"
-          onClick={onReset}
-          className="inline-flex items-center gap-2 text-magenta font-bold uppercase tracking-widest text-xs hover:text-pink transition-colors"
-        >
-          <RotateCcw size={14} strokeWidth={2} /> Retake the assessment
-        </button>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 print:hidden">
+          <button
+            type="button"
+            onClick={() => window.print()}
+            className="inline-flex items-center gap-3 bg-magenta text-white py-3.5 px-7 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-pink transition-colors shadow-lg"
+          >
+            <Printer size={15} strokeWidth={2} /> Save as PDF / Print
+          </button>
+          <button
+            type="button"
+            onClick={onRetake}
+            className="inline-flex items-center gap-2 text-magenta font-bold uppercase tracking-widest text-xs hover:text-pink transition-colors"
+          >
+            <RotateCcw size={14} strokeWidth={2} /> Retake the assessment
+          </button>
+        </div>
       </div>
     </div>
   );
