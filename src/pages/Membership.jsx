@@ -75,6 +75,54 @@ export default function Membership() {
         </div>
       </section>
 
+      {/* HOW JOINING WORKS */}
+      <section className="relative py-20 md:py-24 px-5 md:px-6 bg-white overflow-hidden">
+        <Blob tone="sun" size="lg" className="-top-24 -right-24" opacity={25} slow />
+        <div className="max-w-5xl mx-auto relative z-10">
+          <div className="text-center mb-12">
+            <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-pink mb-3">
+              Three simple steps
+            </p>
+            <h2 className="text-3xl md:text-5xl font-display text-gray-900 leading-tight">
+              How joining <i className="text-pink">works.</i>
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-5 md:gap-6">
+            {[
+              {
+                title: 'Become a member',
+                desc: 'Tap "Reserve My Spot" and complete secure checkout with your card. Use the email address you check most — it becomes your key to everything.',
+              },
+              {
+                title: 'Watch your inbox',
+                desc: 'We’ll email you a welcome from Jenn with a link to your member portal. First time? Peek in your Spam or Promotions folder and mark us "Not spam."',
+              },
+              {
+                title: 'Sign in — no password',
+                desc: 'There’s nothing to memorize. Whenever you want in, type your email on the Sign In page and we email you a personal sign-in button. Tap it and you’re in.',
+              },
+            ].map((step, i) => (
+              <div key={i} className="bento-card glass border-2 border-pink/15 p-7 md:p-8 text-center">
+                <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-pink text-white font-display text-2xl mb-5 shadow-md">
+                  {i + 1}
+                </span>
+                <h3 className="text-xl md:text-2xl font-display text-gray-900 mb-3">{step.title}</h3>
+                <p className="text-gray-700 text-sm md:text-base font-medium leading-relaxed">{step.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-center text-sm text-gray-500 font-medium mt-8 max-w-xl mx-auto">
+            Stuck at any step? Email{' '}
+            <a href="mailto:jenn@energizeyourvibe.com" className="text-pink hover:text-magenta font-semibold">
+              jenn@energizeyourvibe.com
+            </a>{' '}
+            and a real human will walk you through it.
+          </p>
+        </div>
+      </section>
+
       {/* FORM */}
       <section className="relative py-20 md:py-24 px-5 md:px-6 bg-soft-dawn overflow-hidden">
         <Blob tone="pink" size="lg" className="-top-20 -right-20" opacity={15} />
@@ -88,10 +136,10 @@ export default function Membership() {
                   <CheckCircle2 className="text-pink" size={36} strokeWidth={1.75} />
                 </div>
                 <h2 className="text-3xl md:text-4xl font-display text-gray-900 mb-4">
-                  You’re on the <i className="text-pink">list, sister.</i>
+                  You’re first in <i className="text-pink">line, sister.</i>
                 </h2>
                 <p className="text-gray-700 text-base md:text-lg font-medium leading-relaxed mb-8 max-w-md mx-auto">
-                  Welcome to the inner circle. Watch your inbox, we’ll be in touch soon with everything you need to know.
+                  Watch your inbox — your personal sign-up link arrives the moment doors open on July 17. Can’t wait? You can reserve your spot right now.
                 </p>
                 <a
                   href={CHECKOUT_URL}
@@ -105,11 +153,14 @@ export default function Membership() {
             ) : (
               <>
                 <div className="text-center mb-8">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-magenta mb-3">
+                    Step one
+                  </p>
                   <h2 className="text-3xl md:text-5xl font-display text-gray-900 mb-3 leading-tight">
-                    Stay in the <i className="text-pink">loop.</i>
+                    Start your <i className="text-pink">membership.</i>
                   </h2>
                   <p className="text-gray-600 text-base md:text-lg font-medium">
-                    Add yourself to the waitlist. No spam, just the good stuff.
+                    Sign-ups open July 17. Leave your details and we’ll email you your personal sign-up link the moment doors open — you’ll be first in line for the Founding Member rate.
                   </p>
                 </div>
 
@@ -168,64 +219,16 @@ export default function Membership() {
                     disabled={status === 'submitting'}
                     className="block w-full bg-pink text-white py-5 px-8 rounded-full font-bold uppercase tracking-widest text-base md:text-lg hover:bg-magenta transition-colors shadow-[0_10px_30px_rgba(226,46,100,0.35)] disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    {status === 'submitting' ? 'Sending…' : 'Keep Me Posted'}
+                    {status === 'submitting' ? 'Sending…' : 'Save My Spot'}
                   </button>
 
                   <p className="text-xs text-gray-500 text-center font-medium">
-                    By joining the waitlist, you agree to receive occasional updates from Energize Your Vibe. Unsubscribe anytime.
+                    By signing up, you agree to receive occasional updates from Energize Your Vibe. Unsubscribe anytime.
                   </p>
                 </form>
               </>
             )}
           </div>
-        </div>
-      </section>
-
-      {/* HOW JOINING WORKS */}
-      <section className="relative py-20 md:py-24 px-5 md:px-6 bg-white overflow-hidden">
-        <Blob tone="sun" size="lg" className="-top-24 -right-24" opacity={25} slow />
-        <div className="max-w-5xl mx-auto relative z-10">
-          <div className="text-center mb-12">
-            <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-pink mb-3">
-              Three simple steps
-            </p>
-            <h2 className="text-3xl md:text-5xl font-display text-gray-900 leading-tight">
-              How joining <i className="text-pink">works.</i>
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-5 md:gap-6">
-            {[
-              {
-                title: 'Become a member',
-                desc: 'Tap "Reserve My Spot" and complete secure checkout with your card. Use the email address you check most — it becomes your key to everything.',
-              },
-              {
-                title: 'Watch your inbox',
-                desc: 'We’ll email you a welcome from Jenn with a link to your member portal. First time? Peek in your Spam or Promotions folder and mark us "Not spam."',
-              },
-              {
-                title: 'Sign in — no password',
-                desc: 'There’s nothing to memorize. Whenever you want in, type your email on the Sign In page and we email you a personal sign-in button. Tap it and you’re in.',
-              },
-            ].map((step, i) => (
-              <div key={i} className="bento-card glass border-2 border-pink/15 p-7 md:p-8 text-center">
-                <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-pink text-white font-display text-2xl mb-5 shadow-md">
-                  {i + 1}
-                </span>
-                <h3 className="text-xl md:text-2xl font-display text-gray-900 mb-3">{step.title}</h3>
-                <p className="text-gray-700 text-sm md:text-base font-medium leading-relaxed">{step.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <p className="text-center text-sm text-gray-500 font-medium mt-8 max-w-xl mx-auto">
-            Stuck at any step? Email{' '}
-            <a href="mailto:jenn@energizeyourvibe.com" className="text-pink hover:text-magenta font-semibold">
-              jenn@energizeyourvibe.com
-            </a>{' '}
-            and a real human will walk you through it.
-          </p>
         </div>
       </section>
 
