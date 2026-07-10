@@ -181,6 +181,54 @@ export default function Membership() {
         </div>
       </section>
 
+      {/* HOW JOINING WORKS */}
+      <section className="relative py-20 md:py-24 px-5 md:px-6 bg-white overflow-hidden">
+        <Blob tone="sun" size="lg" className="-top-24 -right-24" opacity={25} slow />
+        <div className="max-w-5xl mx-auto relative z-10">
+          <div className="text-center mb-12">
+            <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-pink mb-3">
+              Three simple steps
+            </p>
+            <h2 className="text-3xl md:text-5xl font-display text-gray-900 leading-tight">
+              How joining <i className="text-pink">works.</i>
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-5 md:gap-6">
+            {[
+              {
+                title: 'Become a member',
+                desc: 'Tap "Reserve My Spot" and complete secure checkout with your card. Use the email address you check most — it becomes your key to everything.',
+              },
+              {
+                title: 'Watch your inbox',
+                desc: 'We’ll email you a welcome from Jenn with a link to your member portal. First time? Peek in your Spam or Promotions folder and mark us "Not spam."',
+              },
+              {
+                title: 'Sign in — no password',
+                desc: 'There’s nothing to memorize. Whenever you want in, type your email on the Sign In page and we email you a personal sign-in button. Tap it and you’re in.',
+              },
+            ].map((step, i) => (
+              <div key={i} className="bento-card glass border-2 border-pink/15 p-7 md:p-8 text-center">
+                <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-pink text-white font-display text-2xl mb-5 shadow-md">
+                  {i + 1}
+                </span>
+                <h3 className="text-xl md:text-2xl font-display text-gray-900 mb-3">{step.title}</h3>
+                <p className="text-gray-700 text-sm md:text-base font-medium leading-relaxed">{step.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-center text-sm text-gray-500 font-medium mt-8 max-w-xl mx-auto">
+            Stuck at any step? Email{' '}
+            <a href="mailto:jenn@energizeyourvibe.com" className="text-pink hover:text-magenta font-semibold">
+              jenn@energizeyourvibe.com
+            </a>{' '}
+            and a real human will walk you through it.
+          </p>
+        </div>
+      </section>
+
       {/* READY NOW CTA */}
       <section className="relative py-20 md:py-24 px-5 md:px-6 bg-soft-rose overflow-hidden">
         <Sunburst
