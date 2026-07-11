@@ -15,7 +15,7 @@ const categories = [
   {
     icon: <Ticket />,
     title: 'Event Tickets',
-    desc: 'Reserve your place at soundbaths, gatherings, the launch party, and the Southern Utah retreat.',
+    desc: 'Reserve your place at soundbaths, gatherings, and the launch party.',
     chip: 'Coming soon',
     color: 'pink',
     image: '/assets/women-boardwalk.png',

@@ -4,22 +4,21 @@ import Blob from '../components/Blob.jsx';
 
 /*
   TODO (NP1 / Markup #55): FAQ page.
-  Client has NOT supplied final FAQ content yet. The questions/answers below are
-  PLACEHOLDERS so the route + nav link exist. Replace `faqs` with Jenn's real
-  copy once provided, and remove the "Placeholder" notice banner below.
+  Client has NOT supplied final FAQ content yet. Replace `faqs` with Jenn's
+  real copy once provided, and remove the "coming soon" notice banner below.
 */
 const faqs = [
   {
-    q: 'What is included in the membership? (placeholder)',
-    a: 'Placeholder answer - to be supplied by client. Covers Lives for Vibes, monthly calls, 7 Pillar growth calls, weekly texts, the library, and the welcome gift.',
+    q: 'What is included in the membership?',
+    a: 'Daily Lives for Vibes, monthly deep-dive calls with Jenn, 7 Pillar support & growth calls, weekly uplifting texts, the member library, and a personalized welcome gift mailed directly to you.',
   },
   {
-    q: 'How much does it cost? (placeholder)',
-    a: 'Placeholder answer - pricing to be confirmed (see Membership page). First 50 members lock in their rate for life.',
+    q: 'How much does it cost?',
+    a: 'Founding Membership is $88/month (see the Membership page for full details). The first 50 members lock in their rate for life.',
   },
   {
-    q: 'Is this only online? (placeholder)',
-    a: 'Placeholder answer - join from wherever you are, with both online and select in-person gatherings as the community grows.',
+    q: 'Is this only online?',
+    a: 'Join from wherever you are. The sisterhood gathers online, with select in-person gatherings as the community grows.',
   },
   {
     q: 'Why is there a 90-day commitment?',
@@ -47,7 +46,7 @@ export default function Faq() {
         <div className="max-w-3xl mx-auto">
           {/* TODO: remove this notice once real FAQ content is in. */}
           <div className="mb-10 rounded-2xl border-2 border-dashed border-gold/60 bg-sun/30 p-5 text-center text-sm font-bold text-magenta">
-            Placeholder content - final FAQ copy coming soon.
+            More questions &amp; answers coming soon.
           </div>
 
           <div className="space-y-4">

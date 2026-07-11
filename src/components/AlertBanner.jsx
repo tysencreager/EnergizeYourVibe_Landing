@@ -5,8 +5,8 @@ export default function AlertBanner() {
         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sun opacity-75"></span>
         <span className="relative inline-flex rounded-full h-full w-full bg-sun"></span>
       </span>
-      <span className="md:hidden">Fall Retreat 2026 · Southern Utah</span>
-      <span className="hidden md:inline">Fall Retreat in Southern Utah! Option to purchase coming soon. Member price extremely discounted.</span>
+      <span className="md:hidden">Launch Party · Stay Tuned!</span>
+      <span className="hidden md:inline">Stay tuned for the Launch Party! An in-person celebration of the sisterhood. Details coming soon.</span>
     </div>
   );
 }

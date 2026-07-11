@@ -72,7 +72,7 @@ export default function Terms() {
       <h2>3. Events &amp; Retreats</h2>
       <p>
         Live calls, workshops, soundbaths, gatherings, launch events, and retreats
-        (including the Southern Utah fall retreat) may be offered as included benefits,
+        may be offered as included benefits,
         add-on experiences, or separately ticketed events. Specific details, including
         dates, location, capacity, payment terms, and any cancellation or transfer
         policies, will be communicated at the time of each event.
