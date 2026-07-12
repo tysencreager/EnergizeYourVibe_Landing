@@ -107,6 +107,10 @@ Sender for all emails: **Jenn from Energize Your Vibe** — jenn@energizeyourvib
 > **3. Hit reply and tell me one thing** you want to be different 90 days from
 > now. I read every reply — and saying it out loud is the first step.
 >
+> 📱 **Quick tip:** save energizeyourvibe.com to your phone's home screen
+> (Share → *Add to Home Screen* on iPhone, ⋮ → *Add to Home Screen* on Android)
+> and the sisterhood opens like an app — one tap away.
+>
 > We lead with love. We live with intention. We have fun.
 >
 > — Jenn

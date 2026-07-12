@@ -3,6 +3,7 @@ import { ArrowRight, Sparkles, Quote } from 'lucide-react';
 import Blob from '../components/Blob.jsx';
 import Sunburst from '../components/Sunburst.jsx';
 import Reveal from '../components/Reveal.jsx';
+import AddToHomeScreen from '../components/AddToHomeScreen.jsx';
 import { pillars, pillarColorClasses } from '../data/pillars.js';
 import { useAuth } from '../hooks/useAuth.jsx';
 
@@ -162,6 +163,11 @@ export default function Portal() {
                 </Reveal>
               );
             })}
+          </div>
+
+          {/* Save-to-home-screen tip (hidden when already installed as an app) */}
+          <div className="mt-12 md:mt-16">
+            <AddToHomeScreen />
           </div>
         </div>
       </section>
