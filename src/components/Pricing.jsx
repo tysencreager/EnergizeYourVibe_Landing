@@ -28,10 +28,6 @@ const perks = [
     bold: 'Community & a personal touch:',
     text: 'Private FB Community & a personalized welcome gift mailed directly to you.',
   },
-  {
-    bold: 'Retreat discount:',
-    text: 'Extremely discounted rate for the Southern Utah fall retreat. This is a thank you to the community and will never be offered this low again. The retreat is strictly for play, fun, laughter, connection & relaxation.',
-  },
 ];
 
 export default function Pricing() {

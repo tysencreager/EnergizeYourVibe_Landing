@@ -25,6 +25,7 @@ Sender for all emails: **Jenn from Energize Your Vibe** — jenn@energizeyourvib
 
 - **Subject:** The 6 pillars that hold everything together
 - **Preview text:** ALIGN · FEEL · THINK · FUEL · CONNECT · FLOW
+- **Design:** ready to paste — see `02-pillars.html`.
 
 > Hey sister,
 >
@@ -55,6 +56,7 @@ Sender for all emails: **Jenn from Energize Your Vibe** — jenn@energizeyourvib
 
 - **Subject:** The moment I chose to keep going
 - **Preview text:** The story behind Energize Your Vibe.
+- **Design:** ready to paste — see `03-jenns-story.html`.
 
 > Hey sister,
 >
@@ -87,7 +89,8 @@ Sender for all emails: **Jenn from Energize Your Vibe** — jenn@energizeyourvib
 ## Email 4 — Day 9: Show up & what's coming
 
 - **Subject:** Don't just join the sisterhood — live it
-- **Preview text:** Events, the fall retreat, and one small ask.
+- **Preview text:** Events, the launch party, and one small ask.
+- **Design:** ready to paste — see `04-show-up.html`.
 
 > Hey sister,
 >
@@ -97,11 +100,16 @@ Sender for all emails: **Jenn from Energize Your Vibe** — jenn@energizeyourvib
 > **1. Come to a gathering.** Live calls and events are where the magic is.
 > Check what's coming up: [energizeyourvibe.com/events](https://www.energizeyourvibe.com/events)
 >
-> **2. Save the date for the fall retreat.** Southern Utah, this fall — members
-> get a deeply discounted price. Details land in your inbox soon.
+> **2. Stay tuned for the launch party.** An in-person celebration of the
+> sisterhood coming together — members get first invites. Details land in your
+> inbox soon.
 >
 > **3. Hit reply and tell me one thing** you want to be different 90 days from
 > now. I read every reply — and saying it out loud is the first step.
+>
+> 📱 **Quick tip:** save energizeyourvibe.com to your phone's home screen
+> (Share → *Add to Home Screen* on iPhone, ⋮ → *Add to Home Screen* on Android)
+> and the sisterhood opens like an app — one tap away.
 >
 > We lead with love. We live with intention. We have fun.
 >

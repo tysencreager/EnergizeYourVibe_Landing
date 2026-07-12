@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Calendar, MapPin, CheckCircle2, Video, Headphones, Flower2 } from 'lucide-react';
+import { ArrowRight, Calendar, CheckCircle2, Video, Headphones, Flower2, PartyPopper } from 'lucide-react';
 import Blob from '../components/Blob.jsx';
 import Sunburst from '../components/Sunburst.jsx';
 
@@ -27,14 +27,6 @@ const eventTypes = [
     chip: 'In-Person',
     color: 'gold',
     image: '/assets/women-boardwalk.png',
-  },
-  {
-    icon: <MapPin />,
-    title: 'Southern Utah Fall Retreat',
-    desc: 'A transformational in-person experience. Extremely discounted for members.',
-    chip: 'In-Person',
-    color: 'orange',
-    image: '/assets/womens-retreat.png',
   },
 ];
 
@@ -126,32 +118,32 @@ export default function Events() {
         </div>
       </section>
 
-      {/* RETREAT CTA */}
+      {/* LAUNCH PARTY CTA */}
       <section className="relative py-20 md:py-24 px-5 md:px-6 bg-bg">
         <div className="max-w-6xl mx-auto bento-card p-0 bg-magenta text-white relative overflow-hidden border-none min-h-[420px] group">
           <img
-            src="/assets/womens-retreat.png"
-            alt="Southern Utah retreat"
+            src="/assets/women-laughing.png"
+            alt="Women celebrating together"
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-tr from-magenta/75 via-magenta/25 to-transparent" />
           <div className="relative z-10 p-10 md:p-16 max-w-2xl">
-            <MapPin size={40} className="text-sun mb-6" />
+            <PartyPopper size={40} className="text-sun mb-6" />
             <h2 className="text-4xl md:text-6xl font-display italic mb-4">
-              Fall Retreat
+              Launch Party
             </h2>
             <p className="text-sun text-sm font-bold uppercase tracking-widest mb-6">
-              Southern Utah
+              Stay Tuned
             </p>
             <p className="text-white/95 text-lg font-medium leading-relaxed mb-8">
-              An exclusive, transformative in-person experience. Unplug, recharge, and energize your vibe under the desert sun. Strictly for play, fun, laughter, connection &amp; relaxation.
+              An intentional in-person gathering to celebrate the community coming together. Connection, laughter, and good energy as the sisterhood officially begins.
             </p>
             <ul className="space-y-2 mb-8">
               <li className="flex items-center gap-3 font-bold">
-                <CheckCircle2 className="text-sun" size={20} /> Extremely discounted member rate
+                <CheckCircle2 className="text-sun" size={20} /> Members get first invites
               </li>
               <li className="flex items-center gap-3 font-bold">
-                <CheckCircle2 className="text-sun" size={20} /> Option to purchase coming soon
+                <CheckCircle2 className="text-sun" size={20} /> Date &amp; location announced soon
               </li>
               <li className="flex items-center gap-3 font-bold">
                 <CheckCircle2 className="text-sun" size={20} /> More details coming soon
@@ -161,7 +153,7 @@ export default function Events() {
               to="/membership"
               className="inline-flex items-center gap-3 bg-sun text-magenta py-4 px-8 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-white transition-colors shadow-lg"
             >
-              Secure My Member Rate <ArrowRight size={18} />
+              Reserve My Spot <ArrowRight size={18} />
             </Link>
           </div>
         </div>
