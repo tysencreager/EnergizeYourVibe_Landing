@@ -1,133 +1,73 @@
-# EYV Welcome Drip — sequence plan & copy
+# EYV Welcome Drip — sequence plan & copy (Jenn's July 2026 edits)
 
 Automation for new **Energize Your Vibe** signups in MailerLite.
+Copy source: `EYV_Email_Drip_Edits.docx` — Jenn rewrote all four emails and
+reordered the sequence.
 
-**Trigger:** subscriber joins the group `EYV Members` (create this group in the
-EYV MailerLite account). Trigger on *group join* — not *form completed* — so it
-fires no matter how the subscriber arrives: API, manual import, Zapier, or a form.
+**Trigger:** subscriber joins the group `EYV Members` (group id
+`192368708907173146`). Trigger on *group join* — not *form completed* — so it
+fires no matter how the subscriber arrives: API (Stripe webhook), manual
+import, or a form.
 
-**Flow:** Email 1 (immediately) → wait 2 days → Email 2 → wait 3 days → Email 3
-→ wait 4 days → Email 4.
+**Flow:** Email 1 (immediately) → wait 2 days → Email 2 → wait 3 days →
+Email 3 → wait 4 days → Email 4.
 
-Sender for all emails: **Jenn from Energize Your Vibe** — jenn@energizeyourvibe.com.
+Sender for all emails: **Jenn from Energize Your Vibe** —
+jenn@energizeyourvibe.com.
 
----
-
-## Email 1 — sent immediately
-
-- **Subject:** You're in, sister 💗 Welcome to Energize Your Vibe
-- **Preview text:** You're in, sister. Here's what happens next.
-- **Design:** ready to paste — see `01-welcome.html`.
-
----
-
-## Email 2 — Day 2: The six pillars
-
-- **Subject:** The 6 pillars that hold everything together
-- **Preview text:** ALIGN · FEEL · THINK · FUEL · CONNECT · FLOW
-- **Design:** ready to paste — see `02-pillars.html`.
-
-> Hey sister,
->
-> Everything we do inside Energize Your Vibe hangs on six pillars. They're not
-> a curriculum you complete — they're the six areas of your life we keep coming
-> back to, together:
->
-> - **ALIGN** — Spiritual Wellness
-> - **FEEL** — Emotional Wellness
-> - **THINK** — Mindset & Mental Clarity
-> - **FUEL** — Physical Health & Energy
-> - **CONNECT** — Relationships & Community
-> - **FLOW** — Money, Lifestyle & Receiving
->
-> Most of us are strong in two or three and quietly running on empty in the
-> rest. That's normal — and it's exactly what the sisterhood is for.
->
-> **This week:** pick the pillar that feels heaviest right now and start there.
-> The portal has resources for each one.
->
-> [Explore the pillars →](https://www.energizeyourvibe.com/pillars)
->
-> — Jenn
+> ⚠️ **Facebook link needed:** the welcome email links to the private
+> Facebook community, currently a `FACEBOOK_GROUP_URL_PLACEHOLDER` in
+> `01-welcome.html`. Replace it with the real group URL before sending
+> (the site footer needs the same URL — it currently points at `#`).
 
 ---
 
-## Email 3 — Day 5: Jenn's story
+## Email 1 — sent immediately: Welcome
+
+- **Subject:** Welcome to the Energize Your Vibe community 💗
+- **Preview text:** Welcome to the community — here are your next steps.
+- **Design:** `01-welcome.html`
+- Jenn's welcome letter ("Hey Sista!") with three NEXT STEPS:
+  1. Create your member account → https://www.energizeyourvibe.com/login
+  2. Join the community space → Instagram + private Facebook group
+  3. Take the 7 Pillar Assessment → https://www.energizeyourvibe.com/portal/assessment
+
+## Email 2 — Day 2: Check-in + Sister Snapshot
+
+- **Subject:** Checking in — and a little favor 💗
+- **Preview text:** Sending love — and a little favor that helps us know the real you.
+- **Design:** `02-check-in-snapshot.html`
+- Check-in note, the Sister Snapshot ask (15–20 minutes, private) →
+  https://www.energizeyourvibe.com/portal/snapshot — plus the
+  "from member to sister" steps (come to a gathering, launch party heads-up,
+  hit reply) and the add-to-home-screen tip.
+
+## Email 3 — Day 5: The Heart behind the 7 Pillars
+
+- **Subject:** The heart behind the 7 Pillars
+- **Preview text:** Seven areas of life, one step at a time.
+- **Design:** `03-seven-pillars.html`
+- All seven pillars (including SHINE), monthly pillar calls with Jenn +
+  coaches/guest experts, recordings in the library for 30 days, call
+  schedule → https://www.energizeyourvibe.com/events
+
+## Email 4 — Day 9: Meet Jenn
 
 - **Subject:** The moment I chose to keep going
-- **Preview text:** The story behind Energize Your Vibe.
-- **Design:** ready to paste — see `03-jenns-story.html`.
-
-> Hey sister,
->
-> I want to tell you why this community exists.
->
-> I was widowed at 22, with a young child, standing in the middle of a life I
-> didn't plan. In the middle of that grief I made a choice: keep going. That
-> choice led me through years of healing work, faith, mindset and nervous-system
-> work — not as theory, but as survival that slowly became transformation.
->
-> I've lost best friends to cancer. I've been impacted by suicide and walked
-> with people I love through addiction and mental health struggles. I'm not
-> here because life has been easy. I'm here because I know what it takes to
-> come back to yourself — and I know no woman should have to do it alone.
->
-> Energize Your Vibe is the space I wish I'd had: women who show up willing —
-> willing to grow, to own their lives, to lift each other. No gossip, no staying
-> stuck. Support, accountability, and real joy.
->
-> Whatever you're carrying right now — you're seen here. You matter here.
->
-> [Meet the community →](https://www.energizeyourvibe.com/about)
->
-> You are welcome here. I love you!
->
-> — Jenn
+- **Preview text:** Why this community exists — and why it means so much to me.
+- **Design:** `04-meet-jenn.html`
+- Jenn's full vulnerable story, in her words, ending with
+  "Read my full story" → https://www.energizeyourvibe.com/about
 
 ---
 
-## Email 4 — Day 9: Show up & what's coming
+## Delivery notes
 
-- **Subject:** Don't just join the sisterhood — live it
-- **Preview text:** Events, the launch party, and one small ask.
-- **Design:** ready to paste — see `04-show-up.html`.
-
-> Hey sister,
->
-> Connection doesn't happen by scrolling — it happens by showing up. Here's how
-> to go from "member" to "sister" this month:
->
-> **1. Come to a gathering.** Live calls and events are where the magic is.
-> Check what's coming up: [energizeyourvibe.com/events](https://www.energizeyourvibe.com/events)
->
-> **2. Stay tuned for the launch party.** An in-person celebration of the
-> sisterhood coming together — members get first invites. Details land in your
-> inbox soon.
->
-> **3. Hit reply and tell me one thing** you want to be different 90 days from
-> now. I read every reply — and saying it out loud is the first step.
->
-> 📱 **Quick tip:** save energizeyourvibe.com to your phone's home screen
-> (Share → *Add to Home Screen* on iPhone, ⋮ → *Add to Home Screen* on Android)
-> and the sisterhood opens like an app — one tap away.
->
-> We lead with love. We live with intention. We have fun.
->
-> — Jenn
-
----
-
-## How signups reach MailerLite (important)
-
-The website currently does **not** push signups to MailerLite automatically.
-Two options, in order of preference:
-
-1. **Automated (recommended, needs the Stripe webhook function):** the same
-   Cloudflare Pages Function that will mark memberships `active` in Supabase
-   after Stripe checkout should also call the MailerLite API
-   (`POST /api/subscribers` with `groups: [<EYV Members group id>]`). One
-   webhook, both jobs. Until that function exists, nothing is automated
-   end-to-end.
-2. **Manual bridge (works today):** export new members from Stripe/Supabase and
-   import them into the `EYV Members` group — the group-join trigger fires on
-   import (MailerLite asks on import whether to trigger automations — say yes).
+- The MailerLite automation **"EYV Welcome Drip"** (id `192368734104454783`)
+  already has 4 email steps with delays — update each step's subject and
+  paste the matching HTML file into the editor.
+- New members are added to the `EYV Members` group automatically by the
+  Stripe webhook (`functions/api/stripe-webhook.js`) when
+  `MAILERLITE_API_KEY` + `MAILERLITE_GROUP_ID` are set in Cloudflare.
+- Sender email must be verified in MailerLite (Settings → Domains) before
+  the automation can send.
