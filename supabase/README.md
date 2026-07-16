@@ -48,18 +48,17 @@ the bucket + the member-read policy).
 
 **Uploading files** (Jenn / admin, via the Supabase dashboard → Storage → `library`):
 
-1. Create a folder named for the pillar, Capitalized — one of: `Align`, `Feel`,
-   `Think`, `Fuel`, `Connect`, `Flow`, `Shine`. (Paths are case-sensitive; the
-   app expects these exact names — see `storagePath()` in `src/data/library.js`.)
-2. Upload the files into that folder. **Keep the filenames exactly** as listed in
-   `src/data/library.js` — the app looks them up by that exact name.
-3. To add a brand-new resource: upload the file, then add an entry to the
-   pillar's array in `src/data/library.js` (`{ title, file, kind }` where `kind`
-   is `image` or `pdf`). No other code changes needed.
+The portal reads each pillar's folder live, so uploads appear automatically —
+no code changes, no filename registry.
 
-Current library contents are already listed in `src/data/library.js` for the
-Align, Feel, Think, and Fuel pillars — upload the matching files from Jenn's
-"EYV Library" Google Drive folder to populate them.
+1. Upload into the pillar's folder — one of: `Align`, `Feel`, `Think`, `Fuel`,
+   `Connect`, `Flow`, `Shine` (Capitalized; paths are case-sensitive).
+2. That's it. The card title is derived from the filename: the extension and
+   any redundant pillar prefix/suffix are stripped ("Align - 5 Minute Morning
+   Vibes.png" shows as "5 Minute Morning Vibes"). Name files the way you want
+   the title to read. "Welcome" files sort first; everything else alphabetical.
+3. PNG/JPG files get a preview thumbnail; PDFs get a document card. Deleting a
+   file from the folder removes it from the portal too.
 
 ## Stripe webhook setup
 

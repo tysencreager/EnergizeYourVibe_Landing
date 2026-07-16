@@ -4,34 +4,92 @@ import { ArrowLeft, Sparkles, FileText, Download, ImageIcon } from 'lucide-react
 import Blob from '../components/Blob.jsx';
 import Sunburst from '../components/Sunburst.jsx';
 import { pillars, pillarColorClasses } from '../data/pillars.js';
-import { pillarResources, storagePath } from '../data/library.js';
 import { supabase } from '../lib/supabase.js';
 
 const SIGNED_URL_TTL = 60 * 60; // 1 hour
 
+// Storage folders are Capitalized ("Align", "Fuel", ...) to match how they
+// were created in the Supabase dashboard. Paths are case-sensitive.
+function storageFolder(pillarKey) {
+  return pillarKey.charAt(0).toUpperCase() + pillarKey.slice(1);
+}
+
+const IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'webp', 'gif'];
+
+// Derive a friendly card title from a filename: drop the extension and any
+// redundant pillar prefix/suffix ("Align - ...", "... - Align", "Align ...").
+function titleFromFilename(filename, pillarFolder) {
+  let title = filename.replace(/\.[^.]+$/, '');
+  const p = pillarFolder;
+  title = title.replace(new RegExp(`^${p}\\s*-\\s*`, 'i'), '');
+  title = title.replace(new RegExp(`\\s*-\\s*${p}$`, 'i'), '');
+  title = title.replace(new RegExp(`^${p}\\s+`, 'i'), '');
+  return title.trim() || filename;
+}
+
 export default function PortalPillar() {
   const { pillarKey } = useParams();
   const pillar = pillars.find((p) => p.key === pillarKey);
-  const resources = pillar ? pillarResources(pillar.key) : [];
 
-  // Map of storage path -> inline signed URL (for image previews).
-  const [previews, setPreviews] = useState({});
+  // Resources are discovered live from the storage bucket, so Jenn can
+  // upload files to a pillar folder and they appear here automatically.
+  const [resources, setResources] = useState([]);
+  const [previews, setPreviews] = useState({}); // path -> signed URL
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!pillar || resources.length === 0) return;
+    if (!pillar) return;
     let cancelled = false;
-    const paths = resources.map((r) => storagePath(pillar.key, r.file));
-    supabase.storage
-      .from('library')
-      .createSignedUrls(paths, SIGNED_URL_TTL)
-      .then(({ data }) => {
-        if (cancelled || !data) return;
+    const folder = storageFolder(pillar.key);
+    setLoading(true);
+    setResources([]);
+    setPreviews({});
+
+    (async () => {
+      const { data: files, error } = await supabase.storage
+        .from('library')
+        .list(folder, { limit: 100, sortBy: { column: 'name', order: 'asc' } });
+
+      if (cancelled) return;
+      if (error || !files) {
+        setLoading(false);
+        return;
+      }
+
+      const items = files
+        .filter((f) => f.name && !f.name.startsWith('.') && f.id) // skip placeholders/subfolders
+        .map((f) => {
+          const ext = f.name.split('.').pop().toLowerCase();
+          return {
+            file: f.name,
+            title: titleFromFilename(f.name, folder),
+            kind: IMAGE_EXTENSIONS.includes(ext) ? 'image' : 'pdf',
+          };
+        })
+        // Welcome guides lead; everything else stays alphabetical.
+        .sort((a, b) => {
+          const aw = /welcome/i.test(a.title) ? 0 : 1;
+          const bw = /welcome/i.test(b.title) ? 0 : 1;
+          return aw - bw || a.title.localeCompare(b.title);
+        });
+
+      setResources(items);
+      setLoading(false);
+
+      if (items.length > 0) {
+        const paths = items.map((r) => `${folder}/${r.file}`);
+        const { data: signed } = await supabase.storage
+          .from('library')
+          .createSignedUrls(paths, SIGNED_URL_TTL);
+        if (cancelled || !signed) return;
         const map = {};
-        data.forEach((entry) => {
+        signed.forEach((entry) => {
           if (entry.signedUrl && !entry.error) map[entry.path] = entry.signedUrl;
         });
         setPreviews(map);
-      });
+      }
+    })();
+
     return () => {
       cancelled = true;
     };
@@ -44,7 +102,7 @@ export default function PortalPillar() {
   const palette = pillarColorClasses[pillar.color] ?? pillarColorClasses.pink;
 
   async function handleDownload(resource) {
-    const path = storagePath(pillar.key, resource.file);
+    const path = `${storageFolder(pillar.key)}/${resource.file}`;
     const { data, error } = await supabase.storage
       .from('library')
       .createSignedUrl(path, 60, { download: resource.file });
@@ -99,7 +157,11 @@ export default function PortalPillar() {
         <Blob tone="pink" size="lg" className="-top-20 -right-20" opacity={15} />
 
         <div className="max-w-5xl mx-auto relative z-10">
-          {resources.length > 0 ? (
+          {loading ? (
+            <div className="min-h-[30vh] flex items-center justify-center text-magenta font-medium">
+              Gathering your resources…
+            </div>
+          ) : resources.length > 0 ? (
             <>
               <div className="text-center mb-12 md:mb-16">
                 <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-magenta mb-3">
@@ -116,7 +178,7 @@ export default function PortalPillar() {
 
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
                 {resources.map((resource) => {
-                  const path = storagePath(pillar.key, resource.file);
+                  const path = `${storageFolder(pillar.key)}/${resource.file}`;
                   return (
                     <ResourceCard
                       key={resource.file}
