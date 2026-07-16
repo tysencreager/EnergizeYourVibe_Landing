@@ -43,3 +43,10 @@ export const libraryByPillar = {
 export function pillarResources(pillarKey) {
   return libraryByPillar[pillarKey] ?? [];
 }
+
+// Storage folders are Capitalized ("Align", "Fuel", ...) to match how they
+// were created in the Supabase dashboard. Paths are case-sensitive.
+export function storagePath(pillarKey, file) {
+  const folder = pillarKey.charAt(0).toUpperCase() + pillarKey.slice(1);
+  return `${folder}/${file}`;
+}
