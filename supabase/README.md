@@ -33,6 +33,32 @@ supabase db push
   - The Stripe webhook (Cloudflare Pages Function) updates this column using the service role key.
   - Row-Level Security only lets a user read or update their own row.
 - Trigger `on_auth_user_created` auto-inserts a profile row when a new auth user signs up.
+- `public.assessment_results` — saved 7 Pillar Assessment results (one row per completion).
+- `public.sister_snapshots` — Jenn's get-to-know-you survey, one row per member (upserted).
+
+## Member resource library (Supabase Storage)
+
+Pillar worksheets/guides live in a **private** Storage bucket called `library`,
+one folder per pillar key. The bucket is private so files have no public URL —
+the portal mints a short-lived signed URL for logged-in members only, which
+keeps the content behind the membership paywall.
+
+**One-time setup:** run `migrations/20260716000000_library_storage.sql` (creates
+the bucket + the member-read policy).
+
+**Uploading files** (Jenn / admin, via the Supabase dashboard → Storage → `library`):
+
+1. Create a folder named for the pillar key — one of: `align`, `feel`, `think`,
+   `fuel`, `connect`, `flow`, `shine`.
+2. Upload the files into that folder. **Keep the filenames exactly** as listed in
+   `src/data/library.js` — the app looks them up by that exact name.
+3. To add a brand-new resource: upload the file, then add an entry to the
+   pillar's array in `src/data/library.js` (`{ title, file, kind }` where `kind`
+   is `image` or `pdf`). No other code changes needed.
+
+Current library contents are already listed in `src/data/library.js` for the
+Align, Feel, Think, and Fuel pillars — upload the matching files from Jenn's
+"EYV Library" Google Drive folder to populate them.
 
 ## Stripe webhook setup
 
