@@ -17,6 +17,7 @@ import AuthCallback from './pages/AuthCallback.jsx';
 import Portal from './pages/Portal.jsx';
 import PortalPillar from './pages/PortalPillar.jsx';
 import PortalInactive from './pages/PortalInactive.jsx';
+import SisterSnapshot from './pages/SisterSnapshot.jsx';
 import Assessment from './pages/Assessment.jsx';
 
 export default function App() {
@@ -58,6 +59,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Assessment />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/portal/snapshot"
+          element={
+            <ProtectedRoute>
+              <SisterSnapshot />
             </ProtectedRoute>
           }
         />

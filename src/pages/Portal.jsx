@@ -105,6 +105,31 @@ export default function Portal() {
             </Link>
           </Reveal>
 
+          {/* Sister Snapshot call-out */}
+          <Reveal>
+            <Link
+              to="/portal/snapshot"
+              className="group block bento-card glass border-2 border-pink/20 p-6 sm:p-7 mb-12 md:mb-16 -mt-6 md:-mt-10 hover:-translate-y-1 hover:shadow-2xl transition-all"
+            >
+              <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-center sm:text-left">
+                <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-pink/10 text-pink shrink-0">
+                  <Quote size={22} strokeWidth={1.75} />
+                </span>
+                <div className="flex-1">
+                  <h3 className="text-xl md:text-2xl font-display text-gray-900 mb-1">
+                    Take your <i className="text-pink">Sister Snapshot.</i>
+                  </h3>
+                  <p className="text-gray-700 text-sm font-medium leading-relaxed">
+                    Help Jenn get to know the real you — your favorites, your heart, and how we can best support and celebrate you. Private, optional, and worth the 15 minutes.
+                  </p>
+                </div>
+                <span className="inline-flex items-center gap-2 text-magenta font-bold text-xs uppercase tracking-widest group-hover:gap-3 transition-all shrink-0">
+                  Share <ArrowRight size={14} strokeWidth={2} />
+                </span>
+              </div>
+            </Link>
+          </Reveal>
+
           <Reveal className="text-center mb-12 md:mb-16">
             <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-magenta mb-3">
               The 7 Pillars

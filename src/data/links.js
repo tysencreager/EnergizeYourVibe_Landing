@@ -8,7 +8,7 @@
 // missing env var in production is safe (degrades to working live checkout).
 export const CHECKOUT_URL =
   import.meta.env.VITE_STRIPE_CHECKOUT_URL ||
-  'https://buy.stripe.com/5kQbJ0cwKd0bc3ic6k87K00';
+  'https://buy.stripe.com/4gM7sMgDy00a5v3fCR4wM00';
 
 export const CONTACT_EMAIL = 'jenn@energizeyourvibe.com';
 export const INSTAGRAM_URL = 'https://www.instagram.com/energizeyourvibe';

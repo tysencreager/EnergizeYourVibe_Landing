@@ -53,7 +53,14 @@ export async function onRequestPost({ request, env }) {
 // --- Event handlers ---------------------------------------------------------
 
 async function handleCheckoutCompleted(session, env) {
-  if (session.payment_status && session.payment_status !== 'paid') return;
+  // "paid" is the normal case; "no_payment_required" covers free trials and
+  // 100%-off promo codes (used for end-to-end testing and comped members).
+  if (
+    session.payment_status &&
+    !['paid', 'no_payment_required'].includes(session.payment_status)
+  ) {
+    return;
+  }
 
   const email = session.customer_details?.email || session.customer_email;
   if (!email) throw new Error('checkout.session has no customer email');
