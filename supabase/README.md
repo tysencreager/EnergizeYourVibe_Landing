@@ -48,8 +48,9 @@ the bucket + the member-read policy).
 
 **Uploading files** (Jenn / admin, via the Supabase dashboard → Storage → `library`):
 
-1. Create a folder named for the pillar key — one of: `align`, `feel`, `think`,
-   `fuel`, `connect`, `flow`, `shine`.
+1. Create a folder named for the pillar, Capitalized — one of: `Align`, `Feel`,
+   `Think`, `Fuel`, `Connect`, `Flow`, `Shine`. (Paths are case-sensitive; the
+   app expects these exact names — see `storagePath()` in `src/data/library.js`.)
 2. Upload the files into that folder. **Keep the filenames exactly** as listed in
    `src/data/library.js` — the app looks them up by that exact name.
 3. To add a brand-new resource: upload the file, then add an entry to the

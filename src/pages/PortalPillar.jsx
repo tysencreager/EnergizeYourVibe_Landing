@@ -4,7 +4,7 @@ import { ArrowLeft, Sparkles, FileText, Download, ImageIcon } from 'lucide-react
 import Blob from '../components/Blob.jsx';
 import Sunburst from '../components/Sunburst.jsx';
 import { pillars, pillarColorClasses } from '../data/pillars.js';
-import { pillarResources } from '../data/library.js';
+import { pillarResources, storagePath } from '../data/library.js';
 import { supabase } from '../lib/supabase.js';
 
 const SIGNED_URL_TTL = 60 * 60; // 1 hour
@@ -20,7 +20,7 @@ export default function PortalPillar() {
   useEffect(() => {
     if (!pillar || resources.length === 0) return;
     let cancelled = false;
-    const paths = resources.map((r) => `${pillar.key}/${r.file}`);
+    const paths = resources.map((r) => storagePath(pillar.key, r.file));
     supabase.storage
       .from('library')
       .createSignedUrls(paths, SIGNED_URL_TTL)
@@ -44,7 +44,7 @@ export default function PortalPillar() {
   const palette = pillarColorClasses[pillar.color] ?? pillarColorClasses.pink;
 
   async function handleDownload(resource) {
-    const path = `${pillar.key}/${resource.file}`;
+    const path = storagePath(pillar.key, resource.file);
     const { data, error } = await supabase.storage
       .from('library')
       .createSignedUrl(path, 60, { download: resource.file });
@@ -116,7 +116,7 @@ export default function PortalPillar() {
 
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
                 {resources.map((resource) => {
-                  const path = `${pillar.key}/${resource.file}`;
+                  const path = storagePath(pillar.key, resource.file);
                   return (
                     <ResourceCard
                       key={resource.file}
