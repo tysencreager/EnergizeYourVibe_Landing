@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { X, ArrowRight, Calendar, Check } from 'lucide-react';
 import Sunburst from './Sunburst.jsx';
 
-const STORAGE_KEY = 'eyv-launch-popup-dismissed-v3';
+// Bump the version to re-show the popup to everyone (e.g. a new campaign).
+const STORAGE_KEY = 'eyv-launch-popup-seen-v4';
 
 const foundingBenefits = [
   'Lock in the $88 monthly Founding Member rate for life (first 50 members only)',
@@ -14,7 +15,8 @@ const foundingBenefits = [
   'Energize Your Vibe Hotline, podcast, playlists, meditations, affirmations & vibe check-ins',
   'Private FB Community & personalized welcome gift',
 ];
-const OPEN_DELAY_MS = 900;
+// How long a first-time visitor browses before the popup appears.
+const OPEN_DELAY_MS = 5000;
 
 export default function LaunchPopup() {
   const [open, setOpen] = useState(false);
@@ -22,11 +24,20 @@ export default function LaunchPopup() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     try {
-      if (window.sessionStorage.getItem(STORAGE_KEY) === '1') return;
+      if (window.localStorage.getItem(STORAGE_KEY) === '1') return;
     } catch {
-      /* sessionStorage may be unavailable; just show once per load */
+      /* localStorage may be unavailable; just show once per load */
     }
-    const id = window.setTimeout(() => setOpen(true), OPEN_DELAY_MS);
+    const id = window.setTimeout(() => {
+      setOpen(true);
+      // Mark as seen on show, so it truly appears only on the first visit —
+      // even if the visitor leaves without dismissing it.
+      try {
+        window.localStorage.setItem(STORAGE_KEY, '1');
+      } catch {
+        /* best effort */
+      }
+    }, OPEN_DELAY_MS);
     return () => window.clearTimeout(id);
   }, []);
 
@@ -46,7 +57,7 @@ export default function LaunchPopup() {
 
   function close() {
     try {
-      window.sessionStorage.setItem(STORAGE_KEY, '1');
+      window.localStorage.setItem(STORAGE_KEY, '1');
     } catch {
       /* best effort */
     }
