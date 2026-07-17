@@ -65,13 +65,21 @@ export default function Membership() {
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-display text-white leading-tight mb-5 md:mb-6 drop-shadow-md">
-            Sign-ups launch{' '}
-            <span className="font-serif italic text-sun">July 17, 2026.</span>
+            Sign-ups are <span className="font-serif italic text-sun">open, sister.</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-white/95 font-medium max-w-2xl mx-auto leading-relaxed">
-            The community begins August 1, 2026. Drop your details below and we’ll send you the link the moment sign-ups go live on July 17, plus the inside scoop on the first 50 Founding Member rate.
+          <p className="text-lg md:text-xl text-white/95 font-medium max-w-2xl mx-auto leading-relaxed mb-8">
+            The community begins August 1, 2026. The first 50 Founding Members lock in <strong>$88/mo for life</strong>, and the one-time $45 Setup Fee is waived through July 31.
           </p>
+
+          <a
+            href={CHECKOUT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 bg-white text-magenta py-5 px-10 rounded-full font-bold uppercase tracking-widest text-base md:text-lg hover:bg-sun transition-colors shadow-2xl"
+          >
+            Become a Founding Member <ArrowRight size={18} />
+          </a>
         </div>
       </section>
 
@@ -92,7 +100,7 @@ export default function Membership() {
             {[
               {
                 title: 'Become a member',
-                desc: 'Tap "Reserve My Spot" and complete secure checkout with your card. Use the email address you check most — it becomes your key to everything.',
+                desc: 'Tap "Become a Founding Member" and complete secure checkout with your card. Use the email address you check most — it becomes your key to everything.',
               },
               {
                 title: 'Watch your inbox',
@@ -136,10 +144,10 @@ export default function Membership() {
                   <CheckCircle2 className="text-pink" size={36} strokeWidth={1.75} />
                 </div>
                 <h2 className="text-3xl md:text-4xl font-display text-gray-900 mb-4">
-                  You’re first in <i className="text-pink">line, sister.</i>
+                  You’re on the <i className="text-pink">list, sister.</i>
                 </h2>
                 <p className="text-gray-700 text-base md:text-lg font-medium leading-relaxed mb-8 max-w-md mx-auto">
-                  Watch your inbox — your personal sign-up link arrives the moment doors open on July 17. Can’t wait? You can reserve your spot right now.
+                  We’ll keep you posted. And remember — sign-ups are open right now, and the Founding Member rate is first come, first served.
                 </p>
                 <a
                   href={CHECKOUT_URL}
@@ -154,13 +162,13 @@ export default function Membership() {
               <>
                 <div className="text-center mb-8">
                   <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-magenta mb-3">
-                    Step one
+                    Not ready to join today?
                   </p>
                   <h2 className="text-3xl md:text-5xl font-display text-gray-900 mb-3 leading-tight">
-                    Start your <i className="text-pink">membership.</i>
+                    Stay in the <i className="text-pink">loop.</i>
                   </h2>
                   <p className="text-gray-600 text-base md:text-lg font-medium">
-                    Sign-ups open July 17. Leave your details and we’ll email you your personal sign-up link the moment doors open — you’ll be first in line for the Founding Member rate.
+                    Leave your details and we’ll keep you posted on the community, upcoming events, and how many of the 50 Founding Member spots are left. No spam, just the good stuff.
                   </p>
                 </div>
 
@@ -219,7 +227,7 @@ export default function Membership() {
                     disabled={status === 'submitting'}
                     className="block w-full bg-pink text-white py-5 px-8 rounded-full font-bold uppercase tracking-widest text-base md:text-lg hover:bg-magenta transition-colors shadow-[0_10px_30px_rgba(226,46,100,0.35)] disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    {status === 'submitting' ? 'Sending…' : 'Save My Spot'}
+                    {status === 'submitting' ? 'Sending…' : 'Keep Me Posted'}
                   </button>
 
                   <p className="text-xs text-gray-500 text-center font-medium">
@@ -243,7 +251,7 @@ export default function Membership() {
             Already a yes?
           </p>
           <h2 className="text-3xl md:text-5xl font-display text-gray-900 mb-5 leading-tight">
-            Skip the wait. <i className="text-pink">Become a Founding Member.</i>
+            Your people are <i className="text-pink">waiting.</i>
           </h2>
           <p className="text-gray-700 text-base md:text-lg font-medium leading-relaxed mb-5 max-w-2xl mx-auto">
             This is more than a membership. It’s a place to learn practical tools that help you understand yourself, strengthen your mindset, and support your emotional well-being while building genuine friendships with women who encourage you, celebrate your wins, and remind you that you don’t have to do life alone.

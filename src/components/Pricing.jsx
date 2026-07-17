@@ -101,7 +101,7 @@ export default function Pricing() {
           <div className="text-center space-y-3">
             <p className="inline-flex items-center gap-3 text-magenta text-sm font-bold bg-magenta/5 px-5 py-3 rounded-full border border-magenta/15">
               <span className="uppercase tracking-[0.2em] text-[10px] bg-magenta text-sun px-2 py-0.5 rounded-full">Launch</span>
-              <span>Sign-ups launch July 17 · Community begins August 1. Real tools. Real friendships. Real growth.</span>
+              <span>Sign-ups are open · Community begins August 1. Real tools. Real friendships. Real growth.</span>
             </p>
             <p className="text-gray-600 text-sm font-medium max-w-xl mx-auto">
               <strong className="text-gray-800">Why 90 days?</strong> Real transformation takes practice. Membership includes a 90-day commitment — time to connect, choose in, attend gatherings, build awareness, learn new tools, create healthier habits, and experience what happens when you consistently support yourself.
