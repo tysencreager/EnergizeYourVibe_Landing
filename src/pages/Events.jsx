@@ -66,13 +66,13 @@ export default function Events() {
               Full calendar <i className="text-pink">coming soon.</i>
             </h2>
             <p className="text-gray-600 text-lg md:text-xl font-medium max-w-2xl mx-auto mb-8">
-              The May and June event lineup is being finalized. Check back shortly, or reserve your spot now so you don’t miss a thing.
+              The upcoming event lineup is being finalized. Check back shortly — or become a member now so you don’t miss a thing.
             </p>
             <Link
               to="/membership"
               className="inline-flex items-center gap-3 bg-magenta text-white py-4 px-8 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-pink transition-colors shadow-lg"
             >
-              Reserve My Spot <ArrowRight size={18} />
+              Become a Member <ArrowRight size={18} />
             </Link>
           </div>
 
@@ -153,7 +153,7 @@ export default function Events() {
               to="/membership"
               className="inline-flex items-center gap-3 bg-sun text-magenta py-4 px-8 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-white transition-colors shadow-lg"
             >
-              Reserve My Spot <ArrowRight size={18} />
+              Become a Member <ArrowRight size={18} />
             </Link>
           </div>
         </div>

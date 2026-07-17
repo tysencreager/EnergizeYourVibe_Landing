@@ -88,7 +88,7 @@ export default function Pillars() {
             to="/membership"
             className="inline-flex items-center gap-3 bg-magenta text-white py-5 px-10 rounded-full font-bold uppercase tracking-widest text-base hover:bg-pink transition-colors shadow-lg"
           >
-            Reserve Your Spot <ArrowRight size={18} />
+            Become a Member <ArrowRight size={18} />
           </Link>
         </div>
       </section>

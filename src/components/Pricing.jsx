@@ -40,8 +40,8 @@ export default function Pricing() {
       <Blob tone="magenta" size="xl" className="bottom-0 -left-40" opacity={25} slow />
       <div className="max-w-5xl mx-auto px-5 md:px-6 text-center relative z-10">
         <h2 className="text-4xl md:text-7xl font-display mb-6 text-white drop-shadow-md leading-tight">
-          Reserve your spot <br className="hidden md:block" />
-          <span className="font-serif italic text-sun">in the community.</span>
+          Your place in the community <br className="hidden md:block" />
+          <span className="font-serif italic text-sun">is ready for you.</span>
         </h2>
         <p className="text-xl md:text-2xl text-white/95 mb-14 max-w-2xl mx-auto font-medium drop-shadow-sm">
           Say yes to coming back home to yourself. Stop figuring it out alone.
