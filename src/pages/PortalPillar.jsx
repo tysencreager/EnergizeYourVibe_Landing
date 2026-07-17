@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Sparkles, FileText, Download, ImageIcon } from 'lucide-react';
+import { ArrowLeft, Sparkles, FileText, Download, ImageIcon, X, ExternalLink } from 'lucide-react';
 import Blob from '../components/Blob.jsx';
 import Sunburst from '../components/Sunburst.jsx';
 import { pillars, pillarColorClasses } from '../data/pillars.js';
@@ -36,6 +36,7 @@ export default function PortalPillar() {
   const [resources, setResources] = useState([]);
   const [previews, setPreviews] = useState({}); // path -> signed URL
   const [loading, setLoading] = useState(true);
+  const [lightbox, setLightbox] = useState(null); // resource being previewed
 
   useEffect(() => {
     if (!pillar) return;
@@ -115,6 +116,20 @@ export default function PortalPillar() {
     a.remove();
   }
 
+  // Preview: images open in a lightbox; PDFs open in a new tab where the
+  // browser's built-in viewer shows them without forcing a download.
+  async function handlePreview(resource) {
+    if (resource.kind === 'image') {
+      setLightbox(resource);
+      return;
+    }
+    const path = `${storageFolder(pillar.key)}/${resource.file}`;
+    const { data } = await supabase.storage
+      .from('library')
+      .createSignedUrl(path, SIGNED_URL_TTL);
+    if (data?.signedUrl) window.open(data.signedUrl, '_blank', 'noopener');
+  }
+
   return (
     <>
       {/* HERO */}
@@ -172,7 +187,7 @@ export default function PortalPillar() {
                 </h2>
                 <p className="text-gray-600 text-base md:text-lg font-medium mt-5 max-w-xl mx-auto">
                   Guides, prompts, and worksheets to practice this pillar. Tap any card to
-                  download and print your copy.
+                  preview it, or use the pink button to download and print your copy.
                 </p>
               </div>
 
@@ -185,6 +200,7 @@ export default function PortalPillar() {
                       resource={resource}
                       palette={palette}
                       previewUrl={previews[path]}
+                      onPreview={() => handlePreview(resource)}
                       onDownload={() => handleDownload(resource)}
                     />
                   );
@@ -213,56 +229,140 @@ export default function PortalPillar() {
           )}
         </div>
       </section>
+
+      {lightbox && (
+        <Lightbox
+          resource={lightbox}
+          previewUrl={previews[`${storageFolder(pillar.key)}/${lightbox.file}`]}
+          onDownload={() => handleDownload(lightbox)}
+          onClose={() => setLightbox(null)}
+        />
+      )}
     </>
   );
 }
 
-function ResourceCard({ resource, palette, previewUrl, onDownload }) {
+function ResourceCard({ resource, palette, previewUrl, onPreview, onDownload }) {
   const isImage = resource.kind === 'image';
 
   return (
-    <button
-      type="button"
-      onClick={onDownload}
-      className="group text-left bento-card glass border-2 border-pink/15 overflow-hidden hover:-translate-y-1 hover:shadow-2xl transition-all"
-    >
-      {/* Preview */}
-      <div className="relative aspect-[4/5] bg-white overflow-hidden border-b border-pink/10">
-        {isImage && previewUrl ? (
-          <img
-            src={previewUrl}
-            alt={resource.title}
-            loading="lazy"
-            className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500"
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center bg-soft-dawn">
-            <span className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl ${palette.chip}`}>
-              {isImage ? (
-                <ImageIcon size={30} strokeWidth={1.5} />
-              ) : (
-                <FileText size={30} strokeWidth={1.5} />
-              )}
+    <div className="group relative bento-card glass border-2 border-pink/15 overflow-hidden hover:-translate-y-1 hover:shadow-2xl transition-all">
+      {/* Preview area — click to view */}
+      <button
+        type="button"
+        onClick={onPreview}
+        aria-label={`Preview ${resource.title}`}
+        className="block w-full text-left"
+      >
+        <div className="relative aspect-[4/5] bg-white overflow-hidden border-b border-pink/10">
+          {isImage && previewUrl ? (
+            <img
+              src={previewUrl}
+              alt={resource.title}
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center bg-soft-dawn">
+              <span className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl ${palette.chip}`}>
+                {isImage ? (
+                  <ImageIcon size={30} strokeWidth={1.5} />
+                ) : (
+                  <FileText size={30} strokeWidth={1.5} />
+                )}
+              </span>
+            </div>
+          )}
+          {!isImage && (
+            <span className="absolute top-3 left-3 text-[9px] font-bold uppercase tracking-[0.2em] bg-white/90 text-magenta px-2.5 py-1 rounded-full shadow-sm">
+              PDF
             </span>
-          </div>
-        )}
-        {!isImage && (
-          <span className="absolute top-3 left-3 text-[9px] font-bold uppercase tracking-[0.2em] bg-white/90 text-magenta px-2.5 py-1 rounded-full shadow-sm">
-            PDF
+          )}
+          {/* Hover hint */}
+          <span className="absolute inset-x-0 bottom-0 flex items-center justify-center gap-2 py-2.5 bg-gradient-to-t from-black/45 to-transparent text-white text-[10px] font-bold uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+            {isImage ? 'Tap to view' : (<>Opens in new tab <ExternalLink size={11} strokeWidth={2.5} /></>)}
           </span>
-        )}
+        </div>
+
+        <div className="p-5 pr-16">
+          <h3 className="font-display text-lg text-gray-900 leading-tight">{resource.title}</h3>
+        </div>
+      </button>
+
+      {/* Explicit download control */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          onDownload();
+        }}
+        aria-label={`Download ${resource.title}`}
+        title="Download"
+        className={`absolute bottom-4 right-4 inline-flex items-center justify-center w-10 h-10 rounded-full ${palette.bg} text-white shadow-md hover:scale-110 transition-transform`}
+      >
+        <Download size={17} strokeWidth={2} />
+      </button>
+    </div>
+  );
+}
+
+function Lightbox({ resource, previewUrl, onDownload, onClose }) {
+  useEffect(() => {
+    function onKey(e) {
+      if (e.key === 'Escape') onClose();
+    }
+    window.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-sm flex flex-col items-center justify-center p-4 sm:p-8"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={resource.title}
+    >
+      {/* Top bar */}
+      <div
+        className="w-full max-w-4xl flex items-center justify-between gap-4 mb-3"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <p className="text-white font-display text-lg sm:text-xl truncate">{resource.title}</p>
+        <div className="flex items-center gap-2 shrink-0">
+          <button
+            type="button"
+            onClick={onDownload}
+            className="inline-flex items-center gap-2 bg-pink text-white text-xs font-bold uppercase tracking-widest px-4 py-2.5 rounded-full hover:bg-magenta transition-colors"
+          >
+            <Download size={14} strokeWidth={2} /> Download
+          </button>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close preview"
+            className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/15 text-white hover:bg-white/30 transition-colors"
+          >
+            <X size={18} strokeWidth={2} />
+          </button>
+        </div>
       </div>
 
-      {/* Meta */}
-      <div className="p-5 flex items-center justify-between gap-3">
-        <h3 className="font-display text-lg text-gray-900 leading-tight">{resource.title}</h3>
-        <span
-          className={`inline-flex items-center justify-center w-10 h-10 rounded-full ${palette.bg} text-white shrink-0 shadow-md group-hover:scale-110 transition-transform`}
-          aria-hidden="true"
-        >
-          <Download size={17} strokeWidth={2} />
-        </span>
-      </div>
-    </button>
+      {/* Image */}
+      {previewUrl ? (
+        <img
+          src={previewUrl}
+          alt={resource.title}
+          onClick={(e) => e.stopPropagation()}
+          className="max-w-full max-h-[82vh] rounded-2xl shadow-2xl object-contain bg-white"
+        />
+      ) : (
+        <p className="text-white/80 font-medium">Loading preview…</p>
+      )}
+    </div>
   );
 }
