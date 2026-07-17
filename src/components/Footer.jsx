@@ -69,7 +69,7 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#" className="inline-flex items-center gap-2 hover:text-sun transition-colors">
+                <a href="https://www.facebook.com/profile.php?id=61575276073421" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-sun transition-colors">
                   <Facebook size={16} strokeWidth={1.5} /> Facebook Community
                 </a>
               </li>
