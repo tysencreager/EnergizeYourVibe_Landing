@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { X, ArrowRight, Calendar, Check } from 'lucide-react';
 import Sunburst from './Sunburst.jsx';
 
-const STORAGE_KEY = 'eyv-launch-popup-dismissed-v2';
+const STORAGE_KEY = 'eyv-launch-popup-dismissed-v3';
 
 const foundingBenefits = [
   'Lock in the $88 monthly Founding Member rate for life (first 50 members only)',
@@ -99,7 +99,7 @@ export default function LaunchPopup() {
         <div className="relative z-10 min-h-0 overflow-y-auto overflow-x-hidden p-7 sm:p-10 text-white text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 border border-white/30 backdrop-blur-md text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] mb-5">
             <Calendar size={12} strokeWidth={1.75} className="text-sun" />
-            Sign-ups launch July 17 · Community begins August 1
+            Sign-ups are OPEN · Community begins August 1
           </div>
 
           <h2
