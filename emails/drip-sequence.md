@@ -15,11 +15,6 @@ Email 3 → wait 4 days → Email 4.
 Sender for all emails: **Jenn from Energize Your Vibe** —
 jenn@energizeyourvibe.com.
 
-> ⚠️ **Facebook link needed:** the welcome email links to the private
-> Facebook community, currently a `FACEBOOK_GROUP_URL_PLACEHOLDER` in
-> `01-welcome.html`. Replace it with the real group URL before sending
-> (the site footer needs the same URL — it currently points at `#`).
-
 ---
 
 ## Email 1 — sent immediately: Welcome

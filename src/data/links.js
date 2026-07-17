@@ -12,6 +12,7 @@ export const CHECKOUT_URL =
 
 export const CONTACT_EMAIL = 'jenn@energizeyourvibe.com';
 export const INSTAGRAM_URL = 'https://www.instagram.com/energizeyourvibe';
+export const FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61575276073421';
 
 // Formspree endpoint for the membership waitlist form on /membership.
 export const WAITLIST_FORM_ENDPOINT = 'https://formspree.io/f/mykoegpy';
