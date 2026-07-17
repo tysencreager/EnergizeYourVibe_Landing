@@ -33,7 +33,7 @@ export default function PortalInactive() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 bg-magenta text-white py-4 px-8 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-pink transition-colors shadow-lg"
           >
-            Reserve my spot <ArrowRight size={16} />
+            Become a member <ArrowRight size={16} />
           </a>
           <button
             onClick={() => signOut()}

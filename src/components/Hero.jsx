@@ -58,7 +58,7 @@ export default function Hero() {
             to="/membership"
             className="w-full sm:w-auto bg-magenta text-white py-4 px-8 rounded-full font-bold uppercase tracking-widest text-base glow-pulse hover:shadow-[0_15px_40px_rgba(183,21,86,0.75)] transition-all hover:-translate-y-1 flex items-center justify-center gap-3"
           >
-            Reserve Your Spot <ArrowRight size={18} />
+            Become a Member <ArrowRight size={18} />
           </Link>
           <Link
             to="/about"

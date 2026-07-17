@@ -155,7 +155,7 @@ export default function Membership() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 bg-magenta text-white py-4 px-8 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-pink transition-colors shadow-lg"
                 >
-                  Reserve My Spot Now <ArrowRight size={18} />
+                  Become a Founding Member <ArrowRight size={18} />
                 </a>
               </div>
             ) : (
@@ -265,7 +265,7 @@ export default function Membership() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 bg-magenta text-white py-4 px-8 rounded-full font-bold uppercase tracking-widest text-sm md:text-base hover:bg-pink transition-colors shadow-lg"
           >
-            Reserve My Spot <ArrowRight size={18} />
+            Become a Founding Member <ArrowRight size={18} />
           </a>
         </div>
       </section>
