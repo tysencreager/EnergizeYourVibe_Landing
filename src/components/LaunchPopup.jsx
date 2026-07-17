@@ -77,7 +77,7 @@ export default function LaunchPopup() {
       />
 
       {/* Card */}
-      <div className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto overflow-x-hidden rounded-3xl shadow-2xl border border-white/40 animate-[fade-up_450ms_cubic-bezier(0.16,1,0.3,1)_both]">
+      <div className="relative w-full max-w-xl max-h-[90vh] overflow-hidden rounded-3xl shadow-2xl border border-white/40 animate-[fade-up_450ms_cubic-bezier(0.16,1,0.3,1)_both] flex flex-col">
         {/* Gradient background + decorative sunburst */}
         <div className="absolute inset-0 bg-gradient-to-br from-magenta via-pink to-orange grain" aria-hidden="true" />
         <Sunburst
@@ -95,8 +95,8 @@ export default function LaunchPopup() {
           <X size={18} strokeWidth={1.75} />
         </button>
 
-        {/* Content */}
-        <div className="relative z-10 p-7 sm:p-10 text-white text-center">
+        {/* Scrollable content */}
+        <div className="relative z-10 min-h-0 overflow-y-auto overflow-x-hidden p-7 sm:p-10 text-white text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 border border-white/30 backdrop-blur-md text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] mb-5">
             <Calendar size={12} strokeWidth={1.75} className="text-sun" />
             Sign-ups launch July 17 · Community begins August 1
