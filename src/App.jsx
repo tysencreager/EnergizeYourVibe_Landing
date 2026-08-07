@@ -9,6 +9,8 @@ import Faq from './pages/Faq.jsx';
 import Events from './pages/Events.jsx';
 import Shop from './pages/Shop.jsx';
 import Membership from './pages/Membership.jsx';
+import VibeReset from './pages/VibeReset.jsx';
+import VibeResetThankYou from './pages/VibeResetThankYou.jsx';
 import Terms from './pages/Terms.jsx';
 import Privacy from './pages/Privacy.jsx';
 import Cookies from './pages/Cookies.jsx';
@@ -32,6 +34,8 @@ export default function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/membership" element={<Membership />} />
+        <Route path="/vibe-reset" element={<VibeReset />} />
+        <Route path="/vibe-reset/thank-you" element={<VibeResetThankYou />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/cookies" element={<Cookies />} />

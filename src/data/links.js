@@ -17,3 +17,17 @@ export const FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61575276073
 
 // Formspree endpoint for the membership waitlist form on /membership.
 export const WAITLIST_FORM_ENDPOINT = 'https://formspree.io/f/mykoegpy';
+
+// --- Free 10-Minute Vibe Reset lead funnel -----------------------------------
+
+// The downloadable freebie. Replace the file at public/assets/ with the final
+// designed PDF (same filename) — no code changes needed.
+export const VIBE_RESET_PDF_URL = '/assets/10-minute-vibe-reset.pdf';
+
+// Pages Function that adds the lead to MailerLite (see functions/api/).
+export const VIBE_RESET_SIGNUP_ENDPOINT = '/api/vibe-reset-signup';
+
+// Flip to true once the MailerLite "Vibe Reset" delivery automation is live
+// (see emails/vibe-reset-sequence.md) so the thank-you page can honestly say
+// "we've also sent a copy to your inbox."
+export const VIBE_RESET_EMAIL_DELIVERY_LIVE = false;

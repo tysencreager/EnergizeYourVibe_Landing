@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { X, ArrowRight, Calendar, Check } from 'lucide-react';
 import Sunburst from './Sunburst.jsx';
 
@@ -18,9 +18,12 @@ const OPEN_DELAY_MS = 900;
 
 export default function LaunchPopup() {
   const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
+  // The Vibe Reset funnel is a focused conversion flow — don't interrupt it.
+  const suppressed = pathname.startsWith('/vibe-reset');
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || suppressed) return;
     try {
       if (window.sessionStorage.getItem(STORAGE_KEY) === '1') return;
     } catch {
@@ -28,7 +31,7 @@ export default function LaunchPopup() {
     }
     const id = window.setTimeout(() => setOpen(true), OPEN_DELAY_MS);
     return () => window.clearTimeout(id);
-  }, []);
+  }, [suppressed]);
 
   useEffect(() => {
     if (!open) return;
@@ -60,7 +63,7 @@ export default function LaunchPopup() {
     e;
   }
 
-  if (!open) return null;
+  if (!open || suppressed) return null;
 
   return (
     <div
