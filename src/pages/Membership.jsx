@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ArrowRight, CheckCircle2, Mail, Phone, User, Sparkles } from 'lucide-react';
 import Blob from '../components/Blob.jsx';
 import Sunburst from '../components/Sunburst.jsx';
+import MembershipPreview from '../components/MembershipPreview.jsx';
 import { CHECKOUT_URL, WAITLIST_FORM_ENDPOINT } from '../data/links.js';
 
 const initialForm = {
@@ -61,7 +62,7 @@ export default function Membership() {
         <div className="max-w-4xl mx-auto relative z-10 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 border border-white/30 backdrop-blur-md text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] mb-6 text-white">
             <Sparkles size={14} strokeWidth={1.75} className="text-sun" />
-            Community begins August 1, 2026
+            The community is live
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-display text-white leading-tight mb-5 md:mb-6 drop-shadow-md">
@@ -69,7 +70,7 @@ export default function Membership() {
           </h1>
 
           <p className="text-lg md:text-xl text-white/95 font-medium max-w-2xl mx-auto leading-relaxed mb-8">
-            The community begins August 1, 2026. The first 50 Founding Members lock in <strong>$88/mo for life</strong>, and the one-time $45 Setup Fee is waived through July 31.
+            The community is live and growing. The first 50 Founding Members lock in <strong>$88/mo for life</strong> — and there’s still no sign-up fee, so it’s just $88 to get started.
           </p>
 
           <a
@@ -130,6 +131,9 @@ export default function Membership() {
           </p>
         </div>
       </section>
+
+      {/* A TASTE OF THE MEMBERSHIP */}
+      <MembershipPreview />
 
       {/* FORM */}
       <section className="relative py-20 md:py-24 px-5 md:px-6 bg-soft-dawn overflow-hidden">
@@ -257,7 +261,7 @@ export default function Membership() {
             This is more than a membership. It’s a place to learn practical tools that help you understand yourself, strengthen your mindset, and support your emotional well-being while building genuine friendships with women who encourage you, celebrate your wins, and remind you that you don’t have to do life alone.
           </p>
           <p className="text-gray-700 text-base md:text-lg font-medium leading-relaxed mb-8 max-w-2xl mx-auto">
-            The first 50 members lock in the <strong>$88/mo Founding Member rate for life</strong>, and your one-time $45 Setup Fee is waived through July 31. Membership includes a 90-day commitment.
+            The first 50 members lock in the <strong>$88/mo Founding Member rate for life</strong>, and there’s still no sign-up fee — just $88 to get started. Membership includes a 90-day commitment.
           </p>
           <a
             href={CHECKOUT_URL}

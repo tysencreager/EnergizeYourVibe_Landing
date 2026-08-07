@@ -1,6 +1,7 @@
 // Stripe-hosted Payment Link for the Energize Your Vibe membership.
-// $88/mo recurring subscription + one-time $45 Setup Fee (waived for
-// Founding Members through July 31, 2026 — confirm the Payment Link matches).
+// $88/mo recurring subscription, no sign-up fee for now (a one-time $45
+// Setup Fee gets added once Founding Member enrollment closes — confirm
+// the Payment Link matches).
 //
 // Driven by VITE_STRIPE_CHECKOUT_URL so we can point local dev / Cloudflare
 // Preview at the TEST-mode Payment Link, and Cloudflare Production at the

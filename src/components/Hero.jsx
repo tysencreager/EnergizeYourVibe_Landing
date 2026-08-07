@@ -70,9 +70,9 @@ export default function Hero() {
 
         <p className="inline-flex items-center gap-3 text-xs md:text-sm font-bold text-magenta mt-6 bg-sun/95 backdrop-blur-md px-5 py-2.5 rounded-full border border-magenta/15 shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-pink animate-pulse" />
-          <span className="uppercase tracking-[0.2em] text-[10px] md:text-xs">Launch</span>
+          <span className="uppercase tracking-[0.2em] text-[10px] md:text-xs">Now Live</span>
           <span className="hidden sm:inline text-magenta/40">|</span>
-          <span>Sign-ups are open · Community begins August 1. First 50 Founding Members lock in $88/mo for life, $45 Setup Fee waived through July 31.</span>
+          <span>The community is live · Still no sign-up fee — just $88 to join. First 50 Founding Members lock in $88/mo for life.</span>
         </p>
       </div>
     </section>

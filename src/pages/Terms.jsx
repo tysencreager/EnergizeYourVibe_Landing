@@ -25,15 +25,16 @@ export default function Terms() {
       <h2>2. Membership &amp; Founding Member Pricing</h2>
       <p>
         Our membership is a recurring subscription billed monthly unless otherwise
-        described at checkout. During our launch period, the first 50 members who join
+        described at checkout. The first 50 members who join
         lock in the introductory &ldquo;Founding Member&rdquo; rate of $88/month for the
         lifetime of their continuous membership. If membership is cancelled, this
         lifetime rate is forfeited and any future membership will be offered at the
         then-current standard rate.
       </p>
       <p>
-        Sign-ups launch July 17, 2026, and the community begins August 1, 2026. Founding
-        Members who join through July 31, 2026 have the one-time $45 Setup Fee waived.
+        There is currently no sign-up or Setup Fee — joining costs only your monthly
+        membership. Once Founding Member enrollment is complete, a one-time $45 Setup
+        Fee will apply to new memberships and will be disclosed at checkout.
       </p>
 
       <h3>90-Day Commitment</h3>

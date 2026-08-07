@@ -9,8 +9,8 @@ const perks = [
     text: 'Lock in the $88 monthly Founding Member rate for life (first 50 members only).',
   },
   {
-    bold: 'Setup fee waived:',
-    text: 'Your one-time $45 Setup Fee is waived through July 31.',
+    bold: 'No sign-up fee:',
+    text: 'There’s still no initial sign-up fee — for now it’s just $88 to join. (A one-time Setup Fee will be added once our Founding Member spots are filled.)',
   },
   {
     bold: 'Your growth roadmap:',
@@ -52,7 +52,6 @@ export default function Pricing() {
             Founding Members · First 50 Only
           </div>
 
-          {/* NOTE: Jenn is still honing final pricing — numbers below reflect her latest notes (July 2026). */}
           <div className="text-center mb-8 pt-6">
             <h3 className="text-2xl md:text-3xl font-display text-gray-900 mb-4">
               Founding Membership
@@ -62,7 +61,7 @@ export default function Pricing() {
               <span className="text-gray-500 font-bold text-xl mb-2">/ month</span>
             </div>
             <p className="text-sm text-gray-500 mt-3 font-medium">
-              One-time $45 Setup Fee <strong className="text-magenta">waived through July 31</strong>
+              Still <strong className="text-magenta">no sign-up fee</strong> — just $88 to get started
             </p>
           </div>
 
@@ -84,10 +83,10 @@ export default function Pricing() {
 
           <div className="bg-sun/60 rounded-2xl p-5 mb-8 text-center border-2 border-gold/50">
             <p className="text-gray-900 font-display text-xl md:text-2xl mb-1">
-              Join before August 1: just $88 to sign up
+              Still no sign-up fee: just $88 to sign up
             </p>
             <p className="text-sm font-bold text-magenta">
-              (First month $88 · one-time $45 Setup Fee waived through July 31)
+              (A one-time Setup Fee will only be added once our Founding Member spots are filled)
             </p>
           </div>
 
@@ -100,8 +99,8 @@ export default function Pricing() {
 
           <div className="text-center space-y-3">
             <p className="inline-flex items-center gap-3 text-magenta text-sm font-bold bg-magenta/5 px-5 py-3 rounded-full border border-magenta/15">
-              <span className="uppercase tracking-[0.2em] text-[10px] bg-magenta text-sun px-2 py-0.5 rounded-full">Launch</span>
-              <span>Sign-ups are open · Community begins August 1. Real tools. Real friendships. Real growth.</span>
+              <span className="uppercase tracking-[0.2em] text-[10px] bg-magenta text-sun px-2 py-0.5 rounded-full">Live</span>
+              <span>The community is live · Sign-ups are open. Real tools. Real friendships. Real growth.</span>
             </p>
             <p className="text-gray-600 text-sm font-medium max-w-xl mx-auto">
               <strong className="text-gray-800">Why 90 days?</strong> Real transformation takes practice. Membership includes a 90-day commitment — time to connect, choose in, attend gatherings, build awareness, learn new tools, create healthier habits, and experience what happens when you consistently support yourself.
