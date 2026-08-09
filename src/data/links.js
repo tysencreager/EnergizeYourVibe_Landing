@@ -30,4 +30,4 @@ export const VIBE_RESET_SIGNUP_ENDPOINT = '/api/vibe-reset-signup';
 // Flip to true once the MailerLite "Vibe Reset" delivery automation is live
 // (see emails/vibe-reset-sequence.md) so the thank-you page can honestly say
 // "we've also sent a copy to your inbox."
-export const VIBE_RESET_EMAIL_DELIVERY_LIVE = false;
+export const VIBE_RESET_EMAIL_DELIVERY_LIVE = true;
