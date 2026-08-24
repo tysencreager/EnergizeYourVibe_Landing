@@ -271,7 +271,7 @@ function QuizPreview() {
                 to="/membership"
                 className="inline-flex items-center gap-3 bg-magenta text-white py-3.5 px-8 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-pink transition-colors shadow-lg"
               >
-                Unlock the Full Quiz <ArrowRight size={15} />
+                Unlock the Full Quiz by Becoming a Member <ArrowRight size={15} />
               </Link>
               <button
                 type="button"
