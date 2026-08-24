@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   ArrowRight,
   BookOpen,
@@ -12,6 +12,7 @@ import Blob from './Blob.jsx';
 import Reveal from './Reveal.jsx';
 import { pillars, pillarColorClasses } from '../data/pillars.js';
 import { assessmentScale, assessmentPillars } from '../data/assessment.js';
+import { CHECKOUT_URL } from '../data/links.js';
 
 /*
   A taste of the membership — sample texts, a peek inside the member
@@ -59,6 +60,27 @@ const totalAssessmentStatements = assessmentPillars.reduce(
   0
 );
 
+/*
+  This section renders on both the homepage and /membership. On the homepage
+  the CTAs lead to /membership, but on /membership itself that link would go
+  nowhere — so there they open Stripe checkout directly instead.
+*/
+function MembershipCta({ className, children }) {
+  const { pathname } = useLocation();
+  if (pathname.startsWith('/membership')) {
+    return (
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className={className}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link to="/membership" className={className}>
+      {children}
+    </Link>
+  );
+}
+
 export default function MembershipPreview() {
   return (
     <section id="preview" className="relative z-10 py-20 md:py-28 px-5 md:px-6 bg-soft-sunset overflow-hidden">
@@ -95,12 +117,9 @@ export default function MembershipPreview() {
         </Reveal>
 
         <div className="text-center mt-12">
-          <Link
-            to="/membership"
-            className="inline-flex items-center gap-3 bg-pink text-white py-4 px-10 rounded-full font-bold uppercase tracking-widest text-sm md:text-base hover:bg-magenta transition-colors shadow-[0_10px_30px_rgba(226,46,100,0.35)]"
-          >
+          <MembershipCta className="inline-flex items-center gap-3 bg-pink text-white py-4 px-10 rounded-full font-bold uppercase tracking-widest text-sm md:text-base hover:bg-magenta transition-colors shadow-[0_10px_30px_rgba(226,46,100,0.35)]">
             Experience It All Inside <ArrowRight size={18} />
-          </Link>
+          </MembershipCta>
         </div>
       </div>
     </section>
@@ -267,12 +286,9 @@ function QuizPreview() {
               where to start first.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                to="/membership"
-                className="inline-flex items-center gap-3 bg-magenta text-white py-3.5 px-8 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-pink transition-colors shadow-lg"
-              >
+              <MembershipCta className="inline-flex items-center gap-3 bg-magenta text-white py-3.5 px-8 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-pink transition-colors shadow-lg">
                 Unlock the Full Quiz by Becoming a Member <ArrowRight size={15} />
-              </Link>
+              </MembershipCta>
               <button
                 type="button"
                 onClick={restart}
