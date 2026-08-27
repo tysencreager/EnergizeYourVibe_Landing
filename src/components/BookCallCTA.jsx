@@ -10,10 +10,10 @@ import { track } from '../lib/track.js';
 // which drops the lead into MailerLite so Jenn can reach out.
 
 const TIME_OPTIONS = [
-  'Flexible — any time works',
-  'Morning (9am – 12pm)',
-  'Afternoon (12pm – 4pm)',
-  'Evening (4pm – 8pm)',
+  'Flexible, any time works',
+  'Morning (9am to 12pm)',
+  'Afternoon (12pm to 4pm)',
+  'Evening (4pm to 8pm)',
 ];
 
 export default function BookCallCTA() {
@@ -108,9 +108,9 @@ export default function BookCallCTA() {
                   Curious? Let&rsquo;s <span className="font-serif italic text-pink font-semibold">chat.</span>
                 </h2>
                 <p className="text-gray-600 text-base md:text-lg font-medium leading-relaxed mb-6 max-w-md mx-auto md:mx-0">
-                  Book a free 30-minute call with Jenn — no pressure, no pitch. Share
-                  where you&rsquo;re at, ask anything about the community, and see if
-                  Energize Your Vibe feels like your kind of place.
+                  Book a free 30-minute call with Jenn to ask questions about the
+                  community, discover what you or your body needs, or simply chat
+                  with a sister. No pressure, no pitch. Just a real conversation.
                 </p>
                 <ul className="space-y-3 text-left max-w-md mx-auto md:mx-0">
                   {[
@@ -211,7 +211,7 @@ export default function BookCallCTA() {
                       </label>
                     </div>
 
-                    {/* Honeypot — hidden from real visitors, tempting to bots. */}
+                    {/* Honeypot - hidden from real visitors, tempting to bots. */}
                     <div className="hidden" aria-hidden="true">
                       <label>
                         Website

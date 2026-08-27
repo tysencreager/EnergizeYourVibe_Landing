@@ -32,7 +32,7 @@ export default function Terms() {
         then-current standard rate.
       </p>
       <p>
-        There is currently no sign-up or Setup Fee — joining costs only your monthly
+        There is currently no sign-up or Setup Fee; joining costs only your monthly
         membership. Once Founding Member enrollment is complete, a one-time $45 Setup
         Fee will apply to new memberships and will be disclosed at checkout.
       </p>

@@ -10,7 +10,7 @@ const perks = [
   },
   {
     bold: 'No sign-up fee:',
-    text: 'There’s still no initial sign-up fee — for now it’s just $88 to join. (A one-time Setup Fee will be added once our Founding Member spots are filled.)',
+    text: 'There’s still no initial sign-up fee. For now it’s just $88 to join. (A one-time Setup Fee will be added once our Founding Member spots are filled.)',
   },
   {
     bold: 'Your growth roadmap:',
@@ -61,7 +61,7 @@ export default function Pricing() {
               <span className="text-gray-500 font-bold text-xl mb-2">/ month</span>
             </div>
             <p className="text-sm text-gray-500 mt-3 font-medium">
-              Still <strong className="text-magenta">no sign-up fee</strong> — just $88 to get started
+              Still <strong className="text-magenta">no sign-up fee</strong>, just $88 to get started
             </p>
           </div>
 
@@ -103,7 +103,7 @@ export default function Pricing() {
               <span>The community is live · Sign-ups are open. Real tools. Real friendships. Real growth.</span>
             </p>
             <p className="text-gray-600 text-sm font-medium max-w-xl mx-auto">
-              <strong className="text-gray-800">Why 90 days?</strong> Real transformation takes practice. Membership includes a 90-day commitment — time to connect, choose in, attend gatherings, build awareness, learn new tools, create healthier habits, and experience what happens when you consistently support yourself.
+              <strong className="text-gray-800">Why 90 days?</strong> Real transformation takes practice. Membership includes a 90-day commitment: time to connect, choose in, attend gatherings, build awareness, learn new tools, create healthier habits, and experience what happens when you consistently support yourself.
             </p>
           </div>
         </div>

@@ -24,7 +24,7 @@ export default function About() {
               The heart behind <span className="font-serif italic text-gradient font-semibold">Energize Your Vibe.</span>
             </h1>
             <p className="text-lg md:text-xl text-magenta/90 font-medium leading-relaxed mb-6">
-              Jenn is the founder of Energize Your Vibe, a high vibin&rsquo; community for women who want to connect and build meaningful relationships. For women who want to play, grow, and be real — who don&rsquo;t want to do life alone.
+              Jenn is the founder of Energize Your Vibe, a high vibin&rsquo; community for women who want to connect and build meaningful relationships. For women who want to play, grow, and be real, who don&rsquo;t want to do life alone.
             </p>
             <Link
               to="/membership"
@@ -220,7 +220,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* OUR MISSION — Jenn's words */}
+      {/* OUR MISSION - Jenn's words */}
       <section className="relative py-20 md:py-28 px-5 md:px-6 bg-white overflow-hidden">
         <Blob tone="sun" size="xl" className="-top-40 -left-40" opacity={25} slow />
         <Blob tone="pink" size="lg" className="bottom-0 -right-32" opacity={12} />

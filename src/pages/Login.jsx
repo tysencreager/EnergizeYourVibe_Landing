@@ -100,12 +100,12 @@ export default function Login() {
                   <>
                     Find the email from <strong>Energize Your Vibe</strong>{' '}
                     (jenn@energizeyourvibe.com). The first time, it may land in your{' '}
-                    <strong>Spam or Promotions</strong> folder — if so, mark it &ldquo;Not
+                    <strong>Spam or Promotions</strong> folder. If so, mark it &ldquo;Not
                     spam.&rdquo;
                   </>,
                   <>
                     Tap the big <strong>&ldquo;Sign me in&rdquo;</strong> button inside. That&rsquo;s
-                    it — no password, ever.
+                    it. No password, ever.
                   </>,
                 ].map((step, i) => (
                   <li key={i} className="flex gap-3 items-start">
@@ -155,7 +155,7 @@ export default function Login() {
                   Welcome back, <i className="text-pink">sister.</i>
                 </h1>
                 <p className="text-gray-600 text-base md:text-lg font-medium">
-                  There&rsquo;s no password here — signing in is as easy as opening an email.
+                  There&rsquo;s no password here. Signing in is as easy as opening an email.
                 </p>
               </div>
 
@@ -166,9 +166,9 @@ export default function Login() {
                 </p>
                 <ol className="space-y-2.5">
                   {[
-                    { icon: <Mail size={16} strokeWidth={2} />, text: 'Type your email below — the same one you used when you joined.' },
+                    { icon: <Mail size={16} strokeWidth={2} />, text: 'Type your email below, the same one you used when you joined.' },
                     { icon: <Inbox size={16} strokeWidth={2} />, text: 'We instantly email you a personal sign-in button.' },
-                    { icon: <MousePointerClick size={16} strokeWidth={2} />, text: 'Tap the button in that email — and you’re in. That’s the whole thing.' },
+                    { icon: <MousePointerClick size={16} strokeWidth={2} />, text: 'Tap the button in that email, and you’re in. That’s the whole thing.' },
                   ].map((step, i) => (
                     <li key={i} className="flex gap-3 items-center text-sm text-gray-700 font-medium leading-snug">
                       <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-pink/10 text-magenta shrink-0">

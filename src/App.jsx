@@ -6,6 +6,7 @@ import About from './pages/About.jsx';
 import Pillars from './pages/Pillars.jsx';
 import EyvMethod from './pages/EyvMethod.jsx';
 import Faq from './pages/Faq.jsx';
+import Contact from './pages/Contact.jsx';
 import Events from './pages/Events.jsx';
 import Shop from './pages/Shop.jsx';
 import Membership from './pages/Membership.jsx';
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="/pillars" element={<Pillars />} />
         <Route path="/eyv-method" element={<EyvMethod />} />
         <Route path="/faq" element={<Faq />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/events" element={<Events />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/membership" element={<Membership />} />

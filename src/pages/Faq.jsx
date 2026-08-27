@@ -20,7 +20,7 @@ const faqs = [
   },
   {
     q: 'Is this a networking group?',
-    a: "No. Friendships naturally happen, but Energize Your Vibe isn't a business networking community. It's a place where women can simply be women. If you own a business, you're welcome here, but this space is about you, not your business. If you are someone with the intention of seeking to join and meet others to grow or find new contacts for your business, this probably isn't the space for you. However, if things happen organically — that's fabulous. We want members to feel safe from pressure or spamming.",
+    a: "No. Friendships naturally happen, but Energize Your Vibe isn't a business networking community. It's a place where women can simply be women. If you own a business, you're welcome here, but this space is about you, not your business. If you are someone with the intention of seeking to join and meet others to grow or find new contacts for your business, this probably isn't the space for you. However, if things happen organically, that's fabulous. We want members to feel safe from pressure or spamming.",
   },
   {
     q: 'What do I receive as a member?',
@@ -32,7 +32,7 @@ const faqs = [
   },
   {
     q: 'Do I have to participate in everything?',
-    a: "Not at all. Take what you need. Skip what doesn't fit. Come back whenever you're ready. This community is designed to support your life, not overwhelm it. However, I won't skip over that showing up can be half the battle, and if you aren't engaged — how do you expect life to shift in the way you want it to? I encourage you to lean in. Usually the things that confront us or feel challenging or uncomfortable are the things that will help us to grow the most. You get to choose what that is for you, and we are here to support it!",
+    a: "Not at all. Take what you need. Skip what doesn't fit. Come back whenever you're ready. This community is designed to support your life, not overwhelm it. However, I won't skip over that showing up can be half the battle, and if you aren't engaged, how do you expect life to shift in the way you want it to? I encourage you to lean in. Usually the things that confront us or feel challenging or uncomfortable are the things that will help us to grow the most. You get to choose what that is for you, and we are here to support it!",
   },
   {
     q: 'Is this like therapy?',
@@ -40,11 +40,11 @@ const faqs = [
   },
   {
     q: 'Is this faith-based?',
-    a: "Women of all backgrounds are welcome. While Jenn openly shares her own faith and values around God, the community focuses on personal growth, connection, and becoming more aligned with who you were created to be. Everyone is invited to participate with respect for one another. If you aren't an open person to accept, love & co-exist with others no matter their faith, race, beliefs, etc. — it may or may not be the community for you. Again, we want a safe community.",
+    a: "Women of all backgrounds are welcome. While Jenn openly shares her own faith and values around God, the community focuses on personal growth, connection, and becoming more aligned with who you were created to be. Everyone is invited to participate with respect for one another. If you aren't an open person to accept, love & co-exist with others no matter their faith, race, beliefs, etc., it may or may not be the community for you. Again, we want a safe community.",
   },
   {
     q: 'Are there live events?',
-    a: "Yes! Members have opportunities to attend live virtual events monthly & local meet-ups in person. Visit the calendar for more information. It's our goal to expand and have more in-person events as we grow. If you are a person who loves to gather and/or host — or who has a space of your own that could be utilized for gatherings in your area — perhaps you would be a great fit to be a city team lead in your own area. More info to come. Feel free to send an email to leadership@energizeyourvibe.com if this is of interest.",
+    a: "Yes! Members have opportunities to attend live virtual events monthly & local meet-ups in person. Visit the calendar for more information. It's our goal to expand and have more in-person events as we grow. If you are a person who loves to gather and/or host, or who has a space of your own that could be utilized for gatherings in your area, perhaps you would be a great fit to be a city team lead in your own area. More info to come. Feel free to send an email to leadership@energizeyourvibe.com if this is of interest.",
   },
   {
     q: 'Why a 90-day commitment?',

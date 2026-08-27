@@ -7,7 +7,7 @@ const STORAGE_KEY = 'eyv-launch-popup-dismissed-v4';
 
 const foundingBenefits = [
   'Lock in the $88 monthly Founding Member rate for life (first 50 members only)',
-  'Still no sign-up fee — just $88 to join',
+  'Still no sign-up fee, just $88 to join',
   'Start with the 7 Pillar Assessment and your personalized growth roadmap',
   'Invitations to local meetups, experiences, and community events',
   'Access to the member library, daily Lives for Vibes & inspiring texts, monthly calls',
@@ -19,7 +19,7 @@ const OPEN_DELAY_MS = 900;
 export default function LaunchPopup() {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
-  // The Vibe Reset funnel is a focused conversion flow — don't interrupt it.
+  // The Vibe Reset funnel is a focused conversion flow - don't interrupt it.
   const suppressed = pathname.startsWith('/vibe-reset');
 
   useEffect(() => {
@@ -123,7 +123,7 @@ export default function LaunchPopup() {
 
           <div className="bg-white/10 border border-white/25 rounded-2xl px-5 py-4 mb-5 backdrop-blur-sm text-left">
             <p className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] text-sun mb-3 text-center">
-              Founding Member benefits — while spots last
+              Founding Member benefits, while spots last
             </p>
             <ul className="space-y-2">
               {foundingBenefits.map((benefit, i) => (

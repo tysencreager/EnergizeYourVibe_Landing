@@ -10,7 +10,7 @@ import { useAuth } from '../hooks/useAuth.jsx';
 // One affirmation per day, rotating through the week. Jenn's voice.
 const affirmations = [
   'I lead with love. I live with intention. I have fun.',
-  'My energy is sacred — I protect it, and I share it on purpose.',
+  'My energy is sacred. I protect it, and I share it on purpose.',
   'I am allowed to take up space and shine.',
   'I trust myself. I trust my timing. I trust my path.',
   'I choose thoughts that support who I am becoming.',
@@ -95,7 +95,7 @@ export default function Portal() {
                     Take the <i className="font-serif text-sun">7 Pillar Assessment.</i>
                   </h3>
                   <p className="text-white/90 text-sm md:text-base font-medium leading-relaxed">
-                    See where your energy is most supported — and where it needs attention — so you know exactly which pillar to focus on first.
+                    See where your energy is most supported, and where it needs attention, so you know exactly which pillar to focus on first.
                   </p>
                 </div>
                 <span className="inline-flex items-center gap-2 bg-white text-magenta font-bold text-xs uppercase tracking-widest px-6 py-3.5 rounded-full shadow-lg group-hover:gap-3 transition-all shrink-0">
@@ -120,7 +120,7 @@ export default function Portal() {
                     Take your <i className="text-pink">Sister Snapshot.</i>
                   </h3>
                   <p className="text-gray-700 text-sm font-medium leading-relaxed">
-                    Help Jenn get to know the real you — your favorites, your heart, and how we can best support and celebrate you. Private, optional, and worth the 15 minutes.
+                    Help Jenn get to know the real you: your favorites, your heart, and how we can best support and celebrate you. Private, optional, and worth the 15 minutes.
                   </p>
                 </div>
                 <span className="inline-flex items-center gap-2 text-magenta font-bold text-xs uppercase tracking-widest group-hover:gap-3 transition-all shrink-0">

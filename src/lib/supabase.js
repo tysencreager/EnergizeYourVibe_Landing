@@ -6,7 +6,7 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 
 if (!isSupabaseConfigured) {
-  // Don't throw — that would crash the entire app and blank the marketing
+  // Don't throw - that would crash the entire app and blank the marketing
   // pages. Log loudly so the misconfiguration is obvious in DevTools, and
   // let auth-dependent UI render its own "not configured" state.
   // eslint-disable-next-line no-console

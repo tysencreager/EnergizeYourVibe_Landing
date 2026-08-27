@@ -35,7 +35,7 @@ export default function VibeResetThankYou() {
         if (!cancelled) setPdfAvailable(res.ok && !type.includes('text/html'));
       })
       .catch(() => {
-        if (!cancelled) setPdfAvailable(null); // network hiccup — keep the button
+        if (!cancelled) setPdfAvailable(null); // network hiccup - keep the button
       });
     return () => {
       cancelled = true;
@@ -127,7 +127,7 @@ export default function VibeResetThankYou() {
             </Link>
             <p className="flex items-center justify-center gap-2 text-xs text-gray-500 font-medium mt-6">
               <Feather size={13} strokeWidth={1.75} className="text-gold" />
-              The Pillar Assessment lives inside the member experience — no pressure, it’ll be there when you’re ready.
+              The Pillar Assessment lives inside the member experience. No pressure, it’ll be there when you’re ready.
             </p>
           </div>
         </div>

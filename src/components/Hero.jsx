@@ -72,7 +72,7 @@ export default function Hero() {
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-pink animate-pulse" />
           <span className="uppercase tracking-[0.2em] text-[10px] md:text-xs">Now Live</span>
           <span className="hidden sm:inline text-magenta/40">|</span>
-          <span>The community is live · Still no sign-up fee — just $88 to join. First 50 Founding Members lock in $88/mo for life.</span>
+          <span>The community is live · Still no sign-up fee, just $88 to join. First 50 Founding Members lock in $88/mo for life.</span>
         </p>
       </div>
     </section>

@@ -70,7 +70,7 @@ export default function Membership() {
           </h1>
 
           <p className="text-lg md:text-xl text-white/95 font-medium max-w-2xl mx-auto leading-relaxed mb-8">
-            The community is live and growing. The first 50 Founding Members lock in <strong>$88/mo for life</strong> — and there’s still no sign-up fee, so it’s just $88 to get started.
+            The community is live and growing. The first 50 Founding Members lock in <strong>$88/mo for life</strong>, and there’s still no sign-up fee, so it’s just $88 to get started.
           </p>
 
           <a
@@ -101,14 +101,14 @@ export default function Membership() {
             {[
               {
                 title: 'Become a member',
-                desc: 'Tap "Become a Founding Member" and complete secure checkout with your card. Use the email address you check most — it becomes your key to everything.',
+                desc: 'Tap "Become a Founding Member" and complete secure checkout with your card. Use the email address you check most. It becomes your key to everything.',
               },
               {
                 title: 'Watch your inbox',
                 desc: 'We’ll email you a welcome from Jenn with a link to your member portal. First time? Peek in your Spam or Promotions folder and mark us "Not spam."',
               },
               {
-                title: 'Sign in — no password',
+                title: 'Sign in, no password',
                 desc: 'There’s nothing to memorize. Whenever you want in, type your email on the Sign In page and we email you a personal sign-in button. Tap it and you’re in.',
               },
             ].map((step, i) => (
@@ -151,7 +151,7 @@ export default function Membership() {
                   You’re on the <i className="text-pink">list, sister.</i>
                 </h2>
                 <p className="text-gray-700 text-base md:text-lg font-medium leading-relaxed mb-8 max-w-md mx-auto">
-                  We’ll keep you posted. And remember — sign-ups are open right now, and the Founding Member rate is first come, first served.
+                  We’ll keep you posted. And remember: sign-ups are open right now, and the Founding Member rate is first come, first served.
                 </p>
                 <a
                   href={CHECKOUT_URL}
@@ -261,7 +261,7 @@ export default function Membership() {
             This is more than a membership. It’s a place to learn practical tools that help you understand yourself, strengthen your mindset, and support your emotional well-being while building genuine friendships with women who encourage you, celebrate your wins, and remind you that you don’t have to do life alone.
           </p>
           <p className="text-gray-700 text-base md:text-lg font-medium leading-relaxed mb-8 max-w-2xl mx-auto">
-            The first 50 members lock in the <strong>$88/mo Founding Member rate for life</strong>, and there’s still no sign-up fee — just $88 to get started. Membership includes a 90-day commitment.
+            The first 50 members lock in the <strong>$88/mo Founding Member rate for life</strong>, and there’s still no sign-up fee, just $88 to get started. Membership includes a 90-day commitment.
           </p>
           <a
             href={CHECKOUT_URL}

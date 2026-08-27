@@ -6,7 +6,7 @@ const DEFAULT_TITLE = 'Energize Your Vibe | Empower Your Energy, Transform Your 
 // canonical URL, and robots on mount; restores the site defaults on unmount.
 //
 // Note: social crawlers (Facebook/iMessage) don't run JS, so Open Graph tags
-// for every route come from index.html — this hook covers search engines and
+// for every route come from index.html - this hook covers search engines and
 // the browser tab.
 export function usePageMeta({ title, description, canonical, noindex = false }) {
   useEffect(() => {
