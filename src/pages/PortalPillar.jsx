@@ -217,7 +217,7 @@ export default function PortalPillar() {
               </h2>
               <p className="text-gray-600 text-base md:text-lg font-medium">
                 Jenn is adding guides, prompts, and worksheets for this pillar now. Check
-                back soon, sister — and explore the pillars that are ready in the meantime.
+                back soon, sister, and explore the pillars that are ready in the meantime.
               </p>
               <Link
                 to="/portal"
@@ -247,7 +247,7 @@ function ResourceCard({ resource, palette, previewUrl, onPreview, onDownload }) 
 
   return (
     <div className="group relative bento-card glass border-2 border-pink/15 overflow-hidden hover:-translate-y-1 hover:shadow-2xl transition-all">
-      {/* Preview area — click to view */}
+      {/* Preview area - click to view */}
       <button
         type="button"
         onClick={onPreview}

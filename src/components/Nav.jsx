@@ -22,6 +22,7 @@ const navItems = [
     ],
   },
   { to: '/shop', label: 'Shop' },
+  { to: '/contact', label: 'Contact' },
 ];
 
 function DesktopDropdown({ item }) {

@@ -37,7 +37,7 @@ export default function EyvMethod() {
               <i className="text-pink"> It happens through practice.</i>
             </p>
             <p>
-              That&rsquo;s why we created the Energize Your Vibe Method — a simple daily practice
+              That&rsquo;s why we created the Energize Your Vibe Method: a simple daily practice
               that helps you become more intentional, aware, and connected to how you move
               through life. Combined with our 7 Pillars framework, you&rsquo;ll build habits and
               life skills that support lasting growth, one day at a time.

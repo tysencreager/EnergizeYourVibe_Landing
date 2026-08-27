@@ -58,7 +58,7 @@ export default function PortalInactive() {
           Almost in
         </p>
         <h1 className="text-3xl md:text-5xl font-display text-gray-900 mb-5 leading-tight">
-          You&rsquo;re signed in — <i className="text-pink">one moment, sister.</i>
+          You&rsquo;re signed in… <i className="text-pink">one moment, sister.</i>
         </h1>
 
         {/* Just-paid path: reassure + auto-unlock */}
@@ -69,7 +69,7 @@ export default function PortalInactive() {
           </p>
           <p className="text-gray-700 text-base md:text-lg font-medium leading-relaxed">
             We&rsquo;re confirming your payment ({user?.email}) right now. This usually
-            takes under a minute — <strong>this page will unlock automatically</strong>{' '}
+            takes under a minute, and <strong>this page will unlock automatically</strong>{' '}
             the moment it&rsquo;s confirmed. No need to refresh.
           </p>
           <button
@@ -84,7 +84,7 @@ export default function PortalInactive() {
         </div>
 
         <p className="text-gray-700 text-base font-medium leading-relaxed mb-8 max-w-xl mx-auto">
-          Haven&rsquo;t joined yet? Your account is ready — it just needs a membership
+          Haven&rsquo;t joined yet? Your account is ready. It just needs a membership
           attached to unlock the portal.
         </p>
 

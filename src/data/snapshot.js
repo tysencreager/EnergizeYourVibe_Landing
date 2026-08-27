@@ -1,4 +1,4 @@
-// The Sister Snapshot — Jenn's get-to-know-you survey (EYV_Sister_Snapshot.docx).
+// The Sister Snapshot - Jenn's get-to-know-you survey (EYV_Sister_Snapshot.docx).
 // Every question is optional by design: "you don't have to complete anything
 // you don't want to." Answers are stored as jsonb keyed by each field's id.
 //
@@ -7,7 +7,7 @@
 export const snapshotIntro = {
   title: 'Welcome to Your Sister Snapshot!',
   body: [
-    "We believe every woman deserves to be seen, known, and celebrated. This isn't just a form. It's a chance for us to get to know the real you, from your favorite treats and birthday to what fills your heart and how we can best support you. Everything you share helps us create a more meaningful community and personalize your Energize Your Vibe experience. This information is kept private and is just between us — nothing you share will be given to any third parties or made visible to other members.",
+    "We believe every woman deserves to be seen, known, and celebrated. This isn't just a form. It's a chance for us to get to know the real you, from your favorite treats and birthday to what fills your heart and how we can best support you. Everything you share helps us create a more meaningful community and personalize your Energize Your Vibe experience. This information is kept private and is just between us. Nothing you share will be given to any third parties or made visible to other members.",
     "For those who don't love filling out forms... of course you don't have to complete anything you don't want to. However, I encourage you to use this as a little time with yourself to reconnect, remember what you enjoy, and get present to the incredible woman you are.",
   ],
 };

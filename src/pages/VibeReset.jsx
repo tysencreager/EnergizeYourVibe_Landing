@@ -95,7 +95,7 @@ export default function VibeReset() {
               </p>
               <p className="text-gray-600 text-base md:text-lg font-medium leading-relaxed">
                 A simple guided reset you can return to whenever life feels a little too
-                loud. Print it, screenshot it, or keep it on your phone — it works
+                loud. Print it, screenshot it, or keep it on your phone. It works
                 anywhere you can find ten quiet minutes and a pen.
               </p>
             </div>
@@ -268,7 +268,7 @@ function OptInSection() {
               required
             />
 
-            {/* Honeypot — hidden from real visitors, tempting to bots. */}
+            {/* Honeypot - hidden from real visitors, tempting to bots. */}
             <div className="hidden" aria-hidden="true">
               <label>
                 Website

@@ -106,7 +106,7 @@ export default function SisterSnapshot() {
             </h1>
 
             <p className="text-lg md:text-xl text-white/95 font-medium max-w-2xl mx-auto leading-relaxed">
-              Every answer is optional — share as much or as little as you like. You can
+              Every answer is optional. Share as much or as little as you like. You can
               come back and update it anytime.
             </p>
           </div>
@@ -149,7 +149,7 @@ export default function SisterSnapshot() {
             ))}
             {hasExisting && loaded && (
               <p className="mt-4 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-magenta bg-pink/5 border border-pink/15 rounded-full px-4 py-2">
-                <CloudUpload size={13} strokeWidth={2} /> You have saved answers — edit away
+                <CloudUpload size={13} strokeWidth={2} /> You have saved answers, edit away
               </p>
             )}
           </div>
@@ -180,7 +180,7 @@ export default function SisterSnapshot() {
           <div className="mt-10 text-center">
             {saveStatus === 'error' && (
               <p className="mb-4 text-sm font-semibold text-magenta bg-magenta/5 border border-magenta/20 rounded-2xl px-4 py-3">
-                Something went wrong saving your answers. Please try again — nothing you
+                Something went wrong saving your answers. Please try again. Nothing you
                 typed has been lost.
               </p>
             )}
@@ -193,7 +193,7 @@ export default function SisterSnapshot() {
               {saveStatus === 'saving' ? 'Saving…' : hasExisting ? 'Save my updates' : 'Save my snapshot'}
             </button>
             <p className="text-xs text-gray-500 font-medium mt-4 max-w-md mx-auto">
-              Your answers are private — only Jenn and the EYV team can see them. Nothing is
+              Your answers are private. Only Jenn and the EYV team can see them. Nothing is
               shared with other members or third parties.
             </p>
           </div>

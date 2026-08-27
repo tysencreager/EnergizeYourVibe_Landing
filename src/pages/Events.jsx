@@ -66,7 +66,7 @@ export default function Events() {
               Full calendar <i className="text-pink">coming soon.</i>
             </h2>
             <p className="text-gray-600 text-lg md:text-xl font-medium max-w-2xl mx-auto mb-8">
-              The upcoming event lineup is being finalized. Check back shortly — or become a member now so you don’t miss a thing.
+              The upcoming event lineup is being finalized. Check back shortly, or become a member now so you don’t miss a thing.
             </p>
             <Link
               to="/membership"

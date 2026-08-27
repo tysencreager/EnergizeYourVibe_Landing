@@ -1,4 +1,4 @@
-// Free 30-minute connect call requests — captures the lead from the homepage
+// Free 30-minute connect call requests - captures the lead from the homepage
 // "Book a call with Jenn" form so Jenn can reach out to schedule.
 //
 // Deployed automatically by Cloudflare Pages at /api/book-call.
@@ -18,7 +18,7 @@
 //    The requested date/time land in a custom text field `call_request`
 //    (create it in MailerLite → Subscribers → Fields); phone goes into the
 //    default `phone` field. If `call_request` doesn't exist yet, MailerLite
-//    rejects the payload with a 422 — we retry once without it. Like the
+//    rejects the payload with a 422 - we retry once without it. Like the
 //    Vibe Reset form, POST /api/subscribers upserts by email and only ADDS
 //    groups, so an existing subscriber or member keeps everything she has.
 //
@@ -79,7 +79,7 @@ export async function onRequestPost({ request, env }) {
   return json({ ok: true }, 200);
 }
 
-// Notification path — emails the request via the existing Formspree form.
+// Notification path - emails the request via the existing Formspree form.
 async function sendToFormspree(lead, origin) {
   try {
     const res = await fetch(FORMSPREE_ENDPOINT, {
@@ -112,7 +112,7 @@ async function sendToFormspree(lead, origin) {
   }
 }
 
-// CRM path — best-effort MailerLite upsert; skipped when not configured.
+// CRM path - best-effort MailerLite upsert; skipped when not configured.
 async function upsertToMailerLite(lead, env) {
   if (!env.MAILERLITE_API_KEY || !env.MAILERLITE_CALL_REQUEST_GROUP_ID) {
     return false;
@@ -144,7 +144,7 @@ async function upsertToMailerLite(lead, env) {
     });
 
     // A 422 usually means the `call_request` custom field hasn't been
-    // created in MailerLite yet — retry with default fields only so the
+    // created in MailerLite yet - retry with default fields only so the
     // lead still lands in the group.
     if (res.status === 422 && callRequest) {
       console.error('[book-call] 422 with call_request field, retrying without it');

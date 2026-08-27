@@ -1,6 +1,6 @@
 // Stripe-hosted Payment Link for the Energize Your Vibe membership.
 // $88/mo recurring subscription, no sign-up fee for now (a one-time $45
-// Setup Fee gets added once Founding Member enrollment closes — confirm
+// Setup Fee gets added once Founding Member enrollment closes - confirm
 // the Payment Link matches).
 //
 // Driven by VITE_STRIPE_CHECKOUT_URL so we can point local dev / Cloudflare
@@ -25,7 +25,7 @@ export const BOOK_CALL_ENDPOINT = '/api/book-call';
 // --- Free 10-Minute Vibe Reset lead funnel -----------------------------------
 
 // The downloadable freebie. Replace the file at public/assets/ with the final
-// designed PDF (same filename) — no code changes needed.
+// designed PDF (same filename) - no code changes needed.
 export const VIBE_RESET_PDF_URL = '/assets/10-minute-vibe-reset.pdf';
 
 // Pages Function that adds the lead to MailerLite (see functions/api/).

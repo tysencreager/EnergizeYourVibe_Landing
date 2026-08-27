@@ -5,9 +5,9 @@
 // a provider is added later, events start flowing without touching the
 // funnel components:
 //
-//   - Google Analytics 4: add the gtag snippet to index.html — done.
-//   - GTM: add the container snippet — events land on window.dataLayer.
-//   - Plausible: add the script with the custom-events extension — done.
+//   - Google Analytics 4: add the gtag snippet to index.html - done.
+//   - GTM: add the container snippet - events land on window.dataLayer.
+//   - Plausible: add the script with the custom-events extension - done.
 //
 // Until then every call is a silent no-op.
 //

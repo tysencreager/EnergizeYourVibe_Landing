@@ -1,4 +1,4 @@
-// Vibe Reset lead capture — adds a lead to MailerLite for the free
+// Vibe Reset lead capture - adds a lead to MailerLite for the free
 // 10-Minute Vibe Reset funnel (/vibe-reset).
 //
 // Deployed automatically by Cloudflare Pages at /api/vibe-reset-signup.
@@ -10,13 +10,13 @@
 //   MAILERLITE_VIBE_RESET_GROUP_ID id of the "Vibe Reset Leads" group
 //
 // MailerLite's POST /api/subscribers upserts by email and only ADDS the
-// listed groups — an existing subscriber (including a paid member in the
+// listed groups - an existing subscriber (including a paid member in the
 // "EYV Members" group) keeps all of her current groups and fields, so a
 // member using this form is never downgraded or overwritten. Repeat
 // submissions are idempotent: same subscriber, same group, no duplicates.
 //
 // The delivery email + nurture sequence are MailerLite automations triggered
-// by joining the group — see emails/vibe-reset-sequence.md.
+// by joining the group - see emails/vibe-reset-sequence.md.
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 

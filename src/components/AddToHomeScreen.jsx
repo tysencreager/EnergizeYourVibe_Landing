@@ -2,7 +2,7 @@ import { Smartphone, Share, MoreVertical } from 'lucide-react';
 import Reveal from './Reveal.jsx';
 
 export default function AddToHomeScreen() {
-  // Already running as an installed app — nothing to promote.
+  // Already running as an installed app - nothing to promote.
   const isStandalone =
     typeof window !== 'undefined' &&
     (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true);
@@ -17,7 +17,7 @@ export default function AddToHomeScreen() {
               <Smartphone size={13} strokeWidth={2} /> One-tap access
             </span>
             <h3 className="text-2xl md:text-3xl font-display text-gray-900 mb-2">
-              Take the vibe with you — <i className="font-serif text-pink">save EYV to your home screen.</i>
+              Take the vibe with you: <i className="font-serif text-pink">save EYV to your home screen.</i>
             </h3>
             <p className="text-gray-700 text-sm md:text-base font-medium leading-relaxed">
               Add this site to your phone&rsquo;s home screen and it opens like an app: full screen, your own EYV icon, sisterhood one tap away.

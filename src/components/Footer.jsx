@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Mail, Instagram, Facebook } from 'lucide-react';
+import { Mail, Instagram, Facebook, Phone } from 'lucide-react';
 import Sunburst from './Sunburst.jsx';
 import { CONTACT_EMAIL, INSTAGRAM_URL } from '../data/links.js';
 
@@ -50,6 +50,7 @@ export default function Footer() {
               <li><Link to="/events" className="hover:text-sun transition-colors">Events</Link></li>
               <li><Link to="/shop" className="hover:text-sun transition-colors">Shop</Link></li>
               <li><Link to="/faq" className="hover:text-sun transition-colors">FAQ</Link></li>
+              <li><Link to="/contact" className="hover:text-sun transition-colors">Contact</Link></li>
               <li><Link to="/membership" className="hover:text-sun transition-colors">Membership</Link></li>
             </ul>
           </div>
@@ -58,6 +59,11 @@ export default function Footer() {
               Connect
             </p>
             <ul className="space-y-3 text-white/80 font-medium">
+              <li>
+                <Link to="/contact" className="inline-flex items-center gap-2 hover:text-sun transition-colors">
+                  <Phone size={16} strokeWidth={1.5} /> Book a Free Call with Jenn
+                </Link>
+              </li>
               <li>
                 <a href={`mailto:${CONTACT_EMAIL}`} className="inline-flex items-center gap-2 hover:text-sun transition-colors">
                   <Mail size={16} strokeWidth={1.5} /> {CONTACT_EMAIL}

@@ -11,7 +11,7 @@ export default function AuthCallback() {
     let cancelled = false;
 
     // Supabase reports link failures (expired, already used, misconfigured
-    // redirect URL) as error params in the URL hash — surface them instead of
+    // redirect URL) as error params in the URL hash - surface them instead of
     // silently retrying getSession, which just times out into a generic error.
     const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
     const hashError = hashParams.get('error_description') || hashParams.get('error');

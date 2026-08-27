@@ -1,5 +1,5 @@
-// The 7 Pillar Assessment — taken by new members after they join.
-// Members rate each statement 1–5, then total each pillar to see where
+// The 7 Pillar Assessment - taken by new members after they join.
+// Members rate each statement 1-5, then total each pillar to see where
 // their energy is most supported and where it needs attention.
 
 export const assessmentScale = [
@@ -113,7 +113,7 @@ export const assessmentPillars = [
   },
 ];
 
-// Score bands for each pillar total (8 statements × 1–5 = 8–40).
+// Score bands for each pillar total (8 statements × 1-5 = 8-40).
 export const scoreBands = [
   { min: 32, max: 40, label: 'Strong / Supported', tone: 'strong' },
   { min: 24, max: 31, label: 'Growing / Some support needed', tone: 'growing' },

@@ -1,4 +1,4 @@
-// Stripe webhook — the missing backend piece that activates memberships.
+// Stripe webhook - the missing backend piece that activates memberships.
 //
 // Deployed automatically by Cloudflare Pages at /api/stripe-webhook.
 // Point a Stripe webhook endpoint at it (see supabase/README.md) with events:
@@ -10,7 +10,7 @@
 //   STRIPE_WEBHOOK_SECRET      whsec_... from the Stripe webhook endpoint
 //   SUPABASE_URL               falls back to VITE_SUPABASE_URL
 //   SUPABASE_SERVICE_ROLE_KEY  service role key (Supabase → Settings → API)
-// Optional — enrolls paying members into the MailerLite welcome drip:
+// Optional - enrolls paying members into the MailerLite welcome drip:
 //   MAILERLITE_API_KEY         MailerLite → Integrations → API
 //   MAILERLITE_GROUP_ID        the "EYV Members" group id
 
@@ -39,7 +39,7 @@ export async function onRequestPost({ request, env }) {
       // Other event types are acknowledged without action.
     }
   } catch (err) {
-    // Non-2xx makes Stripe retry with backoff — desired for transient failures.
+    // Non-2xx makes Stripe retry with backoff - desired for transient failures.
     console.error(`[stripe-webhook] ${event.type} failed:`, err);
     return new Response('Handler error', { status: 500 });
   }
@@ -88,7 +88,7 @@ async function handleCheckoutCompleted(session, env) {
   });
 
   // Best-effort: enroll in the MailerLite welcome drip. Never fail the webhook
-  // over email marketing — membership activation is the critical path.
+  // over email marketing - membership activation is the critical path.
   try {
     await addToMailerLite(env, email, fullName);
   } catch (err) {
@@ -112,7 +112,7 @@ async function handleSubscriptionChange(subscription, env) {
     incomplete_expired: 'canceled',
   };
   const membershipStatus = statusMap[subscription.status];
-  if (!membershipStatus) return; // e.g. "incomplete" — wait for a definitive status
+  if (!membershipStatus) return; // e.g. "incomplete" - wait for a definitive status
 
   await updateProfile(env, `stripe_customer_id=eq.${encodeURIComponent(customerId)}`, {
     membership_status: membershipStatus,
@@ -153,7 +153,7 @@ async function createAuthUser(env, email) {
     headers: supabaseHeaders(env),
     body: JSON.stringify({ email, email_confirm: true }),
   });
-  // 422 = user already exists (raced with a magic-link signup) — that's fine.
+  // 422 = user already exists (raced with a magic-link signup) - that's fine.
   if (!res.ok && res.status !== 422) {
     throw new Error(`auth user creation failed: ${res.status} ${await res.text()}`);
   }

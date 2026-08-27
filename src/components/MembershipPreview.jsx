@@ -15,7 +15,7 @@ import { assessmentScale, assessmentPillars } from '../data/assessment.js';
 import { CHECKOUT_URL } from '../data/links.js';
 
 /*
-  A taste of the membership — sample texts, a peek inside the member
+  A taste of the membership - sample texts, a peek inside the member
   library, and a mini sneak peek of the real 7 Pillar quiz.
 
   NOTE: The text-message bubbles below are placeholders written in Jenn's
@@ -47,7 +47,7 @@ const sampleResource = {
 };
 
 // A handful of real statements from the 7 Pillar Assessment for the sneak
-// peek — one each from three different pillars.
+// peek - one each from three different pillars.
 const previewStatements = [
   { pillarKey: 'align', text: assessmentPillars[0].statements[1] },
   { pillarKey: 'think', text: assessmentPillars[2].statements[2] },
@@ -63,7 +63,7 @@ const totalAssessmentStatements = assessmentPillars.reduce(
 /*
   This section renders on both the homepage and /membership. On the homepage
   the CTAs lead to /membership, but on /membership itself that link would go
-  nowhere — so there they open Stripe checkout directly instead.
+  nowhere - so there they open Stripe checkout directly instead.
 */
 function MembershipCta({ className, children }) {
   const { pathname } = useLocation();
@@ -127,7 +127,7 @@ export default function MembershipPreview() {
 }
 
 /* ---------------------------------------------------------------- */
-/* Texts sisters receive — phone mockup                              */
+/* Texts sisters receive - phone mockup                              */
 /* ---------------------------------------------------------------- */
 
 function PhonePreview() {
@@ -137,7 +137,7 @@ function PhonePreview() {
         icon={<MessageSquareText size={16} strokeWidth={1.75} />}
         eyebrow="Texts from the sisterhood"
         title={<>A cheerleader <i className="text-pink">in your pocket.</i></>}
-        blurb="Uplifting texts land during the week — inspiration, self-love reminders, and simple ways to take action."
+        blurb="Uplifting texts land during the week: inspiration, self-love reminders, and simple ways to take action."
       />
 
       {/* Phone frame */}
@@ -167,7 +167,7 @@ function PhonePreview() {
               </div>
             ))}
             <p className="text-center text-[10px] text-gray-400 font-medium pt-1 pb-2">
-              💬 Sample texts — yours arrive all week long
+              💬 Sample texts · yours arrive all week long
             </p>
           </div>
         </div>
@@ -189,7 +189,7 @@ function LibraryPreview() {
         icon={<BookOpen size={16} strokeWidth={1.75} />}
         eyebrow="From the member library"
         title={<>Resources that <i className="text-pink">grow with you.</i></>}
-        blurb="Guides, journal prompts, worksheets, and meditations for every pillar — new resources added regularly to your member portal."
+        blurb="Guides, journal prompts, worksheets, and meditations for every pillar, with new resources added regularly to your member portal."
       />
 
       {/* Worksheet-style card */}
@@ -217,7 +217,7 @@ function LibraryPreview() {
           </div>
           <div className="px-6 pb-5">
             <p className="text-[10px] text-gray-400 font-medium text-center">
-              📖 One page from the library — members unlock it all
+              📖 One page from the library · members unlock it all
             </p>
           </div>
         </div>
@@ -227,7 +227,7 @@ function LibraryPreview() {
 }
 
 /* ---------------------------------------------------------------- */
-/* 7 Pillar quiz sneak peek — real statements, tap to try            */
+/* 7 Pillar quiz sneak peek - real statements, tap to try            */
 /* ---------------------------------------------------------------- */
 
 function QuizPreview() {
@@ -265,7 +265,7 @@ function QuizPreview() {
           Sneak peek · The 7 Pillar Quiz
         </p>
         <p className="text-gray-500 font-medium mt-4 max-w-xl mx-auto">
-          Every member starts with the 7 Pillar Assessment — {totalAssessmentStatements} quick
+          Every member starts with the 7 Pillar Assessment: {totalAssessmentStatements} quick
           statements that map where your energy is thriving and where it’s asking for
           attention. Try a few real ones right now:
         </p>
@@ -282,7 +282,7 @@ function QuizPreview() {
             </h3>
             <p className="text-gray-700 font-medium leading-relaxed mb-7 max-w-md mx-auto">
               Members answer all {totalAssessmentStatements} statements across the 7 pillars and
-              receive a personalized energy map — plus a growth roadmap showing exactly
+              receive a personalized energy map, plus a growth roadmap showing exactly
               where to start first.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

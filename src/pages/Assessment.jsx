@@ -33,7 +33,7 @@ const flatStatements = assessmentPillars.flatMap((pillar) =>
 const totalStatements = flatStatements.length;
 
 // Build the display shape (totals, percentages, bands) from stored per-pillar
-// totals — used both for a fresh submission and a result loaded from Supabase.
+// totals - used both for a fresh submission and a result loaded from Supabase.
 function resultsFromScores(scores) {
   const perPillar = assessmentPillars.map((pillar) => ({
     key: pillar.key,
@@ -53,7 +53,7 @@ function focusKeysFromResults(results) {
   return sorted.filter((p) => p.total === lowest).slice(0, 2).map((p) => p.key);
 }
 
-// The 1–5 buttons grow with the rating so the scale reads at a glance.
+// The 1-5 buttons grow with the rating so the scale reads at a glance.
 const scaleSizes = [
   'w-10 h-10 text-sm',
   'w-11 h-11 text-sm',
@@ -120,7 +120,7 @@ export default function Assessment() {
     }));
   }, [answers]);
 
-  // Lowest 1–2 pillars to focus on first.
+  // Lowest 1-2 pillars to focus on first.
   const focusKeys = useMemo(() => {
     const sorted = [...results].sort((a, b) => a.total - b.total);
     const lowest = sorted[0]?.total;
@@ -155,7 +155,7 @@ export default function Assessment() {
 
   useEffect(() => () => clearTimeout(advanceTimer.current), []);
 
-  // Keyboard flow: 1–5 to answer, arrows to move between statements.
+  // Keyboard flow: 1-5 to answer, arrows to move between statements.
   useEffect(() => {
     if (!started || submitted) return;
     function onKey(e) {
@@ -239,7 +239,7 @@ export default function Assessment() {
 
             <p className="text-lg md:text-xl text-white/95 font-medium max-w-2xl mx-auto leading-relaxed">
               Rate each statement honestly. At the end you’ll see where your energy is
-              thriving — and where it may be asking for a little more attention.
+              thriving, and where it may be asking for a little more attention.
             </p>
           </div>
         </div>
@@ -298,7 +298,7 @@ export default function Assessment() {
                     <ArrowLeft size={14} strokeWidth={2} /> Back
                   </button>
                   <p className="hidden sm:block text-[11px] text-gray-400 font-medium">
-                    Tip: press 1–5 to answer
+                    Tip: press 1-5 to answer
                   </p>
                   <button
                     type="button"
@@ -325,7 +325,7 @@ function IntroCard({ onStart }) {
         How it <i className="text-pink">works.</i>
       </h2>
       <p className="text-gray-700 font-medium leading-relaxed mb-6 max-w-xl mx-auto">
-        You’ll see one statement at a time — {totalStatements} in all, a quick minute or
+        You’ll see one statement at a time: {totalStatements} in all, a quick minute or
         two per pillar. Rate how true each one feels for you right now. No overthinking;
         your first instinct is usually the honest one.
       </p>
@@ -460,8 +460,8 @@ function CompletionCard({ allAnswered, onSubmit, onBack }) {
       </h2>
       <p className="text-gray-700 font-medium leading-relaxed mb-8 max-w-md mx-auto">
         {allAnswered
-          ? 'Beautifully done. Ready to see where your energy is thriving — and where it’s asking for attention?'
-          : 'Almost there — a few statements are still unanswered. We’ll take you back to the first one.'}
+          ? 'Beautifully done. Ready to see where your energy is thriving, and where it’s asking for attention?'
+          : 'Almost there! A few statements are still unanswered. We’ll take you back to the first one.'}
       </p>
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
         <button
@@ -515,7 +515,7 @@ function Results({ results, focusKeys, onRetake, takenAt, saveStatus }) {
         </h2>
         <p className="text-gray-600 text-base md:text-lg font-medium mt-4 max-w-xl mx-auto">
           Here’s how your energy is distributed across the 7 pillars right now. Numbers
-          shift as you grow — this is a snapshot, not a verdict.
+          shift as you grow. This is a snapshot, not a verdict.
         </p>
         {takenDate && (
           <p className="inline-flex items-center gap-2 mt-5 text-[11px] font-bold uppercase tracking-[0.2em] text-gray-500 bg-white/70 border border-pink/15 rounded-full px-4 py-2 print:hidden">
@@ -527,7 +527,7 @@ function Results({ results, focusKeys, onRetake, takenAt, saveStatus }) {
             )}
             {saveStatus === 'saving' && <span className="text-gray-400">Saving…</span>}
             {saveStatus === 'error' && (
-              <span className="text-orange">Couldn’t save — print a copy below</span>
+              <span className="text-orange">Couldn’t save. Print a copy below</span>
             )}
           </p>
         )}
@@ -604,7 +604,7 @@ function Results({ results, focusKeys, onRetake, takenAt, saveStatus }) {
 
       <div className="text-center space-y-5">
         <p className="text-gray-700 font-medium max-w-xl mx-auto leading-relaxed">
-          This isn’t about being perfect — it’s about awareness. When you know what needs
+          This isn’t about being perfect, it’s about awareness. When you know what needs
           support, you can actually do something about it. That’s how you start to energize
           your vibe.
         </p>
