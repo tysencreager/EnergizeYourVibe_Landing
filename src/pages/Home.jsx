@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Hero from '../components/Hero.jsx';
 import Marquee from '../components/Marquee.jsx';
+import BookCallCTA from '../components/BookCallCTA.jsx';
 import MissionIntro from '../components/MissionIntro.jsx';
 import PowerOfYes from '../components/PowerOfYes.jsx';
 import VibeResetPromo from '../components/VibeResetPromo.jsx';
@@ -28,6 +29,7 @@ export default function Home() {
     <>
       <Hero />
       <Marquee />
+      <BookCallCTA />
       <MissionIntro />
       <PowerOfYes />
       <VibeResetPromo />
