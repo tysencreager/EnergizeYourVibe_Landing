@@ -17,6 +17,9 @@
 //   vibe_reset_signup           backend confirmed the lead was created
 //   vibe_reset_download         "Open my Vibe Reset" clicked
 //   vibe_reset_membership_click membership CTA clicked from the funnel
+//
+// Other conversion events:
+//   book_call_request           homepage "book a free call" form submitted
 
 export function track(event, data = {}) {
   try {

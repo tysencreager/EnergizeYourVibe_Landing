@@ -18,6 +18,10 @@ export const FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61575276073
 // Formspree endpoint for the membership waitlist form on /membership.
 export const WAITLIST_FORM_ENDPOINT = 'https://formspree.io/f/mykoegpy';
 
+// Pages Function for the homepage "book a free 30-minute call with Jenn"
+// form (see functions/api/book-call.js).
+export const BOOK_CALL_ENDPOINT = '/api/book-call';
+
 // --- Free 10-Minute Vibe Reset lead funnel -----------------------------------
 
 // The downloadable freebie. Replace the file at public/assets/ with the final
