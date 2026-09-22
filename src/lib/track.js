@@ -18,6 +18,12 @@
 //   vibe_reset_download         "Open my Vibe Reset" clicked
 //   vibe_reset_membership_click membership CTA clicked from the funnel
 //
+// Event registration pages (/events/<slug>), all with { event: slug }:
+//   event_form_view             registration form scrolled into view
+//   event_registration          backend confirmed the registration
+//   event_share                 "Share the invite" clicked on thank-you page
+//   event_membership_click      membership link clicked on thank-you page
+//
 // Other conversion events:
 //   book_call_request           homepage "book a free call" form submitted
 

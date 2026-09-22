@@ -22,6 +22,10 @@ export const WAITLIST_FORM_ENDPOINT = 'https://formspree.io/f/mykoegpy';
 // form (see functions/api/book-call.js).
 export const BOOK_CALL_ENDPOINT = '/api/book-call';
 
+// Pages Function for event registrations at /events/<slug> (see
+// functions/api/event-register.js and src/data/events.js).
+export const EVENT_REGISTER_ENDPOINT = '/api/event-register';
+
 // --- Free 10-Minute Vibe Reset lead funnel -----------------------------------
 
 // The downloadable freebie. Replace the file at public/assets/ with the final

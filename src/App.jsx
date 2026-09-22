@@ -8,6 +8,8 @@ import EyvMethod from './pages/EyvMethod.jsx';
 import Faq from './pages/Faq.jsx';
 import Contact from './pages/Contact.jsx';
 import Events from './pages/Events.jsx';
+import EventRegister from './pages/EventRegister.jsx';
+import EventThankYou from './pages/EventThankYou.jsx';
 import Shop from './pages/Shop.jsx';
 import Membership from './pages/Membership.jsx';
 import VibeReset from './pages/VibeReset.jsx';
@@ -34,6 +36,8 @@ export default function App() {
         <Route path="/faq" element={<Faq />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/events" element={<Events />} />
+        <Route path="/events/:slug" element={<EventRegister />} />
+        <Route path="/events/:slug/thank-you" element={<EventThankYou />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/membership" element={<Membership />} />
         <Route path="/vibe-reset" element={<VibeReset />} />

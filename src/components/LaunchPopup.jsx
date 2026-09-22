@@ -19,8 +19,9 @@ const OPEN_DELAY_MS = 900;
 export default function LaunchPopup() {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
-  // The Vibe Reset funnel is a focused conversion flow - don't interrupt it.
-  const suppressed = pathname.startsWith('/vibe-reset');
+  // The Vibe Reset funnel and event registration pages are focused
+  // conversion flows - don't interrupt them.
+  const suppressed = pathname.startsWith('/vibe-reset') || pathname.startsWith('/events/');
 
   useEffect(() => {
     if (typeof window === 'undefined' || suppressed) return;
