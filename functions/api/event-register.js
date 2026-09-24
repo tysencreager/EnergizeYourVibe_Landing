@@ -9,14 +9,26 @@
 // Events are defined in src/data/events.js (shared with the landing page).
 // Each event names its MailerLite group; this function finds that group by
 // exact name and creates it if it doesn't exist yet, so a new event needs no
-// new env vars. The confirmation email (with the Zoom link) is a MailerLite
-// automation triggered when a subscriber joins the group - see
+// new env vars. The confirmation email (with the Zoom link or directions) is
+// a MailerLite automation triggered when a subscriber joins the group - see
 // emails/event-registrations.md.
+//
+// Events with `pricing` (free for members, paid for everyone else) also ask
+// whether the registrant is a member. The answer is stored in the MailerLite
+// `event_ticket` custom field so Jenn can tell paid spots from member spots
+// in the registrant list; the non-member payment itself happens on the
+// thank-you page (Stripe Payment Link / Venmo), not here.
 //
 // Like the other lead forms, POST /api/subscribers upserts by email and only
 // ADDS groups, so an existing subscriber or member keeps her other groups.
 
-import { getEvent, isRegistrationOpen } from '../../src/data/events.js';
+import {
+  getEvent,
+  hasNonMemberPrice,
+  isRegistrationOpen,
+  MEMBERSHIP_OPTIONS,
+  ticketLabel,
+} from '../../src/data/events.js';
 
 const MAILERLITE_API = 'https://connect.mailerlite.com/api';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -49,6 +61,7 @@ export async function onRequestPost({ request, env }) {
   const email = String(body.email ?? '').trim().toLowerCase();
   const rawPhone = String(body.phone ?? '').trim();
   const phone = sanitizePhone(rawPhone);
+  const membership = String(body.membership ?? '').trim();
 
   if (!firstName) {
     return json({ ok: false, error: 'Please tell us your first name.' }, 400);
@@ -59,12 +72,30 @@ export async function onRequestPost({ request, env }) {
   if (!email || email.length > 254 || !EMAIL_RE.test(email)) {
     return json({ ok: false, error: 'Please enter a valid email address.' }, 400);
   }
-  if (rawPhone && !phone) {
+  if (event.phoneRequired && !phone) {
     return json(
-      { ok: false, error: 'Please enter a valid phone number, or leave it blank.' },
+      { ok: false, error: 'Please enter a phone number so we can text you updates.' },
       400
     );
   }
+  if (rawPhone && !phone) {
+    return json(
+      {
+        ok: false,
+        error: event.phoneRequired
+          ? 'Please enter a valid phone number.'
+          : 'Please enter a valid phone number, or leave it blank.',
+      },
+      400
+    );
+  }
+  if (hasNonMemberPrice(event) && !MEMBERSHIP_OPTIONS.includes(membership)) {
+    return json(
+      { ok: false, error: 'Please let us know whether you’re an Energize Your Vibe member.' },
+      400
+    );
+  }
+  const ticket = ticketLabel(event, membership);
 
   if (!env.MAILERLITE_API_KEY) {
     console.error('[event-register] MAILERLITE_API_KEY not configured');
@@ -88,6 +119,9 @@ export async function onRequestPost({ request, env }) {
           // Only send a phone when given, so a blank never erases one on file.
           ...(phone ? { phone } : {}),
           lead_source: 'website_event_registration',
+          // Member vs paid spot, for priced events only (custom text field
+          // `event_ticket` in MailerLite - see emails/event-registrations.md).
+          ...(ticket ? { event_ticket: ticket } : {}),
         },
         groups: [groupId],
       }),

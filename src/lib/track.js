@@ -21,6 +21,10 @@
 // Event registration pages (/events/<slug>), all with { event: slug }:
 //   event_form_view             registration form scrolled into view
 //   event_registration          backend confirmed the registration
+//                               (+ membership: member|non-member on priced events)
+//   event_payment_click         Stripe/Venmo button clicked on thank-you page
+//                               (+ method: stripe|venmo)
+//   event_flyer_download        "Save the flyer" clicked on thank-you page
 //   event_share                 "Share the invite" clicked on thank-you page
 //   event_membership_click      membership link clicked on thank-you page
 //

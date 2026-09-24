@@ -1,4 +1,5 @@
 # Short links for flyers and social posts (must stay above the SPA fallback).
-/fall-reset    /events/fall-reset   301
+/fall-reset    /events/fall-reset          301
+/smores        /events/sisterhood-smores   301
 
 /*    /index.html   200

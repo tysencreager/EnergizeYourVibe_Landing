@@ -2,7 +2,8 @@
 //
 // Each entry powers:
 //   - the landing page at /events/<slug> and its thank-you page
-//   - the upcoming-events list on /events
+//   - the upcoming-events list on /events, the homepage section, and the
+//     site popup
 //   - server-side validation in functions/api/event-register.js, which
 //     imports this file (keep it plain JS: no JSX, no import.meta.env)
 //
@@ -11,11 +12,36 @@
 //
 // Never put Zoom links or passcodes here: this file ships in the public JS
 // bundle. Join details live only in the MailerLite confirmation email.
+//
+// Field guide (optional fields are only rendered when present):
+//   format          'online' | 'in-person'
+//   kindLabel       noun used in copy ("workshop", "gathering")
+//   description     a string or an array of paragraphs
+//   learn           bullet list ("You'll learn how to")
+//   bring           [{ icon, title, desc }] ("What to bring"); icon is a key
+//                   mapped to an icon in EventRegister.jsx
+//   bringNote       small print under the bring list
+//   bonus           { title, desc } freebie card
+//   welcome         copy for the "All women are welcome" card
+//   friendNote      closing line of the "Bring a friend" card (thank-you page)
+//   location        { name, detail, directions, mapsUrl } for in-person events
+//   pricing         { memberLabel, nonMemberPrice, stripeUrl, venmoUrl,
+//                   venmoNote } - when set, the form asks whether the
+//                   registrant is a member and non-members are sent to pay
+//                   after registering
+//   phoneRequired   make the phone field mandatory (text updates)
+//   flyer           path to a shareable flyer image in public/assets
+//   expert.quote    pull quote section; expert.bio (array) is used instead
+//                   when there is no quote
+
+export const EVENT_TIME_ZONE = 'America/Denver';
 
 export const EVENTS = [
   {
     slug: 'fall-reset',
     series: 'Guest Expert Series',
+    kindLabel: 'workshop',
+    format: 'online',
     title: 'The Fall Reset',
     subtitle: 'Simplify Your Home Before the Busiest Season of the Year',
     taglines: ['Practical tools', 'Real solutions', 'A calmer you'],
@@ -57,12 +83,90 @@ export const EVENTS = [
       title: 'Fall Friction Audit',
       desc: 'Use it during the workshop to discover where to start and create more ease at home.',
     },
+    welcome:
+      'You don’t need to be a member to join us. Bring a friend, your questions, and maybe a space in your home that has been driving you a little crazy.',
+    friendNote: 'Send this to a friend who could use a calmer season too.',
 
     // MailerLite group registrants are added to. Its "joins group"
     // automation sends the confirmation email with the Zoom link. The API
     // finds the group by this exact name (creating it if missing), so don't
     // rename the group in MailerLite.
     mailerliteGroup: 'Event: The Fall Reset (Sep 30, 2026)',
+  },
+
+  {
+    slug: 'sisterhood-smores',
+    series: 'An Energize Your Vibe Gathering',
+    kindLabel: 'gathering',
+    format: 'in-person',
+    title: 'Sisterhood, S’mores & Soulful Stories',
+    subtitle:
+      'A cozy afternoon up the canyon with women, nature, meaningful conversation, a little reflection, plenty of laughter and, of course, s’mores.',
+    taglines: ['Nature', 'Guided journaling', 'S’mores by the fire'],
+
+    startsAt: '2026-10-02T11:30:00-06:00',
+    durationMinutes: 180,
+    dateLabel: 'Friday, October 2',
+    timeLabel: '11:30 AM to 2:30 PM Mountain Time',
+    formatLabel: 'In Person',
+    lengthLabel: '3 Hours',
+    priceLabel: 'Free for Members · $15 for Non-Members',
+    audienceLabel: 'All Women Welcome',
+
+    location: {
+      name: 'American Fork Canyon',
+      detail: 'Roadhouse Camp Area',
+      directions:
+        'The Roadhouse Campground is located up the canyon. Take a left at the sign for Tibble Fork Reservoir, and the campground labeled “Roadhouse” will be on your right. Jenn will have a sign out with a few balloons so it’s easy to spot. It’s about 25 minutes from the Timp Hwy / SR 92 exit. Carpool with a buddy!',
+      mapsUrl:
+        'https://www.google.com/maps/search/?api=1&query=Roadhouse+Campground+American+Fork+Canyon+Utah',
+    },
+
+    summary:
+      'An in-person Energize Your Vibe gathering in American Fork Canyon with writing coach Susan Hart: nature, guided journaling, meaningful conversation, and s’mores by the fire. Free for members, $15 for non-members.',
+    heading: ['This isn’t a class.', 'It’s a gathering.'],
+    description: [
+      'A chance to get outside, slow down for a few hours, connect with other women and get a little more present to YOU.',
+      'Sometimes we get so busy living our lives that we don’t stop long enough to notice who we are right now, what we’ve walked through, what matters to us, or the story we’re continuing to write. That’s what this afternoon is about.',
+      'Bring your own lunch, pull up your camping chair and spend the afternoon with us. We’ll have time for conversation, connection, reflection and simply enjoying being together in nature. And yes, there will be s’mores! We’ll have a fire going and provide the s’mores and drinks.',
+    ],
+    expert: {
+      name: 'Susan Hart',
+      role: 'Owner, Voice to Page · Writing Coach',
+      photo: '/assets/susan-hart.jpg',
+      bio: [
+        'Susan will spend some time with us talking about story, identity and the power of putting our thoughts into words, along with some guided journaling to help us reflect on who we are in this season of life.',
+        'No writing experience needed. Just bring your journal and come open.',
+      ],
+    },
+    bring: [
+      { icon: 'lunch', title: 'Your lunch', desc: 'We’ll provide the s’mores and drinks.' },
+      { icon: 'journal', title: 'Journal + pen', desc: 'Come ready to reflect, explore and write.' },
+      { icon: 'chair', title: 'Camping chair', desc: 'Pull up a seat around the fire.' },
+      {
+        icon: 'layers',
+        title: 'Layers or a blanket',
+        desc: 'Dress comfy and bundle up as needed for your body temp.',
+      },
+      { icon: 'you', title: 'Yourself, exactly as you are', desc: 'That’s all we need.' },
+    ],
+    bringNote: 'Sorry, no kids. This one is just for the Sisters.',
+    welcome:
+      'You don’t need to be a member to join us. Bring a friend, your journal, and come exactly as you are.',
+    friendNote: 'Send this to a friend who could use an afternoon in the canyon too.',
+
+    pricing: {
+      memberLabel: 'Free',
+      nonMemberPrice: '$15',
+      // Stripe Payment Link for the $15 non-member spot (one-time payment).
+      stripeUrl: 'https://buy.stripe.com/fZuaEYgDy00a1eNgGV4wM02',
+      venmoUrl: 'https://venmo.com/code?user_id=2114734279098368911&created=1790276161',
+      venmoNote: 'Put your name and “Sisterhood s’mores” in the comments.',
+    },
+    phoneRequired: true,
+    flyer: '/assets/sisterhood-smores-flyer.webp',
+
+    mailerliteGroup: "Event: Sisterhood, S'mores & Soulful Stories (Oct 2, 2026)",
   },
 ];
 
@@ -82,4 +186,45 @@ export function upcomingEvents(now = new Date()) {
   return EVENTS.filter((event) => isRegistrationOpen(event, now)).sort(
     (a, b) => new Date(a.startsAt) - new Date(b.startsAt)
   );
+}
+
+export function isInPerson(event) {
+  return event.format === 'in-person';
+}
+
+// Events with pricing ask whether the registrant is a member; non-members
+// are sent to pay after registering.
+export function hasNonMemberPrice(event) {
+  return Boolean(event.pricing);
+}
+
+export const MEMBERSHIP_OPTIONS = ['member', 'non-member'];
+
+// Value stored in the MailerLite `event_ticket` field so Jenn can tell
+// paid spots from member spots in the registrant list.
+export function ticketLabel(event, membership) {
+  if (!event.pricing) return '';
+  return membership === 'member'
+    ? `Member (${event.pricing.memberLabel.toLowerCase()})`
+    : `Non-member (${event.pricing.nonMemberPrice})`;
+}
+
+// Short location or format line for cards and chips.
+export function whereLabel(event) {
+  if (isInPerson(event) && event.location) {
+    return `${event.location.name} · ${event.location.detail}`;
+  }
+  return event.formatLabel;
+}
+
+// Pieces for a calendar-style date badge, in the event's local time zone.
+export function eventDateParts(event) {
+  const date = new Date(event.startsAt);
+  const part = (options) =>
+    new Intl.DateTimeFormat('en-US', { timeZone: EVENT_TIME_ZONE, ...options }).format(date);
+  return {
+    weekday: part({ weekday: 'short' }),
+    month: part({ month: 'short' }),
+    day: part({ day: 'numeric' }),
+  };
 }

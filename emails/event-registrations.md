@@ -1,9 +1,9 @@
 # Event registrations: landing pages + confirmation emails
 
-Free events (guest expert workshops, calls, gatherings) get a registration
-page at `energizeyourvibe.com/events/<slug>`. Registrants land in a
-per-event MailerLite group, and a MailerLite automation on that group sends
-the confirmation email with the Zoom link.
+Events (guest expert workshops, calls, in-person gatherings) get a
+registration page at `energizeyourvibe.com/events/<slug>`. Registrants land
+in a per-event MailerLite group, and a MailerLite automation on that group
+sends the confirmation email with the Zoom link or the directions.
 
 - Event content: `src/data/events.js` (one entry per event; drives the
   landing page, thank-you page, and the "Coming up" list on `/events`)
@@ -11,10 +11,18 @@ the confirmation email with the Zoom link.
 - Needs only `MAILERLITE_API_KEY` in Cloudflare (already set for the Stripe
   webhook). No per-event env vars.
 
-What the form collects: first name, last name, email, phone (optional).
-They're saved to MailerLite's default `name`, `last_name`, and `phone` fields,
-with `lead_source = website_event_registration`. Upserts only *add* groups,
-so an existing member keeps her `EYV Members` group and data.
+What the form collects: first name, last name, email, phone (optional
+unless the event sets `phoneRequired`). They're saved to MailerLite's default
+`name`, `last_name`, and `phone` fields, with
+`lead_source = website_event_registration`. Upserts only *add* groups, so an
+existing member keeps her `EYV Members` group and data.
+
+Events with `pricing` (free for members, paid for everyone else) also ask
+"Are you an Energize Your Vibe member?". The answer lands in the custom text
+field `event_ticket` (`Member (free)` / `Non-member ($15)`), and non-members
+are sent to pay on the thank-you page via the event's Stripe Payment Link
+(with their email prefilled) or Venmo. Payment is not verified by the site:
+check Stripe / Venmo against the group's non-member rows before the event.
 
 Registration closes automatically when the event ends (start time +
 duration). After that the page shows "Registration has closed" and the API
@@ -74,6 +82,62 @@ link.
 
 ---
 
+## Sisterhood, S'mores & Soulful Stories (Fri, Oct 2, 2026, 11:30 AM to 2:30 PM MT, in person)
+
+- Page: https://www.energizeyourvibe.com/events/sisterhood-smores
+- Short link for flyers/texts: https://www.energizeyourvibe.com/smores
+- Where: American Fork Canyon, Roadhouse Camp Area (directions on the page
+  and in the email)
+- Price: members free, non-members $15
+  - Stripe Payment Link: https://buy.stripe.com/fZuaEYgDy00a1eNgGV4wM02
+  - Venmo: Jenn's Venmo code link (registrants put their name +
+    "Sisterhood s'mores" in the comments)
+- MailerLite group: `Event: Sisterhood, S'mores & Soulful Stories (Oct 2, 2026)`
+  (id `199526321535059559`, created via the API on Sep 24)
+- MailerLite automation: same name, id `199526340778526169`,
+  https://dashboard.mailerlite.com/automations/199526340778526169
+  (created via the API on Sep 24, trigger = joins the group above)
+- MailerLite field: `event_ticket` (text, created via the API on Sep 24)
+- Email: `07-sisterhood-smores-registration.html`. No Zoom tokens: it's an
+  in-person event, so everything in it is public and it can be pasted as is.
+
+### Finish the automation in MailerLite (2 minutes, before sharing the link)
+
+The API can't pick a sender, so the automation was created **off** with an
+empty email step. In the dashboard:
+
+1. Open the automation (link above) and click the email step.
+2. **Sender:** Energize Your Vibe, jenn@energizeyourvibe.com (same as the
+   Fall Reset email). Reply-to: jenn@energizeyourvibe.com.
+3. **Subject:** You’re in! Sisterhood, S’mores & Soulful Stories
+   **Preview text:** Your details for Friday, October 2 in American Fork
+   Canyon are inside.
+4. **Content:** Custom HTML → paste `07-sisterhood-smores-registration.html`
+   (no tokens to replace).
+5. Save, then **turn the automation on**. Register yourself on the live page
+   to test: the email should arrive within a minute or two.
+
+### Registrant list
+
+Open the group in MailerLite (export to CSV from there). The `event_ticket`
+column shows `Member (free)` or `Non-member ($15)`; match the non-members
+against Stripe payments (the Payment Link prefills their email) and Venmo.
+
+### Stripe note
+
+The $15 Payment Link is a one-time payment in the same Stripe account as the
+membership subscription. `functions/api/stripe-webhook.js` now ignores
+non-subscription checkouts, so an event payment never activates a
+membership or enrolls the buyer in the member welcome drip. Nothing to
+configure in Stripe for this.
+
+### Optional: text updates
+
+Phone is required for this event ("for text updates"). Phones are on the
+group's subscribers (`phone` field / CSV export) for day-of texts.
+
+---
+
 ## Adding the next event
 
 Ask Jenn to send, for each event:
@@ -92,17 +156,23 @@ The flyer usually covers 1–6.
 Then:
 
 1. Add an entry to `EVENTS` in `src/data/events.js` (copy the Fall Reset
-   entry). Put the headshot in `public/assets/`. Use a new, unique
+   entry for a Zoom workshop, or the Sisterhood entry for an in-person or
+   paid event; the field guide at the top of the file lists what's
+   optional). Put the headshot in `public/assets/`. Use a new, unique
    `mailerliteGroup` name, e.g. `Event: <Title> (<Mon D, YYYY>)`. Check that
    the `startsAt` UTC offset matches daylight/standard time (`-06:00` MDT,
    `-07:00` MST; DST ends Nov 1, 2026).
 2. Optional short link: add a line to `public/_redirects` above the SPA
    fallback.
-3. Copy `06-fall-reset-registration.html` to a new numbered file, swap in
-   the new copy, event details, and Google Calendar `dates` (UTC), keeping
-   the Zoom `{{tokens}}`.
+3. Copy the closest email template to a new numbered file
+   (`06-fall-reset-registration.html` for Zoom, keeping the `{{tokens}}`;
+   `07-sisterhood-smores-registration.html` for in person / paid) and swap
+   in the new copy, event details, and Google Calendar `dates` (UTC).
 4. In MailerLite: create the group, then an automation on it with the
-   filled-in email (steps 1–4 above).
+   filled-in email (steps 1–4 of the Fall Reset checklist above).
 
-Past events drop off the `/events` list automatically. Their pages stay up
-and show "Registration has closed".
+Past events drop off the `/events` calendar, the homepage "Upcoming
+events" section, and the site popup automatically (all three read
+`upcomingEvents()`). Their pages stay up and show "Registration has closed".
+Once no events are open, the popup falls back to the Founding Member
+invitation.
