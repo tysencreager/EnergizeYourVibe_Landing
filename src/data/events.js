@@ -32,11 +32,19 @@
 //   phoneRequired   make the phone field mandatory (text updates)
 //   flyer           path to a shareable flyer image in public/assets
 //   image           { src, alt, caption? } wide photo shown under the hero
+//   ogImage         { src, alt } share image for link previews (Facebook,
+//                   iMessage, LinkedIn...), served by functions/events/[slug].js.
+//                   Generate it with `node scripts/og-images.mjs <slug>` into
+//                   public/assets/og/ (size below)
 //   experts         [{ name, role, photo, quote?, bio? }] - one or more guest
 //                   experts. A quote renders as a pull-quote section; bios
 //                   (arrays of paragraphs) render as "Meet our guest experts"
 
 export const EVENT_TIME_ZONE = 'America/Denver';
+
+// Pixel size of the generated share images (2x of the 1200x630 that
+// Facebook, LinkedIn and iMessage lay out for).
+export const OG_IMAGE_SIZE = { width: 2400, height: 1260 };
 
 export const EVENTS = [
   {
@@ -90,6 +98,10 @@ export const EVENTS = [
     welcome:
       'You don’t need to be a member to join us. Bring a friend, your questions, and maybe a space in your home that has been driving you a little crazy.',
     friendNote: 'Send this to a friend who could use a calmer season too.',
+    ogImage: {
+      src: '/assets/og/fall-reset.jpg',
+      alt: 'The Fall Reset: a free online workshop with organizing expert Sandy Rodriguez, Wednesday, September 30 at 11 AM Mountain Time',
+    },
 
     // MailerLite group registrants are added to. Its "joins group"
     // automation sends the confirmation email with the Zoom link. The API
@@ -184,6 +196,10 @@ export const EVENTS = [
       src: '/assets/sisterhood-smores-campfire.webp',
       alt: 'Women laughing around a campfire in the canyon, roasting marshmallows and journaling',
       caption: 'S’mores, stories & sisterhood by the fire',
+    },
+    ogImage: {
+      src: '/assets/og/sisterhood-smores.jpg',
+      alt: 'Sisterhood, S’mores & Soulful Stories: an in-person Energize Your Vibe gathering in American Fork Canyon with Susan Hart and Tysen Creager, Friday, October 2',
     },
 
     mailerliteGroup: "Event: Sisterhood, S'mores & Soulful Stories (Oct 2, 2026)",
