@@ -7,6 +7,7 @@ import {
   CalendarDays,
   Clock,
   CreditCard,
+  Flame,
   Gift,
   Heart,
   Laptop,
@@ -141,6 +142,28 @@ export default function EventRegister() {
           </div>
         </div>
       </section>
+
+      {/* FEATURE IMAGE (overlaps the bottom of the hero) */}
+      {event.image && (
+        <section className="relative z-10 px-5 md:px-6 -mt-8 md:-mt-14 bg-white">
+          <Reveal direction="zoom" className="max-w-6xl mx-auto">
+            <figure className="relative rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white bg-white">
+              <img
+                src={event.image.src}
+                alt={event.image.alt}
+                loading="lazy"
+                className="w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] object-cover"
+              />
+              {event.image.caption && (
+                <figcaption className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 backdrop-blur-md text-magenta text-[10px] sm:text-xs font-bold uppercase tracking-[0.25em] shadow-lg">
+                  <Flame size={14} strokeWidth={2} className="text-orange" />
+                  {event.image.caption}
+                </figcaption>
+              )}
+            </figure>
+          </Reveal>
+        </section>
+      )}
 
       {/* ABOUT + WHAT YOU'LL LEARN / WHAT TO BRING */}
       <section className="relative py-16 md:py-24 px-5 md:px-6 bg-white overflow-hidden">

@@ -31,6 +31,7 @@
 //                   after registering
 //   phoneRequired   make the phone field mandatory (text updates)
 //   flyer           path to a shareable flyer image in public/assets
+//   image           { src, alt, caption? } wide photo shown under the hero
 //   experts         [{ name, role, photo, quote?, bio? }] - one or more guest
 //                   experts. A quote renders as a pull-quote section; bios
 //                   (arrays of paragraphs) render as "Meet our guest experts"
@@ -179,6 +180,11 @@ export const EVENTS = [
     },
     phoneRequired: true,
     flyer: '/assets/sisterhood-smores-flyer.webp',
+    image: {
+      src: '/assets/sisterhood-smores-campfire.webp',
+      alt: 'Women laughing around a campfire in the canyon, roasting marshmallows and journaling',
+      caption: 'S’mores, stories & sisterhood by the fire',
+    },
 
     mailerliteGroup: "Event: Sisterhood, S'mores & Soulful Stories (Oct 2, 2026)",
   },

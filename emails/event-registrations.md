@@ -28,6 +28,18 @@ Registration closes automatically when the event ends (start time +
 duration). After that the page shows "Registration has closed" and the API
 rejects new sign-ups.
 
+**Jenn gets an email for every registration.** After MailerLite accepts a
+sign-up, the API forwards it to the same Formspree form that handles the
+book-a-call and waitlist forms (Formspree emails each submission to the
+form owner). The email has the event, name, email, phone, and for priced
+events whether the spot is a member or a non-member who still owes payment.
+It's best effort: if Formspree is down or over quota the registration still
+goes through, only the heads-up is lost. Formspree's free plan caps a form
+at 50 submissions a month across everything that posts to it, so for a
+big event either upgrade the form or create a dedicated Formspree form and
+set `EVENT_NOTIFY_FORMSPREE_ENDPOINT` in Cloudflare (`off` disables the
+notification).
+
 **Zoom details never go in the repo** (it's public) or in
 `src/data/events.js` (it ships to every visitor's browser). They live only in
 the MailerLite email.
