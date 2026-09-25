@@ -148,7 +148,8 @@ export const EVENTS = [
         role: 'Personal & Business Growth Strategist',
         photo: '/assets/tysen-creager.jpg',
         bio: [
-          'Tysen Creager, Personal & Business Growth Strategist, joins Susan as a guest expert for the afternoon.',
+          'Tysen Creager is a Business & Personal Growth Strategist who believes your beginning doesn’t have to define your future. As the founder of Elevate Growth Solutions, she helps business owners grow their digital presence through strategic websites and marketing.',
+          'Drawing on her own journey of overcoming adversity and building a life on her terms, she inspires others to challenge limiting beliefs, embrace their potential, and take meaningful steps toward the lives they want. She brings entrepreneurial insight, lived experience, and a cheerleader’s heart to every room.',
         ],
       },
     ],

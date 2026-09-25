@@ -98,26 +98,17 @@ link.
   (id `199526321535059559`, created via the API on Sep 24)
 - MailerLite automation: same name, id `199526340778526169`,
   https://dashboard.mailerlite.com/automations/199526340778526169
-  (created via the API on Sep 24, trigger = joins the group above)
+  (trigger = joins the group above). **Live** as of Sep 25: sender
+  Energize Your Vibe, jenn@energizeyourvibe.com; subject "You're in! Get
+  ready for the Sisterhood, S'mores, & Soulful Stories Event!"; content is
+  `07-sisterhood-smores-registration.html` pasted as Custom HTML.
 - MailerLite field: `event_ticket` (text, created via the API on Sep 24)
 - Email: `07-sisterhood-smores-registration.html`. No Zoom tokens: it's an
-  in-person event, so everything in it is public and it can be pasted as is.
+  in-person event, so everything in it is public. If the copy changes,
+  re-paste the whole file into the automation's email step.
 
-### Finish the automation in MailerLite (2 minutes, before sharing the link)
-
-The API can't pick a sender, so the automation was created **off** with an
-empty email step. In the dashboard:
-
-1. Open the automation (link above) and click the email step.
-2. **Sender:** Energize Your Vibe, jenn@energizeyourvibe.com (same as the
-   Fall Reset email). Reply-to: jenn@energizeyourvibe.com.
-3. **Subject:** You’re in! Sisterhood, S’mores & Soulful Stories
-   **Preview text:** Your details for Friday, October 2 in American Fork
-   Canyon are inside.
-4. **Content:** Custom HTML → paste `07-sisterhood-smores-registration.html`
-   (no tokens to replace).
-5. Save, then **turn the automation on**. Register yourself on the live page
-   to test: the email should arrive within a minute or two.
+Once the site deploys, register yourself on the live page to test: the
+email should arrive within a minute or two.
 
 ### Registrant list
 
