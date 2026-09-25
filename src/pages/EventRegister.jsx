@@ -61,6 +61,8 @@ export default function EventRegister() {
   const inPerson = isInPerson(event);
   const priced = hasNonMemberPrice(event);
   const paragraphs = Array.isArray(event.description) ? event.description : [event.description];
+  const quoteExpert = event.experts.find((expert) => expert.quote);
+  const bioExperts = event.experts.filter((expert) => expert.bio);
   const titleWords = event.title.split(' ');
   const titleLast = titleWords.pop();
 
@@ -125,23 +127,17 @@ export default function EventRegister() {
           </div>
 
           <div className="md:col-span-5">
-            <div className="relative w-full max-w-[360px] mx-auto">
-              <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-[2rem] bg-sun/70" aria-hidden="true" />
-              <div className="relative rounded-[2rem] overflow-hidden bg-white shadow-2xl">
-                <img
-                  src={event.expert.photo}
-                  alt={event.expert.name}
-                  className="w-full aspect-[9/10] object-cover object-top"
-                />
-                <div className="px-6 py-5 text-center bg-gradient-to-b from-white to-pink/5">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-pink mb-1">
-                    Guest Expert
-                  </p>
-                  <p className="font-display text-3xl text-magenta leading-tight">{event.expert.name}</p>
-                  <p className="text-gray-600 text-sm font-medium mt-1">{event.expert.role}</p>
-                </div>
+            {event.experts.length > 1 ? (
+              <div className="grid grid-cols-2 gap-4 sm:gap-6 w-full max-w-[460px] mx-auto">
+                {event.experts.map((expert) => (
+                  <ExpertCard key={expert.name} expert={expert} compact />
+                ))}
               </div>
-            </div>
+            ) : (
+              <div className="w-full max-w-[360px] mx-auto">
+                <ExpertCard expert={event.experts[0]} />
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -279,46 +275,56 @@ export default function EventRegister() {
         </div>
       </section>
 
-      {/* EXPERT QUOTE or MEET THE EXPERT */}
-      {event.expert.quote ? (
+      {/* EXPERT QUOTE or MEET THE EXPERTS */}
+      {quoteExpert ? (
         <section className="relative py-16 md:py-20 px-5 md:px-6 bg-soft-ember overflow-hidden">
           <Blob tone="pink" size="md" className="-bottom-16 -left-16" opacity={12} slow />
           <Reveal className="max-w-3xl mx-auto relative z-10 text-center">
             <p className="font-serif italic text-2xl md:text-4xl text-gray-900 leading-snug mb-6">
-              “{event.expert.quote}”
+              “{quoteExpert.quote}”
             </p>
             <div className="w-16 h-0.5 bg-magenta mx-auto mb-4" aria-hidden="true" />
             <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-magenta">
-              {event.expert.name} · {event.expert.role}
+              {quoteExpert.name} · {quoteExpert.role}
             </p>
           </Reveal>
         </section>
       ) : (
-        event.expert.bio && (
+        bioExperts.length > 0 && (
           <section className="relative py-16 md:py-20 px-5 md:px-6 bg-soft-ember overflow-hidden">
             <Blob tone="pink" size="md" className="-bottom-16 -left-16" opacity={12} slow />
-            <Reveal className="max-w-4xl mx-auto relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
-              <div className="relative shrink-0">
-                <div className="absolute inset-0 translate-x-2 translate-y-2 rounded-full bg-sun/80" aria-hidden="true" />
-                <img
-                  src={event.expert.photo}
-                  alt={event.expert.name}
-                  className="relative w-40 h-40 md:w-52 md:h-52 rounded-full object-cover object-top border-4 border-white shadow-xl"
-                />
-              </div>
-              <div className="text-center md:text-left">
-                <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-pink mb-2">
-                  Meet our guest expert
-                </p>
-                <p className="font-display text-3xl md:text-4xl text-gray-900 leading-tight mb-1">{event.expert.name}</p>
-                <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-magenta mb-5">{event.expert.role}</p>
-                {event.expert.bio.map((paragraph) => (
-                  <p key={paragraph} className="text-gray-700 text-base md:text-lg font-medium leading-relaxed mb-3 last:mb-0">
-                    {paragraph}
-                  </p>
+            <div className="max-w-4xl mx-auto relative z-10">
+              <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-pink mb-8 md:mb-10 text-center">
+                Meet our guest {bioExperts.length > 1 ? 'experts' : 'expert'}
+              </p>
+              <div className="space-y-12 md:space-y-16">
+                {bioExperts.map((expert, i) => (
+                  <Reveal
+                    key={expert.name}
+                    delay={i * 120}
+                    className="flex flex-col md:flex-row items-center gap-8 md:gap-12"
+                  >
+                    <div className="relative shrink-0">
+                      <div className="absolute inset-0 translate-x-2 translate-y-2 rounded-full bg-sun/80" aria-hidden="true" />
+                      <img
+                        src={expert.photo}
+                        alt={expert.name}
+                        className="relative w-40 h-40 md:w-52 md:h-52 rounded-full object-cover object-top border-4 border-white shadow-xl"
+                      />
+                    </div>
+                    <div className="text-center md:text-left">
+                      <p className="font-display text-3xl md:text-4xl text-gray-900 leading-tight mb-1">{expert.name}</p>
+                      <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-magenta mb-5">{expert.role}</p>
+                      {expert.bio.map((paragraph) => (
+                        <p key={paragraph} className="text-gray-700 text-base md:text-lg font-medium leading-relaxed mb-3 last:mb-0">
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
+                  </Reveal>
                 ))}
               </div>
-            </Reveal>
+            </div>
           </section>
         )
       )}
@@ -345,6 +351,35 @@ export default function EventRegister() {
         </section>
       )}
     </>
+  );
+}
+
+// Hero card for a guest expert. `compact` is used when two or more experts
+// share the column.
+function ExpertCard({ expert, compact = false }) {
+  return (
+    <div className="relative">
+      <div
+        className={`absolute inset-0 bg-sun/70 ${
+          compact ? 'translate-x-3 translate-y-3 rounded-[1.5rem]' : 'translate-x-4 translate-y-4 rounded-[2rem]'
+        }`}
+        aria-hidden="true"
+      />
+      <div className={`relative overflow-hidden bg-white shadow-2xl ${compact ? 'rounded-[1.5rem]' : 'rounded-[2rem]'}`}>
+        <img
+          src={expert.photo}
+          alt={expert.name}
+          className={`w-full object-cover object-top ${compact ? 'aspect-[4/5]' : 'aspect-[9/10]'}`}
+        />
+        <div className={`text-center bg-gradient-to-b from-white to-pink/5 ${compact ? 'px-3 py-4' : 'px-6 py-5'}`}>
+          <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-pink mb-1">Guest Expert</p>
+          <p className={`font-display text-magenta leading-tight ${compact ? 'text-xl sm:text-2xl' : 'text-3xl'}`}>
+            {expert.name}
+          </p>
+          <p className={`text-gray-600 font-medium mt-1 ${compact ? 'text-xs sm:text-sm' : 'text-sm'}`}>{expert.role}</p>
+        </div>
+      </div>
+    </div>
   );
 }
 

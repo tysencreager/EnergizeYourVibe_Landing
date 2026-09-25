@@ -31,8 +31,9 @@
 //                   after registering
 //   phoneRequired   make the phone field mandatory (text updates)
 //   flyer           path to a shareable flyer image in public/assets
-//   expert.quote    pull quote section; expert.bio (array) is used instead
-//                   when there is no quote
+//   experts         [{ name, role, photo, quote?, bio? }] - one or more guest
+//                   experts. A quote renders as a pull-quote section; bios
+//                   (arrays of paragraphs) render as "Meet our guest experts"
 
 export const EVENT_TIME_ZONE = 'America/Denver';
 
@@ -72,13 +73,15 @@ export const EVENTS = [
       'Create simple systems that don’t depend on Mom constantly maintaining them',
       'Simplify your home before the busiest season begins',
     ],
-    expert: {
-      name: 'Sandy Rodriguez',
-      role: 'Owner, Mindful Organizing & Co.',
-      photo: '/assets/sandy-rodriguez.jpg',
-      quote:
-        'The goal isn’t a perfectly organized home. It’s a home that requires less from you when everything else requires more.',
-    },
+    experts: [
+      {
+        name: 'Sandy Rodriguez',
+        role: 'Owner, Mindful Organizing & Co.',
+        photo: '/assets/sandy-rodriguez.jpg',
+        quote:
+          'The goal isn’t a perfectly organized home. It’s a home that requires less from you when everything else requires more.',
+      },
+    ],
     bonus: {
       title: 'Fall Friction Audit',
       desc: 'Use it during the workshop to discover where to start and create more ease at home.',
@@ -110,7 +113,7 @@ export const EVENTS = [
     timeLabel: '11:30 AM to 2:30 PM Mountain Time',
     formatLabel: 'In Person',
     lengthLabel: '3 Hours',
-    priceLabel: 'Free for Members · $15 for Non-Members',
+    priceLabel: 'Free for Members · $20 for Non-Members',
     audienceLabel: 'All Women Welcome',
 
     location: {
@@ -123,22 +126,32 @@ export const EVENTS = [
     },
 
     summary:
-      'An in-person Energize Your Vibe gathering in American Fork Canyon with writing coach Susan Hart: nature, guided journaling, meaningful conversation, and s’mores by the fire. Free for members, $15 for non-members.',
+      'An in-person Energize Your Vibe gathering in American Fork Canyon with guest experts Susan Hart and Tysen Creager: nature, guided journaling, meaningful conversation, and s’mores by the fire. Free for members, $20 for non-members.',
     heading: ['This isn’t a class.', 'It’s a gathering.'],
     description: [
       'A chance to get outside, slow down for a few hours, connect with other women and get a little more present to YOU.',
       'Sometimes we get so busy living our lives that we don’t stop long enough to notice who we are right now, what we’ve walked through, what matters to us, or the story we’re continuing to write. That’s what this afternoon is about.',
       'Bring your own lunch, pull up your camping chair and spend the afternoon with us. We’ll have time for conversation, connection, reflection and simply enjoying being together in nature. And yes, there will be s’mores! We’ll have a fire going and provide the s’mores and drinks.',
     ],
-    expert: {
-      name: 'Susan Hart',
-      role: 'Owner, Voice to Page · Writing Coach',
-      photo: '/assets/susan-hart.jpg',
-      bio: [
-        'Susan will spend some time with us talking about story, identity and the power of putting our thoughts into words, along with some guided journaling to help us reflect on who we are in this season of life.',
-        'No writing experience needed. Just bring your journal and come open.',
-      ],
-    },
+    experts: [
+      {
+        name: 'Susan Hart',
+        role: 'Owner, Voice to Page · Writing Coach',
+        photo: '/assets/susan-hart.jpg',
+        bio: [
+          'Susan will spend some time with us talking about story, identity and the power of putting our thoughts into words, along with some guided journaling to help us reflect on who we are in this season of life.',
+          'No writing experience needed. Just bring your journal and come open.',
+        ],
+      },
+      {
+        name: 'Tysen Creager',
+        role: 'Personal & Business Growth Strategist',
+        photo: '/assets/tysen-creager.jpg',
+        bio: [
+          'Tysen Creager, Personal & Business Growth Strategist, joins Susan as a guest expert for the afternoon.',
+        ],
+      },
+    ],
     bring: [
       { icon: 'lunch', title: 'Your lunch', desc: 'We’ll provide the s’mores and drinks.' },
       { icon: 'journal', title: 'Journal + pen', desc: 'Come ready to reflect, explore and write.' },
@@ -157,9 +170,9 @@ export const EVENTS = [
 
     pricing: {
       memberLabel: 'Free',
-      nonMemberPrice: '$15',
-      // Stripe Payment Link for the $15 non-member spot (one-time payment).
-      stripeUrl: 'https://buy.stripe.com/fZuaEYgDy00a1eNgGV4wM02',
+      nonMemberPrice: '$20',
+      // Stripe Payment Link for the $20 non-member spot (one-time payment).
+      stripeUrl: 'https://buy.stripe.com/fZu28safa00aaPnaix4wM03',
       venmoUrl: 'https://venmo.com/code?user_id=2114734279098368911&created=1790276161',
       venmoNote: 'Put your name and “Sisterhood s’mores” in the comments.',
     },
@@ -207,6 +220,13 @@ export function ticketLabel(event, membership) {
   return membership === 'member'
     ? `Member (${event.pricing.memberLabel.toLowerCase()})`
     : `Non-member (${event.pricing.nonMemberPrice})`;
+}
+
+// "Sandy Rodriguez" / "Susan Hart & Tysen Creager" for copy.
+export function expertNames(event) {
+  const names = event.experts.map((expert) => expert.name);
+  if (names.length <= 1) return names[0] ?? '';
+  return `${names.slice(0, -1).join(', ')} & ${names[names.length - 1]}`;
 }
 
 // Short location or format line for cards and chips.

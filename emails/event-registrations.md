@@ -19,7 +19,7 @@ existing member keeps her `EYV Members` group and data.
 
 Events with `pricing` (free for members, paid for everyone else) also ask
 "Are you an Energize Your Vibe member?". The answer lands in the custom text
-field `event_ticket` (`Member (free)` / `Non-member ($15)`), and non-members
+field `event_ticket` (`Member (free)` / `Non-member ($20)`), and non-members
 are sent to pay on the thank-you page via the event's Stripe Payment Link
 (with their email prefilled) or Venmo. Payment is not verified by the site:
 check Stripe / Venmo against the group's non-member rows before the event.
@@ -88,8 +88,10 @@ link.
 - Short link for flyers/texts: https://www.energizeyourvibe.com/smores
 - Where: American Fork Canyon, Roadhouse Camp Area (directions on the page
   and in the email)
-- Price: members free, non-members $15
-  - Stripe Payment Link: https://buy.stripe.com/fZuaEYgDy00a1eNgGV4wM02
+- Guest experts: Susan Hart (Owner, Voice to Page · Writing Coach) and Tysen
+  Creager (Personal & Business Growth Strategist)
+- Price: members free, non-members $20
+  - Stripe Payment Link: https://buy.stripe.com/fZu28safa00aaPnaix4wM03
   - Venmo: Jenn's Venmo code link (registrants put their name +
     "Sisterhood s'mores" in the comments)
 - MailerLite group: `Event: Sisterhood, S'mores & Soulful Stories (Oct 2, 2026)`
@@ -120,12 +122,12 @@ empty email step. In the dashboard:
 ### Registrant list
 
 Open the group in MailerLite (export to CSV from there). The `event_ticket`
-column shows `Member (free)` or `Non-member ($15)`; match the non-members
+column shows `Member (free)` or `Non-member ($20)`; match the non-members
 against Stripe payments (the Payment Link prefills their email) and Venmo.
 
 ### Stripe note
 
-The $15 Payment Link is a one-time payment in the same Stripe account as the
+The $20 Payment Link is a one-time payment in the same Stripe account as the
 membership subscription. `functions/api/stripe-webhook.js` now ignores
 non-subscription checkouts, so an event payment never activates a
 membership or enrolls the buyer in the member welcome drip. Nothing to

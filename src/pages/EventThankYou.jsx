@@ -19,7 +19,7 @@ import Blob from '../components/Blob.jsx';
 import Sunburst from '../components/Sunburst.jsx';
 import { usePageMeta } from '../hooks/usePageMeta.js';
 import { track } from '../lib/track.js';
-import { getEvent, hasNonMemberPrice, isInPerson, whereLabel } from '../data/events.js';
+import { expertNames, getEvent, hasNonMemberPrice, isInPerson, whereLabel } from '../data/events.js';
 import { CONTACT_EMAIL } from '../data/links.js';
 
 export default function EventThankYou() {
@@ -89,7 +89,7 @@ export default function EventThankYou() {
 
           <p className="text-lg md:text-xl text-white/95 font-medium max-w-2xl mx-auto leading-relaxed mb-8">
             We’re so glad you’re joining us for <strong className="text-white">{event.title}</strong> with
-            our guest expert, {event.expert.name}.
+            our guest {event.experts.length > 1 ? 'experts' : 'expert'}, {expertNames(event)}.
           </p>
 
           <ul className="flex flex-col sm:flex-row sm:flex-wrap justify-center items-center gap-3 mb-10 text-white font-semibold text-sm md:text-base">
