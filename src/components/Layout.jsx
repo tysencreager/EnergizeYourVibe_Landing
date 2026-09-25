@@ -1,6 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import AlertBanner from './AlertBanner.jsx';
 import Nav from './Nav.jsx';
 import Footer from './Footer.jsx';
 import LaunchPopup from './LaunchPopup.jsx';
@@ -15,7 +14,6 @@ export default function Layout() {
   return (
     <div className="relative overflow-x-hidden min-h-screen selection:bg-pink selection:text-white">
       <div className="print:hidden">
-        <AlertBanner />
         <Nav />
       </div>
       <main>

@@ -100,7 +100,7 @@ export default function Nav() {
     <>
       <div
         className={`fixed w-full z-50 px-4 pointer-events-none flex justify-center transition-[top] duration-300 ${
-          scrolled ? 'top-3' : 'top-[40px] md:top-[52px]'
+          scrolled ? 'top-3' : 'top-4 md:top-6'
         }`}
       >
         <nav

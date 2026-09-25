@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar, CheckCircle2, Video, Headphones, Flower2, PartyPopper } from 'lucide-react';
 import Blob from '../components/Blob.jsx';
 import Sunburst from '../components/Sunburst.jsx';
+import EventCard from '../components/EventCard.jsx';
 import { upcomingEvents } from '../data/events.js';
 
 const eventTypes = [
@@ -60,17 +61,24 @@ export default function Events() {
         </div>
       </section>
 
-      {/* UPCOMING EVENTS (placeholder until the calendar has entries) */}
-      <section className="relative py-20 md:py-24 px-5 md:px-6 bg-soft-dawn overflow-hidden">
+      {/* UPCOMING EVENTS (calendar; placeholder until it has entries) */}
+      <section id="calendar" className="relative py-20 md:py-24 px-5 md:px-6 bg-soft-dawn overflow-hidden scroll-mt-24">
         <div className="max-w-5xl mx-auto relative z-10">
           {upcoming.length > 0 ? (
-            <div className="mb-16">
-              <h2 className="text-3xl md:text-5xl font-display text-gray-900 mb-10 text-center">
+            <div className="mb-20">
+              <h2 className="text-3xl md:text-5xl font-display text-gray-900 mb-4 text-center">
                 Coming <i className="text-pink">up.</i>
               </h2>
-              <div className="space-y-5">
+              <p className="text-gray-600 text-lg md:text-xl font-medium text-center max-w-2xl mx-auto mb-10">
+                You don’t need to be a member to join these. All women are welcome, so bring a friend.
+              </p>
+              <div
+                className={`grid gap-6 md:gap-8 ${
+                  upcoming.length === 1 ? 'max-w-xl mx-auto' : 'md:grid-cols-2'
+                }`}
+              >
                 {upcoming.map((event) => (
-                  <UpcomingEventCard key={event.slug} event={event} />
+                  <EventCard key={event.slug} event={event} />
                 ))}
               </div>
             </div>
@@ -175,33 +183,5 @@ export default function Events() {
         </div>
       </section>
     </>
-  );
-}
-
-function UpcomingEventCard({ event }) {
-  return (
-    <Link
-      to={`/events/${event.slug}`}
-      className="bento-card group bg-white border-2 border-pink/20 p-0 overflow-hidden flex flex-col sm:flex-row"
-    >
-      <img
-        src={event.expert.photo}
-        alt={event.expert.name}
-        className="w-full sm:w-56 aspect-[4/3] sm:aspect-auto object-cover object-top shrink-0"
-      />
-      <div className="p-7 md:p-9 flex flex-col justify-center">
-        <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-pink mb-2">
-          {event.series} · {event.formatLabel}
-        </p>
-        <h3 className="font-display text-3xl md:text-4xl text-gray-900 leading-tight mb-2">{event.title}</h3>
-        <p className="text-gray-700 font-semibold mb-2">{event.subtitle}</p>
-        <p className="text-gray-500 font-medium text-sm mb-5">
-          {event.dateLabel} · {event.timeLabel} · with {event.expert.name}
-        </p>
-        <span className="inline-flex items-center gap-2 text-magenta font-bold uppercase tracking-widest text-sm group-hover:text-pink transition-colors">
-          Save Your Free Seat <ArrowRight size={16} />
-        </span>
-      </div>
-    </Link>
   );
 }

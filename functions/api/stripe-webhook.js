@@ -53,6 +53,15 @@ export async function onRequestPost({ request, env }) {
 // --- Event handlers ---------------------------------------------------------
 
 async function handleCheckoutCompleted(session, env) {
+  // Only subscription checkouts are memberships. The same Stripe account also
+  // sells one-time items through other Payment Links (e.g. the non-member
+  // spot for in-person events, see src/data/events.js), and those
+  // must never activate a membership or enroll the buyer in the welcome drip.
+  if (session.mode && session.mode !== 'subscription') {
+    console.log(`[stripe-webhook] ignoring ${session.mode}-mode checkout ${session.id}`);
+    return;
+  }
+
   // "paid" is the normal case; "no_payment_required" covers free trials and
   // 100%-off promo codes (used for end-to-end testing and comped members).
   if (

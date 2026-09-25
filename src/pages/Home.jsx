@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Hero from '../components/Hero.jsx';
+import UpcomingEvents from '../components/UpcomingEvents.jsx';
 import Marquee from '../components/Marquee.jsx';
 import BookCallCTA from '../components/BookCallCTA.jsx';
 import MissionIntro from '../components/MissionIntro.jsx';
@@ -28,6 +29,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <UpcomingEvents />
       <Marquee />
       <BookCallCTA />
       <MissionIntro />
