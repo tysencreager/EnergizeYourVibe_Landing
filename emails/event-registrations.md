@@ -186,8 +186,9 @@ Then:
 4. In MailerLite: create the group, then an automation on it with the
    filled-in email (steps 1–4 of the Fall Reset checklist above).
 
-Past events drop off the `/events` calendar, the homepage "Upcoming
-events" section, and the site popup automatically (all three read
-`upcomingEvents()`). Their pages stay up and show "Registration has closed".
-Once no events are open, the popup falls back to the Founding Member
+Events drop off the `/events` calendar, the homepage "Upcoming events"
+section, and the site popup automatically the moment they start (all three
+read `upcomingEvents()`). Their pages stay up, keep taking registrations
+until the event ends, and then show "Registration has closed". Once no
+events are coming up, the popup falls back to the Founding Member
 invitation.

@@ -7,8 +7,8 @@ import { upcomingEvents } from '../data/events.js';
 
 const COUNT_WORDS = ['', 'One', 'Two', 'Three', 'Four'];
 
-// Homepage section right under the hero listing every event that is still
-// open for registration (src/data/events.js). Renders nothing once the
+// Homepage section right under the hero listing every event that hasn't
+// started yet (src/data/events.js). Renders nothing once the
 // calendar is empty, so past events never leave a hole on the page.
 export default function UpcomingEvents() {
   const upcoming = upcomingEvents();

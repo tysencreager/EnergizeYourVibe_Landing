@@ -18,7 +18,6 @@ const foundingBenefits = [
   'Energize Your Vibe Hotline, podcast, playlists, meditations, affirmations & vibe check-ins',
   'Private FB Community & personalized welcome gift',
 ];
-const COUNT_WORDS = ['', 'one', 'two', 'three', 'four'];
 const OPEN_DELAY_MS = 900;
 
 export default function LaunchPopup() {
@@ -29,8 +28,8 @@ export default function LaunchPopup() {
   // popup promotes - don't interrupt them.
   const suppressed = pathname.startsWith('/vibe-reset') || pathname.startsWith('/events');
 
-  // While events are open for registration the popup features them; once the
-  // calendar is empty it falls back to the Founding Member invitation.
+  // While events are coming up the popup features them; once the calendar
+  // is empty it falls back to the Founding Member invitation.
   const upcoming = upcomingEvents();
   const featureEvents = upcoming.length > 0;
 
@@ -125,7 +124,6 @@ export default function LaunchPopup() {
 }
 
 function EventsContent({ events, onPick }) {
-  const countWord = COUNT_WORDS[events.length] ?? events.length;
   return (
     <>
       <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 border border-white/30 backdrop-blur-md text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] mb-5">
@@ -134,8 +132,10 @@ function EventsContent({ events, onPick }) {
       </div>
 
       <h2 id="launch-popup-title" className="font-display text-3xl sm:text-4xl leading-[1.05] mb-3">
-        You’re invited to {countWord} upcoming{' '}
-        <span className="font-serif italic text-sun">{events.length === 1 ? 'event.' : 'events.'}</span>
+        You’re invited to our{' '}
+        <span className="font-serif italic text-sun">
+          {events.length === 1 ? 'next event!' : 'upcoming events!'}
+        </span>
       </h2>
 
       <p className="text-white/95 text-sm sm:text-base font-medium leading-relaxed mb-6">
