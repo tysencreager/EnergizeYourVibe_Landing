@@ -3,7 +3,7 @@
 // Each entry powers:
 //   - the landing page at /events/<slug> and its thank-you page
 //   - the upcoming-events list on /events, the homepage section, and the
-//     site popup
+//     site popup (until the event starts)
 //   - server-side validation in functions/api/event-register.js, which
 //     imports this file (keep it plain JS: no JSX, no import.meta.env)
 //
@@ -218,8 +218,15 @@ export function isRegistrationOpen(event, now = new Date()) {
   return now < eventEndsAt(event);
 }
 
+export function hasStarted(event, now = new Date()) {
+  return now >= new Date(event.startsAt);
+}
+
+// Events still worth promoting. An event comes off the calendar, homepage
+// and popup as soon as it starts; its own page keeps taking registrations
+// until it ends, so latecomers with the link can still get the join details.
 export function upcomingEvents(now = new Date()) {
-  return EVENTS.filter((event) => isRegistrationOpen(event, now)).sort(
+  return EVENTS.filter((event) => !hasStarted(event, now)).sort(
     (a, b) => new Date(a.startsAt) - new Date(b.startsAt)
   );
 }

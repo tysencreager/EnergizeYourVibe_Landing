@@ -29,8 +29,8 @@ export default function LaunchPopup() {
   // popup promotes - don't interrupt them.
   const suppressed = pathname.startsWith('/vibe-reset') || pathname.startsWith('/events');
 
-  // While events are open for registration the popup features them; once the
-  // calendar is empty it falls back to the Founding Member invitation.
+  // While events are coming up the popup features them; once the calendar
+  // is empty it falls back to the Founding Member invitation.
   const upcoming = upcomingEvents();
   const featureEvents = upcoming.length > 0;
 
