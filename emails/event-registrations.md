@@ -179,6 +179,13 @@ group's subscribers (`phone` field / CSV export) for day-of texts.
   calendar, homepage and popup at `announceAt`, **Fri, Oct 9, 9:00 AM MT**.
   Until then, share the link directly.
 - MailerLite group: `Event: Halloween Party (Oct 21, 2026)`
+  (id `200523251589318215`, created via the API on Oct 5)
+- MailerLite automation: same name, id `200523255912596648`,
+  https://dashboard.mailerlite.com/automations/200523255912596648
+  (trigger = joins the group above). Created via the API on Oct 5,
+  **inactive**. Its email step still needs its sender set in the
+  dashboard (the API defaulted it to an unverified address and can't
+  change it), and only then can the subject and HTML be added.
 - Email: `08-halloween-party-registration.html`
 
 ### Before sharing the link
