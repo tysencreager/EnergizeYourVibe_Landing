@@ -5,12 +5,17 @@ import {
   ArrowDown,
   ArrowRight,
   CalendarDays,
+  Camera,
   Clock,
   CreditCard,
+  Crown,
+  CupSoda,
+  Dices,
   Flame,
   Gift,
   Heart,
   Laptop,
+  Lollipop,
   Mail,
   MapPin,
   Navigation,
@@ -20,6 +25,7 @@ import {
   Sparkles,
   Ticket,
   User,
+  Users,
   Utensils,
 } from 'lucide-react';
 import Blob from '../components/Blob.jsx';
@@ -31,19 +37,27 @@ import { track, trackOnce } from '../lib/track.js';
 import {
   getEvent,
   hasNonMemberPrice,
+  isFreeTier,
   isInPerson,
   isRegistrationOpen,
+  payByLabel,
   whereLabel,
 } from '../data/events.js';
 import { EVENT_REGISTER_ENDPOINT, CONTACT_EMAIL } from '../data/links.js';
 
-// Icons for the "What to bring" list (keys come from src/data/events.js).
-const bringIcons = {
+// Icons for the "What to bring" and "Your ticket includes" lists (keys come
+// from src/data/events.js).
+const listIcons = {
   lunch: Utensils,
   journal: NotebookPen,
   chair: Armchair,
   layers: Shirt,
   you: Heart,
+  cakePop: Lollipop,
+  games: Dices,
+  camera: Camera,
+  crown: Crown,
+  drink: CupSoda,
 };
 
 export default function EventRegister() {
@@ -119,6 +133,11 @@ export default function EventRegister() {
                 <p className="text-white/90 text-sm font-medium mt-4">
                   {event.priceLabel} · {event.audienceLabel}
                 </p>
+                {event.capacity && (
+                  <p className="text-sun text-[10px] sm:text-xs font-bold uppercase tracking-[0.25em] mt-2">
+                    Space is limited · First come, first served
+                  </p>
+                )}
               </>
             ) : (
               <p className="inline-block bg-white/15 border border-white/30 backdrop-blur-md rounded-2xl px-6 py-4 text-white font-semibold">
@@ -201,27 +220,11 @@ export default function EventRegister() {
               </>
             )}
 
+            {event.included && <IconList heading="Your ticket includes:" items={event.included} />}
+
             {event.bring && (
               <>
-                <h3 className="text-sm font-bold uppercase tracking-[0.25em] text-magenta mt-10 mb-5">
-                  What to bring:
-                </h3>
-                <ul className="grid sm:grid-cols-2 gap-4">
-                  {event.bring.map((item) => {
-                    const Icon = bringIcons[item.icon] ?? Heart;
-                    return (
-                      <li key={item.title} className="flex items-start gap-4 bg-soft-dawn border border-gold/20 rounded-2xl p-4">
-                        <span className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-orange/15 text-orange shrink-0">
-                          <Icon size={20} strokeWidth={1.75} />
-                        </span>
-                        <span>
-                          <span className="block font-bold text-gray-900">{item.title}</span>
-                          <span className="block text-gray-600 text-sm font-medium leading-relaxed">{item.desc}</span>
-                        </span>
-                      </li>
-                    );
-                  })}
-                </ul>
+                <IconList heading="What to bring:" items={event.bring} />
                 {event.bringNote && (
                   <p className="text-sm text-gray-500 font-medium mt-4">{event.bringNote}</p>
                 )}
@@ -252,18 +255,40 @@ export default function EventRegister() {
                 <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-pink mb-4">Your spot</p>
                 <div className="grid grid-cols-2 gap-3 mb-5">
                   <div className="bg-white/80 rounded-2xl px-3 py-4">
-                    <p className="font-display text-3xl text-magenta leading-none mb-1">{event.pricing.memberLabel}</p>
+                    <p className="font-display text-3xl text-magenta leading-none mb-1">{event.pricing.member.price}</p>
                     <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-600">Members</p>
                   </div>
                   <div className="bg-white/80 rounded-2xl px-3 py-4">
-                    <p className="font-display text-3xl text-magenta leading-none mb-1">{event.pricing.nonMemberPrice}</p>
+                    <p className="font-display text-3xl text-magenta leading-none mb-1">{event.pricing.nonMember.price}</p>
                     <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-600">Non-members</p>
                   </div>
                 </div>
                 <p className="text-gray-600 text-sm font-medium leading-relaxed inline-flex items-start gap-2 text-left">
                   <CreditCard size={16} strokeWidth={1.75} className="text-orange shrink-0 mt-0.5" />
-                  Not a member? Pay by card or Venmo right after you register.
+                  {isFreeTier(event.pricing.member) ? 'Not a member? Pay' : 'Pay'} by{' '}
+                  {payByLabel(event, event.pricing.nonMember)} right after you register.
                 </p>
+              </div>
+            )}
+
+            {event.membershipPitch && (
+              <div className="bento-card bg-white border-2 border-pink/20 p-8 md:p-10">
+                <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-pink mb-2">Members save</p>
+                <p className="font-display text-2xl text-gray-900 leading-tight mb-3">
+                  Not a member <i className="text-pink">yet?</i>
+                </p>
+                {event.membershipPitch.map((paragraph) => (
+                  <p key={paragraph} className="text-gray-600 font-medium leading-relaxed mb-3">
+                    {paragraph}
+                  </p>
+                ))}
+                <Link
+                  to="/membership"
+                  onClick={() => track('event_membership_click', { event: event.slug, from: 'pitch' })}
+                  className="inline-flex items-center gap-2 mt-2 text-magenta font-bold uppercase tracking-widest text-xs hover:text-pink transition-colors"
+                >
+                  Become a Member <ArrowRight size={14} strokeWidth={2} />
+                </Link>
               </div>
             )}
 
@@ -278,10 +303,12 @@ export default function EventRegister() {
               <div className="bento-card bg-white border-2 border-pink/20 p-8 md:p-10">
                 <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-pink mb-2">Getting there</p>
                 <p className="font-display text-2xl text-gray-900 leading-tight mb-1">{event.location.name}</p>
-                <p className="text-gray-700 font-semibold mb-4">{event.location.detail}</p>
-                <p className="text-gray-600 text-sm font-medium leading-relaxed mb-5">
-                  {event.location.directions}
-                </p>
+                <p className="text-gray-700 font-semibold mb-4">{event.location.address ?? event.location.detail}</p>
+                {event.location.directions && (
+                  <p className="text-gray-600 text-sm font-medium leading-relaxed mb-5">
+                    {event.location.directions}
+                  </p>
+                )}
                 {event.location.mapsUrl && (
                   <a
                     href={event.location.mapsUrl}
@@ -406,6 +433,30 @@ function ExpertCard({ expert, compact = false }) {
   );
 }
 
+function IconList({ heading, items }) {
+  return (
+    <>
+      <h3 className="text-sm font-bold uppercase tracking-[0.25em] text-magenta mt-10 mb-5">{heading}</h3>
+      <ul className="grid sm:grid-cols-2 gap-4">
+        {items.map((item) => {
+          const Icon = listIcons[item.icon] ?? Heart;
+          return (
+            <li key={item.title} className="flex items-start gap-4 bg-soft-dawn border border-gold/20 rounded-2xl p-4">
+              <span className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-orange/15 text-orange shrink-0">
+                <Icon size={20} strokeWidth={1.75} />
+              </span>
+              <span>
+                <span className="block font-bold text-gray-900">{item.title}</span>
+                <span className="block text-gray-600 text-sm font-medium leading-relaxed">{item.desc}</span>
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </>
+  );
+}
+
 function DetailChip({ icon, children }) {
   return (
     <li className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 border border-white/30 backdrop-blur-md">
@@ -429,11 +480,28 @@ function RegisterSection({ event }) {
   });
   const [status, setStatus] = useState('idle'); // idle | submitting | error
   const [errorMessage, setErrorMessage] = useState('');
+  // Spots left for events with a capacity (null until known, or when the
+  // lookup fails: the API still enforces the cap on submit).
+  const [spotsLeft, setSpotsLeft] = useState(null);
   const [formRef, formInView] = useInView({ once: true });
 
   useEffect(() => {
     if (formInView) trackOnce('event_form_view', { event: event.slug });
   }, [formInView, event.slug]);
+
+  useEffect(() => {
+    if (!event.capacity) return undefined;
+    let cancelled = false;
+    fetch(`${EVENT_REGISTER_ENDPOINT}?event=${encodeURIComponent(event.slug)}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (!cancelled && data.ok && typeof data.spotsLeft === 'number') setSpotsLeft(data.spotsLeft);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [event.slug, event.capacity]);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -490,6 +558,12 @@ function RegisterSection({ event }) {
         }),
       });
       const data = await response.json().catch(() => ({}));
+      if (data.full) {
+        track('event_full', { event: event.slug });
+        setStatus('idle');
+        setSpotsLeft(0);
+        return;
+      }
       if (!response.ok || !data.ok) {
         throw new Error(data.error || 'Registration failed');
       }
@@ -506,7 +580,10 @@ function RegisterSection({ event }) {
     }
   }
 
+  if (spotsLeft === 0) return <FullSection event={event} />;
+
   const submitLabel = priced ? 'Save My Seat' : 'Register For Free';
+  const { member, nonMember } = event.pricing ?? {};
 
   return (
     <section id="register" className="relative py-16 md:py-24 px-5 md:px-6 bg-soft-dawn overflow-hidden scroll-mt-24">
@@ -529,6 +606,14 @@ function RegisterSection({ event }) {
                 ? 'We’ll email your confirmation with directions and what to bring.'
                 : 'We’ll email your Zoom link as soon as you register.'}
             </p>
+            {event.capacity && (
+              <p className="inline-flex items-center gap-2 mt-5 px-4 py-2 rounded-full bg-orange/10 text-orange text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em]">
+                <Users size={14} strokeWidth={2} />
+                {spotsLeft !== null && spotsLeft <= 10
+                  ? `Only ${spotsLeft} ${spotsLeft === 1 ? 'spot' : 'spots'} left`
+                  : 'Space is limited · First come, first served'}
+              </p>
+            )}
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5" noValidate>
@@ -586,7 +671,11 @@ function RegisterSection({ event }) {
                     checked={form.membership === 'member'}
                     onChange={handleChange}
                     title="Yes, I’m a member"
-                    detail={`${event.pricing.memberLabel} · you’re all set`}
+                    detail={
+                      isFreeTier(member)
+                        ? `${member.price} · you’re all set`
+                        : `${member.price} · pay by ${payByLabel(event, member)} after you register`
+                    }
                   />
                   <MembershipOption
                     name="membership"
@@ -594,7 +683,7 @@ function RegisterSection({ event }) {
                     checked={form.membership === 'non-member'}
                     onChange={handleChange}
                     title="Not yet"
-                    detail={`${event.pricing.nonMemberPrice} · pay by card or Venmo after you register`}
+                    detail={`${nonMember.price} · pay by ${payByLabel(event, nonMember)} after you register`}
                   />
                 </div>
               </fieldset>
@@ -637,6 +726,39 @@ function RegisterSection({ event }) {
             </p>
           </form>
         </div>
+      </div>
+    </section>
+  );
+}
+
+// Shown in place of the form once a capped event is full.
+function FullSection({ event }) {
+  const waitlistUrl = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Waitlist: ${event.title}`)}`;
+  return (
+    <section id="register" className="relative py-16 md:py-24 px-5 md:px-6 bg-soft-dawn overflow-hidden scroll-mt-24">
+      <Blob tone="pink" size="lg" className="-top-20 -right-20" opacity={15} />
+      <div className="max-w-xl mx-auto relative z-10 bento-card glass border-2 border-pink/20 p-8 sm:p-12 text-center shadow-xl">
+        <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-magenta mb-3">All spots are taken</p>
+        <h2 className="text-3xl md:text-4xl font-display text-gray-900 mb-4 leading-tight">
+          This {event.kindLabel} is <i className="text-pink">full.</i>
+        </h2>
+        <p className="text-gray-600 font-medium mb-8">
+          Thank you for the love! Email us to join the waitlist and we’ll reach out if a spot opens up.
+        </p>
+        <a
+          href={waitlistUrl}
+          onClick={() => track('event_waitlist_click', { event: event.slug })}
+          className="inline-flex items-center gap-3 bg-magenta text-white py-4 px-8 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-pink transition-colors shadow-lg"
+        >
+          <Mail size={18} /> Join the Waitlist
+        </a>
+        <p className="text-sm text-gray-500 font-medium mt-6">
+          Or see{' '}
+          <Link to="/events" className="text-magenta font-bold hover:text-pink transition-colors">
+            what else is coming up
+          </Link>
+          .
+        </p>
       </div>
     </section>
   );
