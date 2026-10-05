@@ -182,10 +182,15 @@ group's subscribers (`phone` field / CSV export) for day-of texts.
   (id `200523251589318215`, created via the API on Oct 5)
 - MailerLite automation: same name, id `200523255912596648`,
   https://dashboard.mailerlite.com/automations/200523255912596648
-  (trigger = joins the group above). Created via the API on Oct 5,
-  **inactive**. Its email step still needs its sender set in the
-  dashboard (the API defaulted it to an unverified address and can't
-  change it), and only then can the subject and HTML be added.
+  (trigger = joins the group above). Created via the API on Oct 5 and
+  **inactive** until Jenn or Tysen turns it on. Sender Energize Your
+  Vibe, jenn@energizeyourvibe.com (set in the dashboard: the API
+  defaults new email steps to the logged-in user's unverified address
+  and can't change it); subject "You're in! See you at the Energize Your
+  Vibe Halloween Party 🎃"; content is `08-halloween-party-registration.html`
+  as Custom HTML, **Venmo-only for now** (the two card buttons removed
+  and Venmo made the solid button). Once the Stripe links exist, re-paste
+  the full file with the tokens filled in.
 - Email: `08-halloween-party-registration.html`
 
 ### Before sharing the link
@@ -195,14 +200,11 @@ group's subscribers (`phone` field / CSV export) for day-of texts.
    non-member ticket"). Put them in `src/data/events.js` as
    `pricing.member.stripeUrl` / `pricing.nonMember.stripeUrl`. Until then
    the site offers Venmo only (the copy adjusts on its own).
-2. **MailerLite**: create the group above, then an automation on it
-   (trigger *When subscriber joins a group*, no delay) with:
-   - **Subject:** You're in! See you at the Energize Your Vibe Halloween Party 🎃
-   - **Preview text:** Your details for Wednesday, October 21 are inside.
-   - **Sender:** Energize Your Vibe, jenn@energizeyourvibe.com
-   - **Content:** Custom HTML. Paste `08-halloween-party-registration.html`
-     with `{{STRIPE_MEMBER_URL}}` and `{{STRIPE_NON_MEMBER_URL}}` replaced
-     by the two Payment Links.
+2. **MailerLite**: the group and automation above are set up (sender,
+   subject and Venmo-only email loaded). Review the email in the
+   automation, then **turn the automation on**. Once the Stripe links
+   exist, replace its content with `08-halloween-party-registration.html`
+   with `{{STRIPE_MEMBER_URL}}` and `{{STRIPE_NON_MEMBER_URL}}` filled in.
 3. **Test**: register yourself on the live page, check the email arrives,
    then **remove yourself from the group** so the test doesn't hold one
    of the 30 spots.
