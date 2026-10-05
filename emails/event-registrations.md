@@ -163,9 +163,9 @@ group's subscribers (`phone` field / CSV export) for day-of texts.
 - Short link for flyers/texts: https://www.energizeyourvibe.com/halloween
 - Where: Lark x Co Connection Studio, 1603 Stratford Ave S, Salt Lake City,
   UT 84106
-- Guest expert: Katherine O'Donnell (Owner, A Piece of Cake Utah). Her
-  headshot is cropped from the flyer; swap in the original file at
-  `public/assets/katherine-odonnell.jpg` if Jenn can get it.
+- Guest expert: Katherine O'Donnell (Owner, A Piece of Cake Utah). Photo:
+  `public/assets/katherine-odonnell.jpg`, a 4:5 crop of her kitchen photo
+  with her cakes (re-run the share image script if it changes).
 - Price: members $20, non-members $40. The page also pitches the
   membership to non-members ("Members get $20 off this event...").
 - Capacity: 30 (Katherine's number to start)
