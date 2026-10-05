@@ -21,14 +21,26 @@
 //   bring           [{ icon, title, desc }] ("What to bring"); icon is a key
 //                   mapped to an icon in EventRegister.jsx
 //   bringNote       small print under the bring list
+//   included        [{ icon, title, desc }] ("Your ticket includes"), same
+//                   shape as bring
 //   bonus           { title, desc } freebie card
 //   welcome         copy for the "All women are welcome" card
 //   friendNote      closing line of the "Bring a friend" card (thank-you page)
-//   location        { name, detail, directions, mapsUrl } for in-person events
-//   pricing         { memberLabel, nonMemberPrice, stripeUrl, venmoUrl,
-//                   venmoNote } - when set, the form asks whether the
-//                   registrant is a member and non-members are sent to pay
-//                   after registering
+//   location        { name, detail, address?, directions?, mapsUrl } for
+//                   in-person events ("name · detail" is the short label)
+//   pricing         { member: { price, stripeUrl? }, nonMember: { price,
+//                   stripeUrl? }, venmoUrl, venmoNote } - when set, the form
+//                   asks whether the registrant is a member, and anyone
+//                   whose ticket isn't 'Free' is sent to pay after
+//                   registering (by card when the tier has a Stripe Payment
+//                   Link, and by Venmo)
+//   membershipPitch paragraphs for a "Not a member yet?" card that points
+//                   to /membership (for events where members pay less)
+//   capacity        max registrations; the API turns people away once the
+//                   MailerLite group holds this many, and the page shows
+//                   "Space is limited" and, once full, a waitlist note
+//   announceAt      early access: until this time the page works at its
+//                   link but stays off /events, the homepage and the popup
 //   phoneRequired   make the phone field mandatory (text updates)
 //   flyer           path to a shareable flyer image in public/assets
 //   image           { src, alt, caption? } wide photo shown under the hero
@@ -183,10 +195,12 @@ export const EVENTS = [
     friendNote: 'Send this to a friend who could use an afternoon in the canyon too.',
 
     pricing: {
-      memberLabel: 'Free',
-      nonMemberPrice: '$20',
-      // Stripe Payment Link for the $20 non-member spot (one-time payment).
-      stripeUrl: 'https://buy.stripe.com/fZu28safa00aaPnaix4wM03',
+      member: { price: 'Free' },
+      nonMember: {
+        price: '$20',
+        // Stripe Payment Link for the $20 non-member spot (one-time payment).
+        stripeUrl: 'https://buy.stripe.com/fZu28safa00aaPnaix4wM03',
+      },
       venmoUrl: 'https://venmo.com/code?user_id=2114734279098368911&created=1790276161',
       venmoNote: 'Put your name and “Sisterhood s’mores” in the comments.',
     },
@@ -203,6 +217,100 @@ export const EVENTS = [
     },
 
     mailerliteGroup: "Event: Sisterhood, S'mores & Soulful Stories (Oct 2, 2026)",
+  },
+
+  {
+    slug: 'halloween-party',
+    series: 'An Energize Your Vibe Gathering',
+    kindLabel: 'party',
+    format: 'in-person',
+    title: 'Halloween Party',
+    subtitle:
+      'Grab a costume and join us for a fun night of connection, creativity, cake pops, and a little Halloween fun!',
+    taglines: ['Connection', 'Cake pops', 'Games'],
+
+    startsAt: '2026-10-21T18:30:00-06:00',
+    durationMinutes: 120,
+    dateLabel: 'Wednesday, October 21',
+    timeLabel: '6:30 to 8:30 PM Mountain Time',
+    formatLabel: 'In Person',
+    lengthLabel: '2 Hours',
+    priceLabel: '$20 for Members · $40 for Non-Members',
+    audienceLabel: 'All Women Welcome',
+
+    // Members and last week's attendees (The Fall Reset + Sisterhood,
+    // S'mores) get first dibs: they get the link by email, and the party
+    // goes on the public calendar, homepage and popup at this time.
+    announceAt: '2026-10-09T09:00:00-06:00',
+    // Katherine's number to start. Raise it here if more spots open up.
+    capacity: 30,
+
+    location: {
+      name: 'Lark x Co Connection Studio',
+      detail: 'Sugar House, Salt Lake City',
+      address: '1603 Stratford Ave S, Salt Lake City, UT 84106',
+      mapsUrl:
+        'https://www.google.com/maps/search/?api=1&query=Lark+x+Co+Connection+Studio+1603+Stratford+Ave+S+Salt+Lake+City+UT+84106',
+    },
+
+    summary:
+      'An Energize Your Vibe Halloween Party at Lark x Co Connection Studio in Salt Lake City: make Halloween cake pops with guest expert Katherine O’Donnell of A Piece of Cake Utah, plus games, snacks, a photo op and a best costume prize. $20 for members, $40 for non-members.',
+    heading: ['Costumes, cake pops', '& great company.'],
+    description: [
+      'We’re getting together at the beautiful Lark x Co Connection Studio for an evening designed to give you a chance to get out, laugh, create something fun, meet and connect with other women, and enjoy a night together.',
+      'And we’re not stopping with cake pops. We’ll have games, light snacks and drinks, a Halloween photo opportunity, and of course, costumes are encouraged. Come dressed up if you’d like because we’ll also have a prize for the best costume!',
+    ],
+    included: [
+      {
+        icon: 'cakePop',
+        title: 'Hands-on cake pop class',
+        desc: 'The cake pop experience and all the supplies.',
+      },
+      { icon: 'games', title: 'Fun games', desc: 'Games and activities all evening.' },
+      { icon: 'camera', title: 'Photo op in your costume', desc: 'A Halloween photo opportunity.' },
+      { icon: 'crown', title: 'Best costume wins a prize', desc: 'Come dressed up if you’d like!' },
+      { icon: 'drink', title: 'Light snacks & drinks', desc: 'Served all evening.' },
+      {
+        icon: 'you',
+        title: 'An evening of connection',
+        desc: 'With the Energize Your Vibe community.',
+      },
+    ],
+    experts: [
+      {
+        name: 'Katherine O’Donnell',
+        role: 'Owner, A Piece of Cake Utah',
+        photo: '/assets/katherine-odonnell.jpg',
+        bio: [
+          'Katherine will walk us through making our own Halloween cake pops, and your ticket includes all the supplies.',
+          'No cake-pop skills required. Just show up ready to create and have fun!',
+        ],
+      },
+    ],
+    welcome:
+      'You don’t need to be a member to join us. Grab a friend, put on your favorite costume, and come ready to have fun.',
+    friendNote: 'Send this to a friend who’d love a night of costumes and cake pops too.',
+
+    pricing: {
+      // Add the Stripe Payment Links (one-time $20 and $40 payments) as
+      // stripeUrl on each tier. Until then the site offers Venmo only.
+      member: { price: '$20' },
+      nonMember: { price: '$40' },
+      venmoUrl: 'https://venmo.com/code?user_id=2114734279098368911&created=1790276161',
+      venmoNote: 'Put your name and “Halloween party” in the comments.',
+    },
+    membershipPitch: [
+      'Before you grab the $40 ticket, you may want to check out the Energize Your Vibe membership. Members get $20 off this event, plus all the other benefits, gatherings, tools, and support that come with being part of the Energize Your Vibe community.',
+      'If you’ve been thinking about joining us, this might be the perfect time. Join the community first, then come back and register at the $20 member rate.',
+    ],
+    phoneRequired: true,
+    flyer: '/assets/halloween-party-flyer.webp',
+    ogImage: {
+      src: '/assets/og/halloween-party.jpg',
+      alt: 'Energize Your Vibe Halloween Party: make cake pops with guest expert Katherine O’Donnell at Lark x Co Connection Studio in Salt Lake City, Wednesday, October 21',
+    },
+
+    mailerliteGroup: 'Event: Halloween Party (Oct 21, 2026)',
   },
 ];
 
@@ -222,11 +330,17 @@ export function hasStarted(event, now = new Date()) {
   return now >= new Date(event.startsAt);
 }
 
-// Events still worth promoting. An event comes off the calendar, homepage
-// and popup as soon as it starts; its own page keeps taking registrations
-// until it ends, so latecomers with the link can still get the join details.
+// Early-access events stay off the public listings until announceAt.
+export function isAnnounced(event, now = new Date()) {
+  return !event.announceAt || now >= new Date(event.announceAt);
+}
+
+// Events still worth promoting. An event goes on the calendar, homepage
+// and popup once it's announced and comes off as soon as it starts; its own
+// page keeps taking registrations until it ends, so latecomers with the link
+// can still get the join details.
 export function upcomingEvents(now = new Date()) {
-  return EVENTS.filter((event) => !hasStarted(event, now)).sort(
+  return EVENTS.filter((event) => isAnnounced(event, now) && !hasStarted(event, now)).sort(
     (a, b) => new Date(a.startsAt) - new Date(b.startsAt)
   );
 }
@@ -235,21 +349,35 @@ export function isInPerson(event) {
   return event.format === 'in-person';
 }
 
-// Events with pricing ask whether the registrant is a member; non-members
-// are sent to pay after registering.
+// Events with pricing ask whether the registrant is a member; anyone whose
+// ticket isn't free is sent to pay after registering.
 export function hasNonMemberPrice(event) {
   return Boolean(event.pricing);
 }
 
 export const MEMBERSHIP_OPTIONS = ['member', 'non-member'];
 
+// The pricing tier ({ price, stripeUrl? }) for a membership answer.
+export function ticketTier(event, membership) {
+  if (!event.pricing) return null;
+  return membership === 'member' ? event.pricing.member : event.pricing.nonMember;
+}
+
+export function isFreeTier(tier) {
+  return tier.price === 'Free';
+}
+
+// How a tier can be paid, for copy: "card or Venmo", "Venmo" or "card".
+export function payByLabel(event, tier) {
+  return [tier.stripeUrl && 'card', event.pricing.venmoUrl && 'Venmo'].filter(Boolean).join(' or ');
+}
+
 // Value stored in the MailerLite `event_ticket` field so Jenn can tell
 // paid spots from member spots in the registrant list.
 export function ticketLabel(event, membership) {
-  if (!event.pricing) return '';
-  return membership === 'member'
-    ? `Member (${event.pricing.memberLabel.toLowerCase()})`
-    : `Non-member (${event.pricing.nonMemberPrice})`;
+  const tier = ticketTier(event, membership);
+  if (!tier) return '';
+  return `${membership === 'member' ? 'Member' : 'Non-member'} (${tier.price.toLowerCase()})`;
 }
 
 // "Sandy Rodriguez" / "Susan Hart & Tysen Creager" for copy.

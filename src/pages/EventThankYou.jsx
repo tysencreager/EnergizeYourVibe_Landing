@@ -19,7 +19,17 @@ import Blob from '../components/Blob.jsx';
 import Sunburst from '../components/Sunburst.jsx';
 import { usePageMeta } from '../hooks/usePageMeta.js';
 import { track } from '../lib/track.js';
-import { expertNames, getEvent, hasNonMemberPrice, isInPerson, whereLabel } from '../data/events.js';
+import {
+  expertNames,
+  getEvent,
+  hasNonMemberPrice,
+  isFreeTier,
+  isInPerson,
+  MEMBERSHIP_OPTIONS,
+  payByLabel,
+  ticketTier,
+  whereLabel,
+} from '../data/events.js';
 import { CONTACT_EMAIL } from '../data/links.js';
 
 export default function EventThankYou() {
@@ -40,11 +50,7 @@ export default function EventThankYou() {
   if (!event) return <Navigate to="/events" replace />;
 
   const inPerson = isInPerson(event);
-  // Members registered for free; anyone else on a priced event still owes
-  // the non-member price. When the page is reloaded the form state is gone,
-  // so the payment step is shown with "not a member?" wording rather than
-  // assumed either way.
-  const showPayment = hasNonMemberPrice(event) && membership !== 'member';
+  const owed = owedTiers(event, membership);
   const eventUrl = `${window.location.origin}/events/${event.slug}`;
 
   async function handleShare() {
@@ -104,7 +110,9 @@ export default function EventThankYou() {
             )}
           </ul>
 
-          {showPayment && <PaymentStep event={event} email={email} membership={membership} />}
+          {owed.length > 0 && (
+            <PaymentStep event={event} email={email} tiers={owed} known={MEMBERSHIP_OPTIONS.includes(membership)} />
+          )}
 
           <div className="max-w-xl mx-auto bg-white/15 border border-white/30 backdrop-blur-md rounded-3xl px-6 py-6 md:px-8 text-white">
             <MailCheck size={30} strokeWidth={1.5} className="text-sun mx-auto mb-3" />
@@ -188,39 +196,68 @@ export default function EventThankYou() {
   );
 }
 
-// Non-member payment step for priced events. Stripe Payment Links accept a
+// Ticket tiers the registrant may still owe on a priced event: their own,
+// or every paid tier when the page was reloaded and the form state is gone
+// (the payment step then offers each rather than assuming either way).
+function owedTiers(event, membership) {
+  if (!hasNonMemberPrice(event)) return [];
+  const options = MEMBERSHIP_OPTIONS.includes(membership) ? [membership] : MEMBERSHIP_OPTIONS;
+  return options
+    .map((option) => ({ membership: option, ...ticketTier(event, option) }))
+    .filter((tier) => !isFreeTier(tier));
+}
+
+// Payment step for priced events. Stripe Payment Links accept a
 // prefilled_email query parameter, so the checkout is tied to the same email
 // the registrant just used.
-function PaymentStep({ event, email, membership }) {
+function PaymentStep({ event, email, tiers, known }) {
   const { pricing } = event;
-  const stripeUrl = email
-    ? `${pricing.stripeUrl}?prefilled_email=${encodeURIComponent(email)}`
-    : pricing.stripeUrl;
-  const known = membership === 'non-member';
+  const single = tiers.length === 1;
+  const price = tiers[0].price;
+  const payBy = payByLabel(event, tiers.find((tier) => tier.stripeUrl) ?? tiers[0]);
+  const withEmail = (url) => (email ? `${url}?prefilled_email=${encodeURIComponent(email)}` : url);
+
+  let eyebrow = 'One last step';
+  let heading = (
+    <>
+      Reserve your spot for <span className="text-magenta">{price}</span>.
+    </>
+  );
+  let body = `Your seat is saved. Complete your ${price} payment by ${payBy} to lock it in.`;
+  if (!known && single) {
+    // Members are free, so only non-members owe anything.
+    eyebrow = 'Not a member yet?';
+    body = `Energize Your Vibe members join for free. Everyone else, lock in your seat by ${payBy}.`;
+  } else if (!single) {
+    heading = 'Lock in your spot.';
+    body = `Your seat is saved. Complete your payment by ${payBy}: ${pricing.member.price} for members, ${pricing.nonMember.price} for everyone else.`;
+  }
 
   return (
     <div className="max-w-xl mx-auto bg-white rounded-3xl px-6 py-7 md:px-8 md:py-8 text-gray-900 shadow-2xl mb-6">
-      <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-pink mb-2">
-        {known ? 'One last step' : 'Not a member yet?'}
-      </p>
-      <p className="font-display text-2xl md:text-3xl leading-tight mb-2">
-        Reserve your spot for <span className="text-magenta">{pricing.nonMemberPrice}</span>.
-      </p>
-      <p className="text-gray-600 text-sm md:text-base font-medium leading-relaxed mb-6">
-        {known
-          ? `Your seat is saved. Complete your ${pricing.nonMemberPrice} payment by card or Venmo to lock it in.`
-          : `Energize Your Vibe members join for ${pricing.memberLabel.toLowerCase()}. Everyone else, lock in your seat by card or Venmo.`}
-      </p>
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
-        <a
-          href={stripeUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => track('event_payment_click', { event: event.slug, method: 'stripe' })}
-          className="inline-flex items-center justify-center gap-2 bg-pink text-white py-4 px-8 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-magenta transition-colors shadow-lg"
-        >
-          <CreditCard size={18} strokeWidth={1.75} /> Pay {pricing.nonMemberPrice} by Card
-        </a>
+      <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-pink mb-2">{eyebrow}</p>
+      <p className="font-display text-2xl md:text-3xl leading-tight mb-2">{heading}</p>
+      <p className="text-gray-600 text-sm md:text-base font-medium leading-relaxed mb-6">{body}</p>
+      <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center justify-center gap-3">
+        {tiers
+          .filter((tier) => tier.stripeUrl)
+          .map((tier) => (
+            <a
+              key={tier.membership}
+              href={withEmail(tier.stripeUrl)}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() =>
+                track('event_payment_click', { event: event.slug, method: 'stripe', membership: tier.membership })
+              }
+              className="inline-flex items-center justify-center gap-2 bg-pink text-white py-4 px-8 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-magenta transition-colors shadow-lg"
+            >
+              <CreditCard size={18} strokeWidth={1.75} />
+              {single
+                ? `Pay ${tier.price} by Card`
+                : `Pay ${tier.price} · ${tier.membership === 'member' ? 'Member' : 'Non-member'}`}
+            </a>
+          ))}
         {pricing.venmoUrl && (
           <a
             href={pricing.venmoUrl}

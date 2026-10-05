@@ -22,12 +22,26 @@ unless the event sets `phoneRequired`). They're saved to MailerLite's default
 `lead_source = website_event_registration`. Upserts only *add* groups, so an
 existing member keeps her `EYV Members` group and data.
 
-Events with `pricing` (free for members, paid for everyone else) also ask
+Events with `pricing` (a member price and a non-member price) also ask
 "Are you an Energize Your Vibe member?". The answer lands in the custom text
-field `event_ticket` (`Member (free)` / `Non-member ($20)`), and non-members
-are sent to pay on the thank-you page via the event's Stripe Payment Link
-(with their email prefilled) or Venmo. Payment is not verified by the site:
-check Stripe / Venmo against the group's non-member rows before the event.
+field `event_ticket` (e.g. `Member (free)` / `Non-member ($20)`, or
+`Member ($20)` / `Non-member ($40)`), and anyone whose ticket isn't free is
+sent to pay on the thank-you page via that tier's Stripe Payment Link (with
+their email prefilled) or Venmo. Payment is not verified by the site: check
+Stripe / Venmo against the group's paid rows before the event.
+
+**Capacity.** Events with a `capacity` stop taking registrations once their
+MailerLite group holds that many active subscribers: the page shows
+"Space is limited", then "Only N spots left" from 10 down, and finally a
+"This party is full" card with a waitlist email button. Every registration
+counts, paid or not, and so do your own test sign-ups: remove test or
+unpaid registrants from the group to free their spots. To add spots, raise
+`capacity` in `src/data/events.js` and redeploy.
+
+**Early access.** Events with `announceAt` stay off `/events`, the homepage
+and the popup until that time, but their page and short link work from the
+moment the site deploys. Send the link to whoever gets first dibs, and the
+event shows up publicly on its own at `announceAt`.
 
 Registration closes automatically when the event ends (start time +
 duration). After that the page shows "Registration has closed" and the API
@@ -148,6 +162,54 @@ group's subscribers (`phone` field / CSV export) for day-of texts.
 
 ---
 
+## Halloween Party (Wed, Oct 21, 2026, 6:30 to 8:30 PM MT, in person)
+
+- Page: https://www.energizeyourvibe.com/events/halloween-party
+- Short link for flyers/texts: https://www.energizeyourvibe.com/halloween
+- Where: Lark x Co Connection Studio, 1603 Stratford Ave S, Salt Lake City,
+  UT 84106
+- Guest expert: Katherine O'Donnell (Owner, A Piece of Cake Utah). Her
+  headshot is cropped from the flyer; swap in the original file at
+  `public/assets/katherine-odonnell.jpg` if Jenn can get it.
+- Price: members $20, non-members $40. The page also pitches the
+  membership to non-members ("Members get $20 off this event...").
+- Capacity: 30 (Katherine's number to start)
+- Early access: members and last week's attendees (The Fall Reset and
+  Sisterhood, S'mores groups) get first dibs. The party goes on the public
+  calendar, homepage and popup at `announceAt`, **Fri, Oct 9, 9:00 AM MT**.
+  Until then, share the link directly.
+- MailerLite group: `Event: Halloween Party (Oct 21, 2026)`
+- Email: `08-halloween-party-registration.html`
+
+### Before sharing the link
+
+1. **Stripe Payment Links**: create two one-time Payment Links, $20
+   ("Halloween Party, member ticket") and $40 ("Halloween Party,
+   non-member ticket"). Put them in `src/data/events.js` as
+   `pricing.member.stripeUrl` / `pricing.nonMember.stripeUrl`. Until then
+   the site offers Venmo only (the copy adjusts on its own).
+2. **MailerLite**: create the group above, then an automation on it
+   (trigger *When subscriber joins a group*, no delay) with:
+   - **Subject:** You're in! See you at the Energize Your Vibe Halloween Party 🎃
+   - **Preview text:** Your details for Wednesday, October 21 are inside.
+   - **Sender:** Energize Your Vibe, jenn@energizeyourvibe.com
+   - **Content:** Custom HTML. Paste `08-halloween-party-registration.html`
+     with `{{STRIPE_MEMBER_URL}}` and `{{STRIPE_NON_MEMBER_URL}}` replaced
+     by the two Payment Links.
+3. **Test**: register yourself on the live page, check the email arrives,
+   then **remove yourself from the group** so the test doesn't hold one
+   of the 30 spots.
+4. **Early access email**: send the page link to the `EYV Members`, The
+   Fall Reset and Sisterhood, S'mores groups before Oct 9.
+
+### Registrant list
+
+Open the group in MailerLite (export to CSV from there). The `event_ticket`
+column shows `Member ($20)` or `Non-member ($40)`; match it against Stripe
+payments (the Payment Links prefill their email) and Venmo.
+
+---
+
 ## Adding the next event
 
 Ask Jenn to send, for each event:
@@ -188,7 +250,8 @@ Then:
 
 Events drop off the `/events` calendar, the homepage "Upcoming events"
 section, and the site popup automatically the moment they start (all three
-read `upcomingEvents()`). Their pages stay up, keep taking registrations
+read `upcomingEvents()`, which also holds back events until their
+`announceAt`). Their pages stay up, keep taking registrations
 until the event ends, and then show "Registration has closed". Once no
 events are coming up, the popup falls back to the Founding Member
 invitation.

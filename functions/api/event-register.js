@@ -13,11 +13,16 @@
 // a MailerLite automation triggered when a subscriber joins the group - see
 // emails/event-registrations.md.
 //
-// Events with `pricing` (free for members, paid for everyone else) also ask
+// Events with `pricing` (a member price and a non-member price) also ask
 // whether the registrant is a member. The answer is stored in the MailerLite
 // `event_ticket` custom field so Jenn can tell paid spots from member spots
-// in the registrant list; the non-member payment itself happens on the
-// thank-you page (Stripe Payment Link / Venmo), not here.
+// in the registrant list; the payment itself happens on the thank-you page
+// (Stripe Payment Link / Venmo), not here.
+//
+// Events with a `capacity` stop taking registrations once their group holds
+// that many active subscribers (someone already in the group can still
+// re-register). GET /api/event-register?event=<slug> reports the spots left
+// so the page can show "full" before anyone fills in the form.
 //
 // Like the other lead forms, POST /api/subscribers upserts by email and only
 // ADDS groups, so an existing subscriber or member keeps her other groups.
@@ -32,9 +37,11 @@
 import {
   getEvent,
   hasNonMemberPrice,
+  isFreeTier,
   isRegistrationOpen,
   MEMBERSHIP_OPTIONS,
   ticketLabel,
+  ticketTier,
 } from '../../src/data/events.js';
 
 const MAILERLITE_API = 'https://connect.mailerlite.com/api';
@@ -43,6 +50,24 @@ const MAILERLITE_API = 'https://connect.mailerlite.com/api';
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mykoegpy';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const GENERIC_ERROR = 'Something went wrong on our end. Please try again in a moment.';
+
+// Spots left for a capped event: { ok, spotsLeft } (spotsLeft is null for
+// events without a capacity). Never creates the group.
+export async function onRequestGet({ request, env }) {
+  const event = getEvent(new URL(request.url).searchParams.get('event') ?? '');
+  if (!event) return json({ ok: false, error: 'We couldn’t find that event.' }, 404);
+  if (!event.capacity || !isRegistrationOpen(event)) return json({ ok: true, spotsLeft: null }, 200);
+  if (!env.MAILERLITE_API_KEY) return json({ ok: false, error: GENERIC_ERROR }, 503);
+
+  try {
+    const groupId = await findGroup(env, event.mailerliteGroup);
+    const taken = groupId ? await countRegistrations(env, groupId, event.capacity) : 0;
+    return json({ ok: true, spotsLeft: Math.max(0, event.capacity - taken) }, 200);
+  } catch (err) {
+    console.error('[event-register] spots lookup failed:', err);
+    return json({ ok: false, error: GENERIC_ERROR }, 502);
+  }
+}
 
 export async function onRequestPost({ request, env, waitUntil }) {
   let body;
@@ -119,6 +144,10 @@ export async function onRequestPost({ request, env, waitUntil }) {
     const groupId = await findOrCreateGroup(env, event.mailerliteGroup);
     if (!groupId) return json({ ok: false, error: GENERIC_ERROR }, 502);
 
+    if (event.capacity && (await isFull(env, event, groupId, email))) {
+      return json({ ok: false, full: true, error: `Sorry, this ${event.kindLabel} is full.` }, 409);
+    }
+
     const res = await mailerlite(env, '/subscribers', {
       method: 'POST', // upserts by email; adds groups without removing existing ones
       body: JSON.stringify({
@@ -171,6 +200,7 @@ async function notifyOwner(env, origin, { event, firstName, lastName, email, pho
   if (endpoint === 'off') return;
 
   const name = `${firstName} ${lastName}`;
+  const tier = ticketTier(event, membership);
   try {
     const res = await fetch(endpoint, {
       method: 'POST',
@@ -188,8 +218,8 @@ async function notifyOwner(env, origin, { event, firstName, lastName, email, pho
         email,
         phone: phone || 'Not given',
         ...(ticket ? { spot: ticket } : {}),
-        ...(membership === 'non-member' && event.pricing
-          ? { payment: `${event.pricing.nonMemberPrice} due by card (Stripe) or Venmo - check before the event` }
+        ...(tier && !isFreeTier(tier)
+          ? { payment: `${tier.price} due by card (Stripe) or Venmo - check before the event` }
           : {}),
         registrant_list: `MailerLite group: ${event.mailerliteGroup}`,
         event_page: `https://www.energizeyourvibe.com/events/${event.slug}`,
@@ -204,20 +234,52 @@ async function notifyOwner(env, origin, { event, firstName, lastName, email, pho
   }
 }
 
+// Full when the group already holds `capacity` registrants, unless this
+// email is one of them (re-registering doesn't take a new spot). A failed
+// count lets the registration through rather than turning people away
+// because MailerLite hiccuped.
+async function isFull(env, event, groupId, email) {
+  try {
+    if ((await countRegistrations(env, groupId, event.capacity)) < event.capacity) return false;
+    const res = await mailerlite(env, `/subscribers/${encodeURIComponent(email)}`);
+    if (res.status === 404) return true;
+    if (!res.ok) throw new Error(`subscriber lookup ${res.status}`);
+    const { data } = await res.json();
+    return !(data?.groups ?? []).some((group) => String(group.id) === String(groupId));
+  } catch (err) {
+    console.error('[event-register] capacity check failed, allowing registration:', err);
+    return false;
+  }
+}
+
+// Active subscribers in the group, counted up to `max` (one page is enough
+// to know whether the event is full).
+async function countRegistrations(env, groupId, max) {
+  const res = await mailerlite(env, `/groups/${groupId}/subscribers?limit=${max}`);
+  if (!res.ok) throw new Error(`group subscribers ${res.status}: ${await res.text()}`);
+  const { data = [] } = await res.json();
+  return data.length;
+}
+
 // filter[name] is a partial match, so pick the exact name from the results.
-async function findOrCreateGroup(env, name) {
+// Resolves to the group id, or null when there's no such group; throws when
+// the lookup itself fails.
+async function findGroup(env, name) {
   const search = await mailerlite(
     env,
     `/groups?limit=100&filter[name]=${encodeURIComponent(name)}`
   );
   if (!search.ok) {
-    const detail = await search.text();
-    console.error(`[event-register] MailerLite group lookup failed: ${search.status} ${detail}`);
-    return null;
+    throw new Error(`MailerLite group lookup failed: ${search.status} ${await search.text()}`);
   }
   const { data = [] } = await search.json();
   const existing = data.find((group) => group.name.trim().toLowerCase() === name.toLowerCase());
-  if (existing) return existing.id;
+  return existing ? existing.id : null;
+}
+
+async function findOrCreateGroup(env, name) {
+  const existing = await findGroup(env, name);
+  if (existing) return existing;
 
   console.warn(`[event-register] MailerLite group "${name}" not found, creating it`);
   const created = await mailerlite(env, '/groups', {
