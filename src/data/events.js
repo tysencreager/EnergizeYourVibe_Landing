@@ -39,8 +39,6 @@
 //   capacity        max registrations; the API turns people away once the
 //                   MailerLite group holds this many, and the page shows
 //                   "Space is limited" and, once full, a waitlist note
-//   announceAt      early access: until this time the page works at its
-//                   link but stays off /events, the homepage and the popup
 //   phoneRequired   make the phone field mandatory (text updates)
 //   flyer           path to a shareable flyer image in public/assets
 //   image           { src, alt, caption? } wide photo shown under the hero
@@ -238,10 +236,6 @@ export const EVENTS = [
     priceLabel: '$20 for Members · $40 for Non-Members',
     audienceLabel: 'All Women Welcome',
 
-    // Members and last week's attendees (The Fall Reset + Sisterhood,
-    // S'mores) get first dibs: they get the link by email, and the party
-    // goes on the public calendar, homepage and popup at this time.
-    announceAt: '2026-10-09T09:00:00-06:00',
     // Katherine's number to start. Raise it here if more spots open up.
     capacity: 30,
 
@@ -297,7 +291,7 @@ export const EVENTS = [
       member: { price: '$20' },
       nonMember: { price: '$40' },
       venmoUrl: 'https://venmo.com/code?user_id=2114734279098368911&created=1790276161',
-      venmoNote: 'Put your name and “Halloween party” in the comments.',
+      venmoNote: 'Put your first and last name and “EYV Halloween Party” in the comments.',
     },
     membershipPitch: [
       'Before you grab the $40 ticket, you may want to check out the Energize Your Vibe membership. Members get $20 off this event, plus all the other benefits, gatherings, tools, and support that come with being part of the Energize Your Vibe community.',
@@ -330,17 +324,11 @@ export function hasStarted(event, now = new Date()) {
   return now >= new Date(event.startsAt);
 }
 
-// Early-access events stay off the public listings until announceAt.
-export function isAnnounced(event, now = new Date()) {
-  return !event.announceAt || now >= new Date(event.announceAt);
-}
-
-// Events still worth promoting. An event goes on the calendar, homepage
-// and popup once it's announced and comes off as soon as it starts; its own
-// page keeps taking registrations until it ends, so latecomers with the link
-// can still get the join details.
+// Events still worth promoting. An event comes off the calendar, homepage
+// and popup as soon as it starts; its own page keeps taking registrations
+// until it ends, so latecomers with the link can still get the join details.
 export function upcomingEvents(now = new Date()) {
-  return EVENTS.filter((event) => isAnnounced(event, now) && !hasStarted(event, now)).sort(
+  return EVENTS.filter((event) => !hasStarted(event, now)).sort(
     (a, b) => new Date(a.startsAt) - new Date(b.startsAt)
   );
 }

@@ -38,11 +38,6 @@ counts, paid or not, and so do your own test sign-ups: remove test or
 unpaid registrants from the group to free their spots. To add spots, raise
 `capacity` in `src/data/events.js` and redeploy.
 
-**Early access.** Events with `announceAt` stay off `/events`, the homepage
-and the popup until that time, but their page and short link work from the
-moment the site deploys. Send the link to whoever gets first dibs, and the
-event shows up publicly on its own at `announceAt`.
-
 Registration closes automatically when the event ends (start time +
 duration). After that the page shows "Registration has closed" and the API
 rejects new sign-ups.
@@ -174,10 +169,7 @@ group's subscribers (`phone` field / CSV export) for day-of texts.
 - Price: members $20, non-members $40. The page also pitches the
   membership to non-members ("Members get $20 off this event...").
 - Capacity: 30 (Katherine's number to start)
-- Early access: members and last week's attendees (The Fall Reset and
-  Sisterhood, S'mores groups) get first dibs. The party goes on the public
-  calendar, homepage and popup at `announceAt`, **Fri, Oct 9, 9:00 AM MT**.
-  Until then, share the link directly.
+- Open to everyone as soon as the site deploys (no early-access window).
 - MailerLite group: `Event: Halloween Party (Oct 21, 2026)`
   (id `200523251589318215`, created via the API on Oct 5)
 - MailerLite automation: same name, id `200523255912596648`,
@@ -208,8 +200,6 @@ group's subscribers (`phone` field / CSV export) for day-of texts.
 3. **Test**: register yourself on the live page, check the email arrives,
    then **remove yourself from the group** so the test doesn't hold one
    of the 30 spots.
-4. **Early access email**: send the page link to the `EYV Members`, The
-   Fall Reset and Sisterhood, S'mores groups before Oct 9.
 
 ### Registrant list
 
@@ -259,8 +249,7 @@ Then:
 
 Events drop off the `/events` calendar, the homepage "Upcoming events"
 section, and the site popup automatically the moment they start (all three
-read `upcomingEvents()`, which also holds back events until their
-`announceAt`). Their pages stay up, keep taking registrations
+read `upcomingEvents()`). Their pages stay up, keep taking registrations
 until the event ends, and then show "Registration has closed". Once no
 events are coming up, the popup falls back to the Founding Member
 invitation.
