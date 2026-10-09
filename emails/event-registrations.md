@@ -188,9 +188,8 @@ group's subscribers (`phone` field / CSV export) for day-of texts.
   defaults new email steps to the logged-in user's unverified address
   and can't change it); subject "You're in! See you at the Energize Your
   Vibe Halloween Party 🎃"; content is `08-halloween-party-registration.html`
-  as Custom HTML, **Venmo-only for now** (the two card buttons removed
-  and Venmo made the solid button). To add card buttons, see step 2
-  below.
+  as Custom HTML. It went out Venmo-only at first; the full file with
+  both Stripe card buttons was loaded on Oct 9.
 - Email: `08-halloween-party-registration.html`
 
 ### Before sharing the link
@@ -199,13 +198,12 @@ group's subscribers (`phone` field / CSV export) for day-of texts.
    `pricing.member.stripeUrl` ($20) and `pricing.nonMember.stripeUrl`
    ($40), and in the email template.
 2. **MailerLite**: the group and automation above are set up (sender,
-   subject and Venmo-only email loaded). Review the email in the
-   automation, then **turn the automation on**. To add card buttons,
-   replace its content with `08-halloween-party-registration.html` as is
-   (both Stripe links are in it). MailerLite won't change the email of
-   an active automation, so pause it in the dashboard first and turn it
-   back on right after; anyone who registers while it's paused doesn't
-   get the email.
+   subject and email with both card buttons loaded) and the automation
+   is on. If the email changes, replace its content with
+   `08-halloween-party-registration.html` as is. MailerLite won't change
+   the email of an active automation, so pause it in the dashboard first
+   and turn it back on right after; anyone who registers while it's
+   paused doesn't get the email.
 3. **Test**: register yourself on the live page, check the email arrives,
    then **remove yourself from the group** so the test doesn't hold one
    of the 30 spots.
