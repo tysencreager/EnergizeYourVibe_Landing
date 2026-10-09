@@ -16,12 +16,9 @@
     per-subscriber conditional content in MailerLite, so the payment block
     lists both and tells anyone who already paid to skip it.
 
-    Before pasting, replace the two Stripe Payment Link tokens:
-      {{STRIPE_MEMBER_URL}}      the $20 member link
-      {{STRIPE_NON_MEMBER_URL}}  the $40 non-member link
-    (the same links as pricing.member/nonMember.stripeUrl in
-    src/data/events.js). No Stripe links? Delete the two "Pay ... by Card"
-    buttons and keep Venmo.
+    The two "Pay ... by Card" buttons carry the $20 member and $40
+    non-member Stripe Payment Links (the same links as
+    pricing.member/nonMember.stripeUrl in src/data/events.js). Paste as is.
 
     Brand: pink #E22E64 / magenta #B71556 / orange #F26B38 / sun #FDE08B
   -->
@@ -143,8 +140,8 @@
                 </tr>
                 <tr>
                   <td align="center" style="padding:0 20px 8px;">
-                    <a class="btn" href="{{STRIPE_MEMBER_URL}}" style="display:inline-block; margin:0 4px 10px; background-color:#E22E64; color:#ffffff; font-family:Arial,Helvetica,sans-serif; font-size:14px; font-weight:bold; letter-spacing:2px; text-transform:uppercase; text-decoration:none; padding:15px 30px; border-radius:999px;">Pay $20 &middot; Member</a>
-                    <a class="btn" href="{{STRIPE_NON_MEMBER_URL}}" style="display:inline-block; margin:0 4px 10px; background-color:#E22E64; color:#ffffff; font-family:Arial,Helvetica,sans-serif; font-size:14px; font-weight:bold; letter-spacing:2px; text-transform:uppercase; text-decoration:none; padding:15px 30px; border-radius:999px;">Pay $40 &middot; Non-Member</a>
+                    <a class="btn" href="https://buy.stripe.com/8x200k2MI6oye1z9et4wM05" style="display:inline-block; margin:0 4px 10px; background-color:#E22E64; color:#ffffff; font-family:Arial,Helvetica,sans-serif; font-size:14px; font-weight:bold; letter-spacing:2px; text-transform:uppercase; text-decoration:none; padding:15px 30px; border-radius:999px;">Pay $20 &middot; Member</a>
+                    <a class="btn" href="https://buy.stripe.com/aFa8wQafa00a8HfcqF4wM06" style="display:inline-block; margin:0 4px 10px; background-color:#E22E64; color:#ffffff; font-family:Arial,Helvetica,sans-serif; font-size:14px; font-weight:bold; letter-spacing:2px; text-transform:uppercase; text-decoration:none; padding:15px 30px; border-radius:999px;">Pay $40 &middot; Non-Member</a>
                     <a class="btn" href="https://venmo.com/code?user_id=2114734279098368911&amp;created=1790276161" style="display:inline-block; margin:0 4px 10px; background-color:#ffffff; color:#B71556; border:2px solid #B71556; font-family:Arial,Helvetica,sans-serif; font-size:14px; font-weight:bold; letter-spacing:2px; text-transform:uppercase; text-decoration:none; padding:13px 26px; border-radius:999px;">Pay with Venmo</a>
                   </td>
                 </tr>

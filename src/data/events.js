@@ -286,10 +286,16 @@ export const EVENTS = [
     friendNote: 'Send this to a friend who’d love a night of costumes and cake pops too.',
 
     pricing: {
-      // Add the Stripe Payment Links (one-time $20 and $40 payments) as
-      // stripeUrl on each tier. Until then the site offers Venmo only.
-      member: { price: '$20' },
-      nonMember: { price: '$40' },
+      member: {
+        price: '$20',
+        // Stripe Payment Link for the $20 member ticket (one-time payment).
+        stripeUrl: 'https://buy.stripe.com/8x200k2MI6oye1z9et4wM05',
+      },
+      nonMember: {
+        price: '$40',
+        // Stripe Payment Link for the $40 non-member ticket (one-time payment).
+        stripeUrl: 'https://buy.stripe.com/aFa8wQafa00a8HfcqF4wM06',
+      },
       venmoUrl: 'https://venmo.com/code?user_id=2114734279098368911&created=1790276161',
       venmoNote: 'Put your first and last name and “EYV Halloween Party” in the comments.',
     },

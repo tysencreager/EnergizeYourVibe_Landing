@@ -168,6 +168,14 @@ group's subscribers (`phone` field / CSV export) for day-of texts.
   with her cakes (re-run the share image script if it changes).
 - Price: members $20, non-members $40. The page also pitches the
   membership to non-members ("Members get $20 off this event...").
+  - Stripe Payment Link, $20 member ticket:
+    https://buy.stripe.com/8x200k2MI6oye1z9et4wM05 (Stripe shows it as
+    "Energize Your Vibe Halloween Party - Member Ticket", US$20.00)
+  - Stripe Payment Link, $40 non-member ticket:
+    https://buy.stripe.com/aFa8wQafa00a8HfcqF4wM06 (Stripe shows it as
+    "Energize Your Vibe Halloween Party - Non-Member Ticket", US$40.00)
+  - Venmo: Jenn's Venmo code link (registrants put their first and last
+    name + "EYV Halloween Party" in the comments)
 - Capacity: 30 (Katherine's number to start)
 - Open to everyone as soon as the site deploys (no early-access window).
 - MailerLite group: `Event: Halloween Party (Oct 21, 2026)`
@@ -175,28 +183,27 @@ group's subscribers (`phone` field / CSV export) for day-of texts.
 - MailerLite automation: same name, id `200523255912596648`,
   https://dashboard.mailerlite.com/automations/200523255912596648
   (trigger = joins the group above). Created via the API on Oct 5 and
-  **inactive** until Jenn or Tysen turns it on. Sender Energize Your
+  turned on in the dashboard (**live**). Sender Energize Your
   Vibe, jenn@energizeyourvibe.com (set in the dashboard: the API
   defaults new email steps to the logged-in user's unverified address
   and can't change it); subject "You're in! See you at the Energize Your
   Vibe Halloween Party 🎃"; content is `08-halloween-party-registration.html`
-  as Custom HTML, **Venmo-only for now** (the two card buttons removed
-  and Venmo made the solid button). Once the Stripe links exist, re-paste
-  the full file with the tokens filled in.
+  as Custom HTML. It went out Venmo-only at first; the full file with
+  both Stripe card buttons was loaded on Oct 9.
 - Email: `08-halloween-party-registration.html`
 
 ### Before sharing the link
 
-1. **Stripe Payment Links**: create two one-time Payment Links, $20
-   ("Halloween Party, member ticket") and $40 ("Halloween Party,
-   non-member ticket"). Put them in `src/data/events.js` as
-   `pricing.member.stripeUrl` / `pricing.nonMember.stripeUrl`. Until then
-   the site offers Venmo only (the copy adjusts on its own).
+1. **Stripe Payment Links**: both are in `src/data/events.js` as
+   `pricing.member.stripeUrl` ($20) and `pricing.nonMember.stripeUrl`
+   ($40), and in the email template.
 2. **MailerLite**: the group and automation above are set up (sender,
-   subject and Venmo-only email loaded). Review the email in the
-   automation, then **turn the automation on**. Once the Stripe links
-   exist, replace its content with `08-halloween-party-registration.html`
-   with `{{STRIPE_MEMBER_URL}}` and `{{STRIPE_NON_MEMBER_URL}}` filled in.
+   subject and email with both card buttons loaded) and the automation
+   is on. If the email changes, replace its content with
+   `08-halloween-party-registration.html` as is. MailerLite won't change
+   the email of an active automation, so pause it in the dashboard first
+   and turn it back on right after; anyone who registers while it's
+   paused doesn't get the email.
 3. **Test**: register yourself on the live page, check the email arrives,
    then **remove yourself from the group** so the test doesn't hold one
    of the 30 spots.
