@@ -291,9 +291,11 @@ export const EVENTS = [
         // Stripe Payment Link for the $20 member ticket (one-time payment).
         stripeUrl: 'https://buy.stripe.com/8x200k2MI6oye1z9et4wM05',
       },
-      // Still waiting on a $40 Stripe Payment Link from Jenn. Until it's
-      // added as stripeUrl here, non-members pay by Venmo only.
-      nonMember: { price: '$40' },
+      nonMember: {
+        price: '$40',
+        // Stripe Payment Link for the $40 non-member ticket (one-time payment).
+        stripeUrl: 'https://buy.stripe.com/aFa8wQafa00a8HfcqF4wM06',
+      },
       venmoUrl: 'https://venmo.com/code?user_id=2114734279098368911&created=1790276161',
       venmoNote: 'Put your first and last name and “EYV Halloween Party” in the comments.',
     },
